@@ -1314,7 +1314,7 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *         enabled?: bool|Param, // Default: false
  *     },
  *     html?: bool|array{
- *         enabled?: bool|Param, // Default: false
+ *         enabled?: bool|Param, // Default: true
  *     },
  *     markdown?: bool|array{
  *         enabled?: bool|Param, // Default: false
@@ -1356,6 +1356,51 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *         ...<string, mixed>
  *     },
  * }
+ * @psalm-type ItkdevOpenidConnectConfig = array{
+ *     cache_options?: array{
+ *         cache_pool?: scalar|Param|null, // Method for caching // Default: "cache.app"
+ *     },
+ *     cli_login_options?: array{
+ *         route?: scalar|Param|null, // Return route for CLI login
+ *     },
+ *     user_provider?: scalar|Param|null, // The User Provider to inject // Default: null
+ *     openid_providers?: list<array{ // Default: []
+ *         options?: array{
+ *             metadata_url?: scalar|Param|null, // URL to OpenId Discovery Document
+ *             client_id?: scalar|Param|null, // Client ID assigned by authorizer
+ *             client_secret?: scalar|Param|null, // Client secret/password assigned by authorizer
+ *             leeway?: int|Param, // Leeway in seconds to account for clock skew between server and provider // Default: 10
+ *             cache_duration?: int|Param, // Cache duration in seconds for the OIDC discovery document and JWKS (default: 86400 — 24 hours) // Default: 86400
+ *             redirect_uri?: scalar|Param|null, // Redirect URI registered at identity provider
+ *             redirect_route?: scalar|Param|null, // Redirect route registered at identity provider (must not be set if redirect_uri is set)
+ *             redirect_route_parameters?: array<mixed>,
+ *             allow_http?: bool|Param, // Whether to allow http or not (default: false) // Default: false
+ *             http_client_options?: array{ // Options forwarded to the underlying Guzzle HTTP client. league/oauth2-client only forwards: timeout, proxy, verify (verify is only consulted when proxy is set).
+ *                 timeout?: float|Param, // Total request timeout in seconds
+ *                 proxy?: scalar|Param|null, // HTTP proxy URI
+ *                 verify?: bool|Param, // Verify TLS certificates (only consulted by Guzzle when proxy is set)
+ *             },
+ *         },
+ *     }>,
+ * }
+ * @psalm-type TwigComponentConfig = array{
+ *     defaults?: array<string, string|array{ // Default: []
+ *         template_directory?: scalar|Param|null, // Default: "components"
+ *         name_prefix?: scalar|Param|null, // Default: ""
+ *     }>,
+ *     anonymous_template_directory?: scalar|Param|null, // Defaults to `components`
+ *     profiler?: bool|array{ // Enables the profiler for Twig Component
+ *         enabled?: bool|Param, // Default: "%kernel.debug%"
+ *         collect_components?: bool|Param, // Collect components instances // Default: true
+ *     },
+ * }
+ * @psalm-type DebugConfig = array{
+ *     max_items?: int|Param, // Max number of displayed items past the first level, -1 means no limit. // Default: 2500
+ *     min_depth?: int|Param, // Minimum tree depth to clone all the items, 1 is default. // Default: 1
+ *     max_string_length?: int|Param, // Max length of displayed strings, -1 means no limit. // Default: -1
+ *     dump_destination?: scalar|Param|null, // A stream URL where dumps should be written to. // Default: null
+ *     theme?: "dark"|"light"|Param, // Changes the color of the dump() output when rendered directly on the templating. "dark" (default) or "light". // Default: "dark"
+ * }
  * @psalm-type ConfigType = array{
  *     imports?: ImportsConfig,
  *     parameters?: ParametersConfig,
@@ -1367,6 +1412,8 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *     security?: SecurityConfig,
  *     twig?: TwigConfig,
  *     twig_extra?: TwigExtraConfig,
+ *     itkdev_openid_connect?: ItkdevOpenidConnectConfig,
+ *     twig_component?: TwigComponentConfig,
  *     "when@dev"?: array{
  *         imports?: ImportsConfig,
  *         parameters?: ParametersConfig,
@@ -1379,6 +1426,9 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *         security?: SecurityConfig,
  *         twig?: TwigConfig,
  *         twig_extra?: TwigExtraConfig,
+ *         itkdev_openid_connect?: ItkdevOpenidConnectConfig,
+ *         twig_component?: TwigComponentConfig,
+ *         debug?: DebugConfig,
  *     },
  *     "when@prod"?: array{
  *         imports?: ImportsConfig,
@@ -1391,6 +1441,8 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *         security?: SecurityConfig,
  *         twig?: TwigConfig,
  *         twig_extra?: TwigExtraConfig,
+ *         itkdev_openid_connect?: ItkdevOpenidConnectConfig,
+ *         twig_component?: TwigComponentConfig,
  *     },
  *     "when@test"?: array{
  *         imports?: ImportsConfig,
@@ -1403,6 +1455,8 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *         security?: SecurityConfig,
  *         twig?: TwigConfig,
  *         twig_extra?: TwigExtraConfig,
+ *         itkdev_openid_connect?: ItkdevOpenidConnectConfig,
+ *         twig_component?: TwigComponentConfig,
  *     },
  *     ...<string, ExtensionType|array{ // extra keys must follow the when@%env% pattern or match an extension alias
  *         imports?: ImportsConfig,

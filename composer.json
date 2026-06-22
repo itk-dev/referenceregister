@@ -10,6 +10,8 @@
         "doctrine/doctrine-bundle": "^3.2",
         "doctrine/doctrine-migrations-bundle": "^4.0",
         "doctrine/orm": "^3.6",
+        "easycorp/easyadmin-bundle": "^5.1",
+        "itk-dev/openid-connect-bundle": "^5.0",
         "stof/doctrine-extensions-bundle": "^1.15",
         "symfony/asset": "~8.1.0",
         "symfony/asset-mapper": "~8.1.0",
@@ -34,6 +36,7 @@
         "ergebnis/composer-normalize": "^2.52",
         "friendsofphp/php-cs-fixer": "^3.95",
         "rector/rector": "^2.5",
+        "symfony/debug-bundle": "~8.1.0",
         "symfony/maker-bundle": "^1.67",
         "vincentlanglet/twig-cs-fixer": "^4.0"
     },

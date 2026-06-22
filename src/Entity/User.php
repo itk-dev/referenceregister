@@ -8,7 +8,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_EMAIL', fields: ['email'])]
-class User implements UserInterface
+class User implements UserInterface, \Stringable
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -23,6 +23,11 @@ class User implements UserInterface
      */
     #[ORM\Column]
     private array $roles = [];
+
+    public function __toString(): string
+    {
+        return (string) $this->email;
+    }
 
     public function getId(): ?int
     {
