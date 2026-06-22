@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="en" target-language="en" datatype="plaintext" original="file.ext">
+    <header>
+      <tool tool-id="symfony" tool-name="Symfony"/>
+    </header>
+    <body>
+      <trans-unit id="37wivZ3" resname="ID">
+        <source>ID</source>
+        <target>ID</target>
+      </trans-unit>
+      <trans-unit id="VgjgkxU" resname="Add entry">
+        <source>Add entry</source>
+        <target>Add entry</target>
+      </trans-unit>
+      <trans-unit id="sclE1Ao" resname="Enter ID to add">
+        <source>Enter ID to add</source>
+        <target>Enter ID to add</target>
+      </trans-unit>
+      <trans-unit id="0e.0AJP" resname="Remove entry">
+        <source>Remove entry</source>
+        <target>Remove entry</target>
+      </trans-unit>
+      <trans-unit id="P.g8bnt" resname="Look up entry">
+        <source>Look up entry</source>
+        <target>Look up entry</target>
+      </trans-unit>
+      <trans-unit id="V2SRfr4" resname="Referenceregister">
+        <source>Referenceregister</source>
+        <target>Referenceregister</target>
+      </trans-unit>
+      <trans-unit id="kiK66bJ" resname="Look up">
+        <source>Look up</source>
+        <target>Look up</target>
+      </trans-unit>
+      <trans-unit id="qy4mn48" resname="Entry not found">
+        <source>Entry not found</source>
+        <target>Entry not found</target>
+      </trans-unit>
+      <trans-unit id="ZxxVJAS" resname="Entry found">
+        <source>Entry found</source>
+        <target>Entry found</target>
+      </trans-unit>
+      <trans-unit id="AmK50LP" resname="Entry removed">
+        <source>Entry removed</source>
+        <target>Entry removed</target>
+      </trans-unit>
+      <trans-unit id="uV2Unnq" resname="Entry added">
+        <source>Entry added</source>
+        <target>Entry added</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

@@ -1,0 +1,20 @@
+<?php
+
+namespace App\Form;
+
+use Symfony\Contracts\Translation\TranslatableInterface;
+
+use function Symfony\Component\Translation\t;
+
+class EntryAddFormType extends AbstractIdFormType
+{
+    protected function getSubmitLabel(): TranslatableInterface
+    {
+        return t('Add entry');
+    }
+
+    protected function getIdHelp(): ?TranslatableInterface
+    {
+        return t('Enter ID to add');
+    }
+}
