@@ -1,4 +1,8 @@
 security:
+    role_hierarchy:
+        !php/enum App\Entity\Role::ADMIN->value:
+            - !php/enum App\Entity\Role::SETTINGS_ADMIN->value
+
     # https://symfony.com/doc/current/security.html#registering-the-user-hashing-passwords
     password_hashers:
         Symfony\Component\PasswordHasher\Hasher\PasswordHasherAwareInterface: 'auto'

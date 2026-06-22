@@ -22,7 +22,7 @@
     {% block navigation %}
         <nav class="navbar navbar-expand-lg bg-body-tertiary">
             <div class="container-fluid">
-                <a class="navbar-brand" href="{{ path('app_default') }}">{{ 'Referenceregister'|trans }}</a>
+                <a class="navbar-brand" href="{{ path('app_default') }}">{{ settings.get('site_name') }}</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                         data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
@@ -30,7 +30,7 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                        {% set menu_items = [
+                        {% set main_menu_items = [
                             {
                                 route: 'app_entry_add',
                                 label: 'Add entry'|trans,
@@ -43,36 +43,57 @@
                                 label: 'Remove entry'|trans,
                             },
                         ] %}
-
-                        {% if is_granted(enum('App\\Entity\\Role').ADMIN.value) %}
-                            {% set menu_items = menu_items|merge([{
-                                route: 'admin',
-                                label: 'Administration'|trans,
+                        {% set users_manual_url = settings.get('users_manual_url') %}
+                        {% if users_manual_url %}
+                            {% set main_menu_items = main_menu_items|merge([{
+                                url: users_manual_url,
+                                label: "User's manual"|trans,
                             }]) %}
                         {% endif %}
-
-                        {% for item in menu_items %}
-                            {% set active = app.current_route starts with item.route %}
+                        {% for item in main_menu_items %}
+                            {% set active = item.route is defined and app.current_route starts with item.route %}
                             <li class="nav-item">
                                 <a class="nav-link {{ active ? 'active' }}" {{ active ? 'aria-current="page"' }}
-                                   href="{{ path(item.route) }}">
+                                   href="{{ item.url ?? path(item.route) }}">
                                     {{ item.label }}
                                 </a>
                             </li>
                         {% endfor %}
                     </ul>
-                    <ul class="navbar-nav">
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-                               aria-expanded="false">
-                                {{ app.user }}
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="{{ path('_logout_main') }}">{{ 'Log out'|trans }}</a>
-                                </li>
-                            </ul>
-                        </li>
-                    </ul>
+
+                    {% set user_menu_items = [] %}
+                    {% if is_granted(enum('App\\Entity\\Role').ADMIN.value) %}
+                        {% set user_menu_items = user_menu_items|merge([{
+                            route: 'admin',
+                            label: 'Administration'|trans,
+                        }]) %}
+                    {% endif %}
+
+                    {% if settings.get('enable_log_out') %}
+                        {% set user_menu_items = user_menu_items|merge([{
+                            route: '_logout_main',
+                            label: 'Log out'|trans,
+                        }]) %}
+                    {% endif %}
+                    {% if user_menu_items %}
+                        <ul class="navbar-nav">
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                                   aria-expanded="false">
+                                    {{ app.user }}
+                                </a>
+                                <ul class="dropdown-menu">
+                                    {% for item in user_menu_items %}
+                                        <li>
+                                            <a class="dropdown-item" href="{{ path(item.route) }}">{{ item.label }}</a>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            </li>
+                        </ul>
+                    {% else %}
+                        <span class="navbar-text">{{ app.user }}</span>
+                    {% endif %}
                 </div>
             </div>
         </nav>

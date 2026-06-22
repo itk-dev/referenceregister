@@ -7,47 +7,103 @@
     <body>
       <trans-unit id="37wivZ3" resname="ID">
         <source>ID</source>
-        <target state="needs-l10n">__ID</target>
+        <target state="translated">Id</target>
       </trans-unit>
       <trans-unit id="VgjgkxU" resname="Add entry">
         <source>Add entry</source>
-        <target state="needs-l10n">__Add entry</target>
+        <target state="translated">Tilføj registrering</target>
       </trans-unit>
       <trans-unit id="sclE1Ao" resname="Enter ID to add">
         <source>Enter ID to add</source>
-        <target state="needs-l10n">__Enter ID to add</target>
+        <target state="translated">Indtast id for registreringen</target>
       </trans-unit>
       <trans-unit id="0e.0AJP" resname="Remove entry">
         <source>Remove entry</source>
-        <target state="needs-l10n">__Remove entry</target>
+        <target state="translated">Fjern registrering</target>
       </trans-unit>
       <trans-unit id="P.g8bnt" resname="Look up entry">
         <source>Look up entry</source>
-        <target state="needs-l10n">__Look up entry</target>
-      </trans-unit>
-      <trans-unit id="V2SRfr4" resname="Referenceregister">
-        <source>Referenceregister</source>
-        <target state="needs-l10n">__Referenceregister</target>
+        <target state="translated">Tjek registrering</target>
       </trans-unit>
       <trans-unit id="kiK66bJ" resname="Look up">
         <source>Look up</source>
-        <target state="needs-l10n">__Look up</target>
+        <target state="translated">Slå op</target>
       </trans-unit>
       <trans-unit id="qy4mn48" resname="Entry not found">
         <source>Entry not found</source>
-        <target state="needs-l10n">__Entry not found</target>
+        <target state="translated">Registrering ikke fundet</target>
       </trans-unit>
       <trans-unit id="ZxxVJAS" resname="Entry found">
         <source>Entry found</source>
-        <target state="needs-l10n">__Entry found</target>
+        <target state="translated">Registrering fundet</target>
       </trans-unit>
       <trans-unit id="AmK50LP" resname="Entry removed">
         <source>Entry removed</source>
-        <target state="needs-l10n">__Entry removed</target>
+        <target state="translated">Registrering slettet</target>
       </trans-unit>
       <trans-unit id="uV2Unnq" resname="Entry added">
         <source>Entry added</source>
-        <target state="needs-l10n">__Entry added</target>
+        <target state="translated">Registrering tilføjet</target>
+      </trans-unit>
+      <trans-unit id="VXFwlwn" resname="Settings">
+        <source>Settings</source>
+        <target state="translated">Indstillinger</target>
+      </trans-unit>
+      <trans-unit id="om5IBU_" resname="Edit setting {name}">
+        <source>Edit setting {name}</source>
+        <target state="translated">Rediger {name}</target>
+      </trans-unit>
+      <trans-unit id="wbMeKOh" resname="Name">
+        <source>Name</source>
+        <target state="translated">Navn</target>
+      </trans-unit>
+      <trans-unit id="tceoGZr" resname="Category">
+        <source>Category</source>
+        <target state="translated">Kategori</target>
+      </trans-unit>
+      <trans-unit id="NXe.m.c" resname="Value">
+        <source>Value</source>
+        <target state="translated">Værdi</target>
+      </trans-unit>
+      <trans-unit id="mpHDX6N" resname="Administration">
+        <source>Administration</source>
+        <target state="translated">Administration</target>
+      </trans-unit>
+      <trans-unit id="S6MjfUy" resname="Log out">
+        <source>Log out</source>
+        <target state="translated">Log ud</target>
+      </trans-unit>
+      <trans-unit id="uCtVl2y" resname="Site name">
+        <source>Site name</source>
+        <target state="translated">Sitenavn</target>
+      </trans-unit>
+      <trans-unit id="2hD.56m" resname="Enable log out">
+        <source>Enable log out</source>
+        <target state="translated">Aktivér log ud</target>
+      </trans-unit>
+      <trans-unit id="TkiKoB6" resname="User">
+        <source>User</source>
+        <target state="translated">Bruger</target>
+      </trans-unit>
+      <trans-unit id="XveYC5a" resname="Site">
+        <source>Site</source>
+        <target state="translated">Site</target>
+      </trans-unit>
+      <trans-unit id="rE82X.X" resname="Max lookups per day">
+        <source>Max lookups per day</source>
+        <target state="translated">Maks. antal opslag pr. dag</target>
+      </trans-unit>
+      <trans-unit id="kQrRgGv" resname="User's manual URL">
+        <source>User's manual URL</source>
+        <target state="translated">Url til brugervejledning</target>
+      </trans-unit>
+      <trans-unit id="kCLhNY7" resname="Frontpage">
+        <source>Frontpage</source>
+        <target state="translated">Forside</target>
+      </trans-unit>
+      <trans-unit id="lEia1yz" resname="User's manual">
+        <source>User's manual</source>
+        <target state="translated">Brugervejledning</target>
       </trans-unit>
     </body>
   </file>

@@ -42,7 +42,7 @@ final class EntryController extends AbstractController
         return $this->render('entry/add-success.html.twig');
     }
 
-    #[Route('/lookup', name: 'app_entry_look_up')]
+    #[Route('/look-up', name: 'app_entry_look_up')]
     public function lookUp(Request $request): Response
     {
         $form = $this->createForm(EntryLookUpFormType::class);

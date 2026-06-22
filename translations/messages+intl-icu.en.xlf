@@ -25,10 +25,6 @@
         <source>Look up entry</source>
         <target>Look up entry</target>
       </trans-unit>
-      <trans-unit id="V2SRfr4" resname="Referenceregister">
-        <source>Referenceregister</source>
-        <target>Referenceregister</target>
-      </trans-unit>
       <trans-unit id="kiK66bJ" resname="Look up">
         <source>Look up</source>
         <target>Look up</target>
@@ -48,6 +44,66 @@
       <trans-unit id="uV2Unnq" resname="Entry added">
         <source>Entry added</source>
         <target>Entry added</target>
+      </trans-unit>
+      <trans-unit id="VXFwlwn" resname="Settings">
+        <source>Settings</source>
+        <target>Settings</target>
+      </trans-unit>
+      <trans-unit id="om5IBU_" resname="Edit setting {name}">
+        <source>Edit setting {name}</source>
+        <target>Edit setting {name}</target>
+      </trans-unit>
+      <trans-unit id="wbMeKOh" resname="Name">
+        <source>Name</source>
+        <target>Name</target>
+      </trans-unit>
+      <trans-unit id="tceoGZr" resname="Category">
+        <source>Category</source>
+        <target>Category</target>
+      </trans-unit>
+      <trans-unit id="NXe.m.c" resname="Value">
+        <source>Value</source>
+        <target>Value</target>
+      </trans-unit>
+      <trans-unit id="mpHDX6N" resname="Administration">
+        <source>Administration</source>
+        <target>Administration</target>
+      </trans-unit>
+      <trans-unit id="S6MjfUy" resname="Log out">
+        <source>Log out</source>
+        <target>Log out</target>
+      </trans-unit>
+      <trans-unit id="uCtVl2y" resname="Site name">
+        <source>Site name</source>
+        <target>Site name</target>
+      </trans-unit>
+      <trans-unit id="2hD.56m" resname="Enable log out">
+        <source>Enable log out</source>
+        <target>Enable log out</target>
+      </trans-unit>
+      <trans-unit id="TkiKoB6" resname="User">
+        <source>User</source>
+        <target>User</target>
+      </trans-unit>
+      <trans-unit id="XveYC5a" resname="Site">
+        <source>Site</source>
+        <target>Site</target>
+      </trans-unit>
+      <trans-unit id="rE82X.X" resname="Max lookups per day">
+        <source>Max lookups per day</source>
+        <target>Max lookups per day</target>
+      </trans-unit>
+      <trans-unit id="kQrRgGv" resname="User's manual URL">
+        <source>User's manual URL</source>
+        <target>User's manual URL</target>
+      </trans-unit>
+      <trans-unit id="kCLhNY7" resname="Frontpage">
+        <source>Frontpage</source>
+        <target>Frontpage</target>
+      </trans-unit>
+      <trans-unit id="lEia1yz" resname="User's manual">
+        <source>User's manual</source>
+        <target>User's manual</target>
       </trans-unit>
     </body>
   </file>

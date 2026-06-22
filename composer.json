@@ -38,6 +38,8 @@
         "rector/rector": "^2.5",
         "symfony/debug-bundle": "~8.1.0",
         "symfony/maker-bundle": "^1.67",
+        "symfony/stopwatch": "~8.1.0",
+        "symfony/web-profiler-bundle": "~8.1.0",
         "vincentlanglet/twig-cs-fixer": "^4.0"
     },
     "replace": {

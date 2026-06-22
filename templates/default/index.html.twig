@@ -1,4 +1,5 @@
 {% extends 'base.html.twig' %}
 
 {% block content %}
+    {{ settings.get('frontpage_text')|raw }}
 {% endblock %}
