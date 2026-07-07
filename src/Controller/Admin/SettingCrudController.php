@@ -7,6 +7,7 @@ use App\Entity\Setting;
 use Doctrine\DBAL\Types\Types;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Assets;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Contracts\Field\FieldInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
@@ -44,6 +45,13 @@ class SettingCrudController extends AbstractCrudController
 
                 return t('Edit setting {name}', ['name' => t($setting->getName())]);
             });
+    }
+
+    #[\Override]
+    public function configureAssets(Assets $assets): Assets
+    {
+        return parent::configureAssets($assets)
+            ->addAssetMapperEntry('admin');
     }
 
     #[\Override]
@@ -113,7 +121,7 @@ class SettingCrudController extends AbstractCrudController
             'category.site' => t('Site'),
             'max_loookups_per_day' => t('Max lookups per day'),
             'users_manual_url' => t("User's manual URL"),
-            'frontpage_text' => t('Front page text'),
+            'front_page_text' => t('Front page text'),
             default => throw new \RuntimeException(\sprintf('Unhandled setting name: %s', $name)),
         };
 

@@ -71,14 +71,14 @@ final class Version20260622133721 extends AbstractMigration
         ]);
 
         $addSetting([
-            'name' => 'frontpage_text',
+            'name' => 'front_page_text',
             'description' => 'Frontpage text',
             'category' => 'site',
             'type' => Types::TEXT,
             'config' => json_encode([
                 'form_type' => 'texteditor',
             ]),
-            'value' => json_encode(''),
+            'value' => json_encode('<div>Velkommen til <em>Aarhus Kommunes Referenceregister</em>. Her kan du <a href="/add">tilføje</a> og <a href="/remove">fjerne</a> registreringer og <a href="/look-up">lave opslag</a> i eksisterende registreringer.</div>'),
         ]);
     }
 
@@ -90,5 +90,6 @@ final class Version20260622133721 extends AbstractMigration
         $removeSetting('enable_log_out');
         $removeSetting('max_loookups_per_day');
         $removeSetting('users_manual_url');
+        $removeSetting('front_page_text');
     }
 }

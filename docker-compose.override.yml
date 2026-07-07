@@ -1,5 +1,5 @@
 include:
-  - docker-compose.oidc.yml
+    - docker-compose.oidc.yml
 
 services:
     phpfpm:

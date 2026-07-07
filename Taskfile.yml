@@ -1,10 +1,10 @@
 version: '3'
 
-# https://taskfile.dev/usage/#env-files
-dotenv: ['.env.local', '.env']
-
 vars:
   DOCKER_COMPOSE: '{{.TASK_DOCKER_COMPOSE | default "docker compose"}}'
+
+# https://taskfile.dev/usage/#env-files
+dotenv: ['.env.local', '.env']
 
 tasks:
   start:
@@ -117,13 +117,13 @@ tasks:
   coding-standards:yaml:apply:
     desc: 'Apply coding standards for YAML'
     cmds:
-      - task compose -- run --rm prettier --parser yaml phpstan*.neon 'config/**/*.{yml,yaml}' --write
+      - task compose -- run --rm prettier --parser yaml phpstan*.neon '**/*.{yml,yaml}' --write
 
   coding-standards:yaml:check:
     desc: 'Apply and check coding standards for YAML'
     cmds:
       - task: coding-standards:yaml:apply
-      - task compose -- run --rm prettier --parser yaml phpstan*.neon 'config/**/*.{yml,yaml}' --check
+      - task compose -- run --rm prettier --parser yaml phpstan*.neon '**/*.{yml,yaml}' --check
 
   code-analysis:
     cmds:
@@ -132,9 +132,7 @@ tasks:
   docker-pull:
     desc: 'Pull all development docker images'
     cmds:
-      - docker pull jauderho/prettier
-      - docker pull peterdavehello/markdownlint
-      - task compose -- pull
+      - task compose -- --profile '*' pull
 
   default:
     cmds:

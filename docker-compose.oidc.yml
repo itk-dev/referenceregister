@@ -1,24 +1,24 @@
 services:
-  # https://github.com/geigerzaehler/oidc-provider-mock
-  idp:
-    image: &oidc_provider_mock_image ghcr.io/geigerzaehler/oidc-provider-mock:latest
-    # Let this container be accessible both internally and externally on the same domain.
-    container_name: idp.${COMPOSE_DOMAIN}
-    networks:
-      - app
-      - frontend
-    labels:
-      - "traefik.enable=true"
-      - "traefik.docker.network=frontend"
-      - "traefik.http.routers.${COMPOSE_PROJECT_NAME}-idp.rule=Host(`idp.${COMPOSE_DOMAIN}`)"
-    expose:
-      - "80"
-    command:
-      [
-        "--port",
-        "80",
-        "--user-claims",
-        '{"sub": "admin@example.com", "upn": "admin@example.com", "name": "Admin And", "roles": ["Administrator"] }',
-        "--user-claims",
-        '{"sub": "user@example.com", "upn": "user@example.com", "roles": ["User"] }',
-      ]
+    # https://github.com/geigerzaehler/oidc-provider-mock
+    idp:
+        image: &oidc_provider_mock_image ghcr.io/geigerzaehler/oidc-provider-mock:latest
+        # Let this container be accessible both internally and externally on the same domain.
+        container_name: idp.${COMPOSE_DOMAIN}
+        networks:
+            - app
+            - frontend
+        labels:
+            - "traefik.enable=true"
+            - "traefik.docker.network=frontend"
+            - "traefik.http.routers.${COMPOSE_PROJECT_NAME}-idp.rule=Host(`idp.${COMPOSE_DOMAIN}`)"
+        expose:
+            - "80"
+        command:
+            [
+                "--port",
+                "80",
+                "--user-claims",
+                '{"sub": "admin@example.com", "upn": "admin@example.com", "name": "Admin And", "roles": ["Administrator"] }',
+                "--user-claims",
+                '{"sub": "user@example.com", "upn": "user@example.com", "roles": ["User"] }',
+            ]
