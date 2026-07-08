@@ -5,12 +5,10 @@ namespace App;
 use App\Entity\Entry;
 use App\Repository\EntryRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\PasswordHasher\Hasher\PasswordHasherFactoryInterface;
 
 class EntryManager
 {
     public function __construct(
-        private readonly PasswordHasherFactoryInterface $hasher,
         private readonly EntryRepository $repository,
         private readonly EntityManagerInterface $entityManager,
     ) {
@@ -20,8 +18,8 @@ class EntryManager
     {
         $entry = $this->getEntry($id);
         if (null === $entry) {
-            $entry = new Entry();
-            $entry->setHash($this->hashId($id));
+            $entry = new Entry()
+                ->setHash($this->hashId($id));
 
             $this->entityManager->persist($entry);
             $this->entityManager->flush();
@@ -48,18 +46,13 @@ class EntryManager
 
     private function getEntry(string $id): ?Entry
     {
-        $entries = $this->repository->findAll();
-        foreach ($entries as $entry) {
-            if ($this->hasher->getPasswordHasher(Entry::class)->verify($entry->getHash(), $id)) {
-                return $entry;
-            }
-        }
+        $hash = $this->hashId($id);
 
-        return null;
+        return $this->repository->findOneBy(['hash' => $hash]);
     }
 
     private function hashId(string $id): string
     {
-        return $this->hasher->getPasswordHasher(Entry::class)->hash($id);
+        return hash('sha512', $id);
     }
 }

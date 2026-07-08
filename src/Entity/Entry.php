@@ -10,6 +10,7 @@ use Symfony\Component\PasswordHasher\Hasher\PasswordHasherAwareInterface;
 use Symfony\Component\Uid\Uuid;
 
 #[ORM\Entity(repositoryClass: EntryRepository::class)]
+#[ORM\Index(columns: ['hash'], name: 'entry_hash_idx')]
 class Entry implements PasswordHasherAwareInterface
 {
     use TimestampableEntity;
