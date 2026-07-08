@@ -2,6 +2,7 @@
 
 namespace App\Controller\Admin;
 
+use App\Entity\Role;
 use App\Settings;
 use EasyCorp\Bundle\EasyAdminBundle\Attribute\AdminDashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
@@ -35,7 +36,14 @@ class DashboardController extends AbstractDashboardController
     #[\Override]
     public function configureMenuItems(): iterable
     {
+        yield MenuItem::linkTo(DepartmentCrudController::class, t('Departments'));
+        if ($this->isGranted(Role::ADMIN->value)) {
+            yield MenuItem::linkTo(UserCrudController::class, t('Users'));
+        }
         yield MenuItem::linkTo(SettingCrudController::class, t('Settings'));
-        yield MenuItem::linkToUrl(t('Frontpage'), null, $this->generateUrl('app_default'));
+        if ('dev' === $this->getParameter('kernel.environment')) {
+            yield MenuItem::linkTo(EntryCrudController::class, t('Entries'), icon: 'fa-brands fa-dev');
+        }
+        yield MenuItem::linkToUrl(t('Front page'), null, $this->generateUrl('app_default'));
     }
 }

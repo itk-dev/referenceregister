@@ -6,3 +6,10 @@ parameters:
         - public/
         - src/
         # - tests/
+
+    excludePaths:
+        - src/Kernel.php
+
+    ignoreErrors:
+        - message: '#Property App\\Entity\\[^:]+::\$id \(Symfony\\Component\\Uid\\Uuid\|null\) is never assigned Symfony\\Component\\Uid\\Uuid so it can be removed from the property type.#'
+          path: src/Entity/*

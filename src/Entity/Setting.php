@@ -8,6 +8,9 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\UniqueConstraint;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
+/**
+ * @phpstan-type Config array<array-key, mixed>
+ */
 #[ORM\Entity(repositoryClass: SettingRepository::class)]
 #[UniqueConstraint(name: 'UNIQ_IDENTIFIER_NAME', fields: ['name'])]
 #[UniqueEntity('name')]
@@ -23,6 +26,7 @@ class Setting
     #[ORM\Column(length: 255)]
     private ?string $type = null;
 
+    /** @var Config */
     #[ORM\Column(type: Types::JSON)]
     private array $config = [];
 
@@ -68,6 +72,9 @@ class Setting
         return $this;
     }
 
+    /**
+     * @return Config
+     */
     public function getConfig(): array
     {
         return $this->config;
@@ -78,6 +85,9 @@ class Setting
         return $this->getConfig()['form_type'] ?? null;
     }
 
+    /**
+     * @return Config
+     */
     public function getFormTypeOptions(): ?array
     {
         $options = $this->getConfig()['form_type_options'] ?? null;

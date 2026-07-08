@@ -100,6 +100,17 @@
     {% endblock %}
     <div class="container-fluid">
         <h1>{{ block('title') }}</h1>
+
+        {% block flashes %}
+            {% for type, messages in app.flashes %}
+                {% for message in messages %}
+                    <div class="alert alert-{{ type == 'error' ? 'danger' : type }}" role="alert">
+                        {{ message|trans }}
+                    </div>
+                {% endfor %}
+            {% endfor %}
+        {% endblock %}
+
         {% block content %}{% endblock %}
     </div>
 {% endblock %}

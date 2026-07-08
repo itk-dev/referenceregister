@@ -97,13 +97,69 @@
         <source>User's manual URL</source>
         <target state="translated">Url til brugervejledning</target>
       </trans-unit>
-      <trans-unit id="kCLhNY7" resname="Frontpage">
-        <source>Frontpage</source>
-        <target state="translated">Forside</target>
-      </trans-unit>
       <trans-unit id="lEia1yz" resname="User's manual">
         <source>User's manual</source>
         <target state="translated">Brugervejledning</target>
+      </trans-unit>
+      <trans-unit id="ZJpy.TT" resname="Front page text">
+        <source>Front page text</source>
+        <target state="translated">Forsidetekst</target>
+      </trans-unit>
+      <trans-unit id="sG7t8cf" resname="Departments">
+        <source>Departments</source>
+        <target state="translated">Afdelinger</target>
+      </trans-unit>
+      <trans-unit id="R_dqsNs" resname="Front page">
+        <source>Front page</source>
+        <target state="translated">Forside</target>
+      </trans-unit>
+      <trans-unit id="LZXye1z" resname="Department">
+        <source>Department</source>
+        <target state="translated">Afdeling</target>
+      </trans-unit>
+      <trans-unit id="TWYuH6u" resname="Choose department">
+        <source>Choose department</source>
+        <target state="translated">Vælg afdeling</target>
+      </trans-unit>
+      <trans-unit id="YiYIE0r" resname="Entry expires after">
+        <source>Entry expires after</source>
+        <target state="translated">Registrering udløber efter</target>
+      </trans-unit>
+      <trans-unit id="ZvziuWE" resname="Timezone">
+        <source>Timezone</source>
+        <target state="translated">Tidszone</target>
+      </trans-unit>
+      <trans-unit id="RPUHE9I" resname="Entry">
+        <source>Entry</source>
+        <target state="translated">Registrering</target>
+      </trans-unit>
+      <trans-unit id="SdhQjq0" resname="Entries">
+        <source>Entries</source>
+        <target state="translated">Registreringer</target>
+      </trans-unit>
+      <trans-unit id="LVVWz4T" resname="Created at">
+        <source>Created at</source>
+        <target state="translated">Oprettet</target>
+      </trans-unit>
+      <trans-unit id="E6miBl5" resname="Updated at">
+        <source>Updated at</source>
+        <target state="translated">Opdateret</target>
+      </trans-unit>
+      <trans-unit id="1BqSb.F" resname="Expired at">
+        <source>Expired at</source>
+        <target state="translated">Udløber</target>
+      </trans-unit>
+      <trans-unit id="BCGjfox" resname="Users">
+        <source>Users</source>
+        <target state="translated">Brugere</target>
+      </trans-unit>
+      <trans-unit id="3rCuur2" resname="Error adding entry ({message})">
+        <source>Error adding entry ({message})</source>
+        <target state="translated">Fejl under registrering ({message})</target>
+      </trans-unit>
+      <trans-unit id="sIafcnN" resname="No look-up result found.">
+        <source>No look-up result found.</source>
+        <target state="translated">Intet resultat fundet.</target>
       </trans-unit>
     </body>
   </file>

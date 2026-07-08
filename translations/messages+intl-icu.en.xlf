@@ -97,13 +97,69 @@
         <source>User's manual URL</source>
         <target>User's manual URL</target>
       </trans-unit>
-      <trans-unit id="kCLhNY7" resname="Frontpage">
-        <source>Frontpage</source>
-        <target>Frontpage</target>
-      </trans-unit>
       <trans-unit id="lEia1yz" resname="User's manual">
         <source>User's manual</source>
         <target>User's manual</target>
+      </trans-unit>
+      <trans-unit id="ZJpy.TT" resname="Front page text">
+        <source>Front page text</source>
+        <target>Front page text</target>
+      </trans-unit>
+      <trans-unit id="sG7t8cf" resname="Departments">
+        <source>Departments</source>
+        <target>Departments</target>
+      </trans-unit>
+      <trans-unit id="R_dqsNs" resname="Front page">
+        <source>Front page</source>
+        <target>Front page</target>
+      </trans-unit>
+      <trans-unit id="LZXye1z" resname="Department">
+        <source>Department</source>
+        <target>Department</target>
+      </trans-unit>
+      <trans-unit id="TWYuH6u" resname="Choose department">
+        <source>Choose department</source>
+        <target>Choose department</target>
+      </trans-unit>
+      <trans-unit id="YiYIE0r" resname="Entry expires after">
+        <source>Entry expires after</source>
+        <target>Entry expires after</target>
+      </trans-unit>
+      <trans-unit id="ZvziuWE" resname="Timezone">
+        <source>Timezone</source>
+        <target>Timezone</target>
+      </trans-unit>
+      <trans-unit id="RPUHE9I" resname="Entry">
+        <source>Entry</source>
+        <target>Entry</target>
+      </trans-unit>
+      <trans-unit id="SdhQjq0" resname="Entries">
+        <source>Entries</source>
+        <target>Entries</target>
+      </trans-unit>
+      <trans-unit id="LVVWz4T" resname="Created at">
+        <source>Created at</source>
+        <target>Created at</target>
+      </trans-unit>
+      <trans-unit id="E6miBl5" resname="Updated at">
+        <source>Updated at</source>
+        <target>Updated at</target>
+      </trans-unit>
+      <trans-unit id="1BqSb.F" resname="Expired at">
+        <source>Expired at</source>
+        <target>Expired at</target>
+      </trans-unit>
+      <trans-unit id="BCGjfox" resname="Users">
+        <source>Users</source>
+        <target>Users</target>
+      </trans-unit>
+      <trans-unit id="3rCuur2" resname="Error adding entry ({message})">
+        <source>Error adding entry ({message})</source>
+        <target>Error adding entry ({message})</target>
+      </trans-unit>
+      <trans-unit id="sIafcnN" resname="No look-up result found.">
+        <source>No look-up result found.</source>
+        <target>No look-up result found.</target>
       </trans-unit>
     </body>
   </file>

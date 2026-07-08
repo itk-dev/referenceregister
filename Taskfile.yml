@@ -52,6 +52,13 @@ tasks:
           TASK_ARGS: asset-map:compile
     internal: true
 
+  translations:extract:
+    desc: Extract translations
+    cmd:
+      task: composer
+      vars:
+        TASK_ARGS: translations-extract
+
   fixtures:load:
     desc: Load fixtures
     prompt: Really load fixtures?

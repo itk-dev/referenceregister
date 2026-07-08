@@ -2,6 +2,9 @@
 
 namespace App\Form;
 
+use App\Entity\Department;
+use App\Entity\Entry;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -10,20 +13,24 @@ use Symfony\Contracts\Translation\TranslatableInterface;
 
 use function Symfony\Component\Translation\t;
 
-abstract class AbstractIdFormType extends AbstractType
+abstract class AbstractEntryFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $label = $this->getIdLabel();
         $builder
-            ->add('id', null, [
+            ->add('hash', null, [
                 'label' => false,
-                'mapped' => false,
                 'attr' => [
                     'autocomplete' => 'off',
                     'placeholder' => $label,
                 ],
                 'help' => $this->getIdHelp(),
+            ])
+            ->add('department', EntityType::class, [
+                'class' => Department::class,
+                'label' => t('Department'),
+                'placeholder' => t('Choose department'),
             ])
             ->add('submit', SubmitType::class, [
                 'label' => $this->getSubmitLabel(),
@@ -34,7 +41,7 @@ abstract class AbstractIdFormType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            // Configure your form options here
+            'data_class' => Entry::class,
         ]);
     }
 

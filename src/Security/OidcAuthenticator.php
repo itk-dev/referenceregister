@@ -10,7 +10,6 @@ use ItkDev\OpenIdConnectBundle\Security\OpenIdConfigurationProviderManager;
 use ItkDev\OpenIdConnectBundle\Security\OpenIdLoginAuthenticator;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
@@ -22,14 +21,16 @@ use Symfony\Component\Security\Http\Authenticator\Passport\SelfValidatingPasspor
 
 class OidcAuthenticator extends OpenIdLoginAuthenticator
 {
+    /**
+     * @param array<array-key, mixed> $options
+     */
     public function __construct(
-        RequestStack $requestStack,
         OpenIdConfigurationProviderManager $providerManager,
         private readonly UrlGeneratorInterface $router,
         private readonly EntityManagerInterface $entityManager,
         private readonly array $options,
     ) {
-        parent::__construct($providerManager, $requestStack);
+        parent::__construct($providerManager);
     }
 
     public function authenticate(Request $request): Passport
@@ -38,12 +39,12 @@ class OidcAuthenticator extends OpenIdLoginAuthenticator
             /**
              * @var array{
              *     upn: string,
-             *     email: string,
+             *     email?: string,
              *     roles: string[],
              * } $claims
              */
             $claims = $this->validateClaims($request);
-            $email = $claims['email'] ?? $claims['upn'] ?? null;
+            $email = $claims['email'] ?? $claims['upn'];
             $rolesClaim = $this->options['roles_claim'] ?? 'roles';
             $roles = $claims[$rolesClaim] ?? [];
 

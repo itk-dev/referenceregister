@@ -3,6 +3,9 @@
 namespace App;
 
 use App\Repository\SettingRepository;
+use Symfony\Contracts\Translation\TranslatorInterface;
+
+use function Symfony\Component\Translation\t;
 
 final class Settings
 {
@@ -13,6 +16,7 @@ final class Settings
 
     public function __construct(
         private readonly SettingRepository $repository,
+        private readonly TranslatorInterface $translator,
     ) {
     }
 
@@ -30,5 +34,23 @@ final class Settings
         }
 
         return $this->settings[$name];
+    }
+
+    public function getTranslatedName(string $name): string
+    {
+        $t = match ($name) {
+            'site_name' => t('Site name'),
+            'enable_log_out' => t('Enable log out'),
+            'category.user' => t('User'),
+            'category.site' => t('Site'),
+            'max_loookups_per_day' => t('Max lookups per day'),
+            'users_manual_url' => t("User's manual URL"),
+            'front_page_text' => t('Front page text'),
+            'entry_expires_after' => t('Entry expires after'),
+            'app_timezone' => t('Timezone'),
+            default => throw new \RuntimeException(\sprintf('Unhandled setting name: %s', $name)),
+        };
+
+        return $t->trans($this->translator);
     }
 }

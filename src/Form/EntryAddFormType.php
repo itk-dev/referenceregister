@@ -6,7 +6,7 @@ use Symfony\Contracts\Translation\TranslatableInterface;
 
 use function Symfony\Component\Translation\t;
 
-class EntryAddFormType extends AbstractIdFormType
+class EntryAddFormType extends AbstractEntryFormType
 {
     protected function getSubmitLabel(): TranslatableInterface
     {

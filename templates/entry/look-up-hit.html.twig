@@ -1,7 +1,26 @@
 {% extends 'base.html.twig' %}
+{# @var entries \App\Entity\Entry #}
 
 {% block title %}{{ 'Entry found'|trans }}{% endblock %}
 
 {% block content %}
     <div class="alert alert-danger">{{ 'Entry found'|trans }}</div>
+
+    {% for entry in entries %}
+        <div class="entry">
+            <div class="department-name">{{ entry.department.name }}</div>
+            {% for contact_person in entry.department.contactPeople %}
+                {# https://microformats.org/wiki/h-card #}
+                <div class="h-card contact-person">
+                    <div class="p-name">{{ contact_person.name }}</div>
+                    <div>
+                        <a class="u-email" href="mailto:{{ contact_person.email }}">{{ contact_person.email }}</a>
+                    </div>
+                    <div>
+                        <a class="p-tel" href="tel:{{ contact_person.phone }}">{{ contact_person.phone }}</a>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% endfor %}
 {% endblock %}

@@ -9,25 +9,19 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Assets;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
-use EasyCorp\Bundle\EasyAdminBundle\Contracts\Field\FieldInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\FieldTrait;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\UrlField;
-use Symfony\Contracts\Translation\TranslatorInterface;
 
 use function Symfony\Component\Translation\t;
 
 class SettingCrudController extends AbstractCrudController
 {
-    public function __construct(
-        private readonly TranslatorInterface $translator,
-    ) {
-    }
-
     public static function getEntityFqcn(): string
     {
         return Setting::class;
@@ -66,11 +60,11 @@ class SettingCrudController extends AbstractCrudController
     public function configureFields(string $pageName): iterable
     {
         yield TextField::new('name', t('Name'))
-            ->formatValue(fn ($value) => $this->getTranslatedName($value))
+            ->formatValue(fn ($value) => $this->settings->getTranslatedName($value))
             ->onlyOnIndex();
 
         yield TextField::new('category', t('Category'))
-            ->formatValue(fn ($value) => $this->getTranslatedName('category.'.$value))
+            ->formatValue(fn ($value) => $this->settings->getTranslatedName('category.'.$value))
             ->onlyOnIndex();
 
         if (Crud::PAGE_INDEX === $pageName) {
@@ -79,52 +73,34 @@ class SettingCrudController extends AbstractCrudController
         } elseif (Crud::PAGE_EDIT === $pageName) {
             /** @var Setting $setting */
             $setting = $this->getContext()->getEntity()->getInstance();
-            if (null !== $setting) {
-                [$type, $formType] = [$setting->getType(), $setting->getFormType()];
-                $fieldType = match ($type) {
-                    Types::TEXT => match ($formType) {
-                        'texteditor' => TextEditorField::class,
-                        'textarea' => TextareaField::class,
-                        default => throw new \RuntimeException(\sprintf('Unhandled form type: %s', $formType)),
-                    },
-                    Types::BOOLEAN => BooleanField::class,
-                    Types::STRING => match ($formType) {
-                        'url' => UrlField::class,
-                        default => TextField::class,
-                    },
-                    Types::INTEGER => IntegerField::class,
-                    default => throw new \RuntimeException(\sprintf('Unhandled data type: %s', $type)),
-                };
-                \assert(is_a($fieldType, FieldInterface::class, true));
-                $field = $fieldType::new('value', false);
-                \assert(\in_array(FieldTrait::class, class_uses($field), true));
-                $field
-                    ->setHelp($setting->getDescription() ?: '');
-                if ($field instanceof BooleanField) {
-                    $field->setRequired(false);
-                }
-                if ($formTypeOptions = $setting->getFormTypeOptions()) {
-                    $field->setFormTypeOptions($formTypeOptions);
-                }
-
-                yield $field;
+            [$type, $formType] = [$setting->getType(), $setting->getFormType()];
+            $fieldType = match ($type) {
+                Types::TEXT => match ($formType) {
+                    'texteditor' => TextEditorField::class,
+                    'textarea' => TextareaField::class,
+                    default => throw new \RuntimeException(\sprintf('Unhandled form type: %s', $formType)),
+                },
+                Types::BOOLEAN => BooleanField::class,
+                Types::STRING => match ($formType) {
+                    'url' => UrlField::class,
+                    'choice' => ChoiceField::class,
+                    default => TextField::class,
+                },
+                Types::INTEGER => IntegerField::class,
+                default => throw new \RuntimeException(\sprintf('Unhandled data type: %s', $type)),
+            };
+            $field = $fieldType::new('value', false);
+            \assert(\in_array(FieldTrait::class, class_uses($field), true));
+            $field
+                ->setHelp($setting->getDescription() ?: '');
+            if ($field instanceof BooleanField) {
+                $field->setRequired(false);
             }
+            if ($formTypeOptions = $setting->getFormTypeOptions()) {
+                $field->setFormTypeOptions($formTypeOptions);
+            }
+
+            yield $field;
         }
-    }
-
-    private function getTranslatedName(string $name): string
-    {
-        $t = match ($name) {
-            'site_name' => t('Site name'),
-            'enable_log_out' => t('Enable log out'),
-            'category.user' => t('User'),
-            'category.site' => t('Site'),
-            'max_loookups_per_day' => t('Max lookups per day'),
-            'users_manual_url' => t("User's manual URL"),
-            'front_page_text' => t('Front page text'),
-            default => throw new \RuntimeException(\sprintf('Unhandled setting name: %s', $name)),
-        };
-
-        return $t->trans($this->translator);
     }
 }

@@ -16,4 +16,11 @@ class Kernel extends BaseKernel
     {
         return ['prod', 'dev', 'test'];
     }
+
+    #[\Override]
+    public function boot(): void
+    {
+        parent::boot();
+        date_default_timezone_set('UTC');
+    }
 }

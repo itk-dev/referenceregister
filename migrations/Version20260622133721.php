@@ -72,13 +72,37 @@ final class Version20260622133721 extends AbstractMigration
 
         $addSetting([
             'name' => 'front_page_text',
-            'description' => 'Frontpage text',
+            'description' => 'Front page text',
             'category' => 'site',
             'type' => Types::TEXT,
             'config' => json_encode([
                 'form_type' => 'texteditor',
             ]),
             'value' => json_encode('<div>Velkommen til <em>Aarhus Kommunes Referenceregister</em>. Her kan du <a href="/add">tilføje</a> og <a href="/remove">fjerne</a> registreringer og <a href="/look-up">lave opslag</a> i eksisterende registreringer.</div>'),
+        ]);
+
+        $addSetting([
+            'name' => 'entry_expires_after',
+            'description' => 'Entry expires after',
+            'category' => 'site',
+            'type' => Types::STRING,
+            'config' => json_encode([]),
+            'value' => json_encode('+5 years'),
+        ]);
+
+        $timeZones = \DateTimeZone::listIdentifiers();
+        $addSetting([
+            'name' => 'app_timezone',
+            'description' => 'App time zone',
+            'category' => 'site',
+            'type' => Types::STRING,
+            'config' => json_encode([
+                'form_type' => 'choice',
+                'form_type_options' => [
+                    'choices' => array_combine($timeZones, $timeZones),
+                ],
+            ]),
+            'value' => json_encode('Europe/Copenhagen'),
         ]);
     }
 
@@ -91,5 +115,6 @@ final class Version20260622133721 extends AbstractMigration
         $removeSetting('max_loookups_per_day');
         $removeSetting('users_manual_url');
         $removeSetting('front_page_text');
+        $removeSetting('entry_expires_after');
     }
 }
