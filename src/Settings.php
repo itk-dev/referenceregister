@@ -9,7 +9,7 @@ final class Settings
     /**
      * @var array<string, mixed>
      */
-    private array $settings;
+    private ?array $settings = null;
 
     public function __construct(
         private readonly SettingRepository $repository,
@@ -18,7 +18,8 @@ final class Settings
 
     public function get(string $name): mixed
     {
-        if (!isset($this->settings)) {
+        if (null === $this->settings) {
+            $this->settings = [];
             foreach ($this->repository->findAll() as $setting) {
                 $this->settings[$setting->getName()] = $setting->getValue();
             }
