@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "4f0d1d8529eb9d70eb95e62e7f23c8c5",
+    "content-hash": "9479ced74e7cf3cf902edc8364bb97cc",
     "packages": [
         {
             "name": "composer/semver",
@@ -1833,6 +1833,50 @@
                 }
             ],
             "time": "2026-06-18T09:49:37+00:00"
+        },
+        {
+            "name": "itk-dev/cpr-sniffer",
+            "version": "dev-features/bug-fixes-and-clean-up",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/itk-dev/cpr-validator.git",
+                "reference": "4f584e4448a90f44e2960ea6aecd269a0e5b1943"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/itk-dev/cpr-validator/zipball/4f584e4448a90f44e2960ea6aecd269a0e5b1943",
+                "reference": "4f584e4448a90f44e2960ea6aecd269a0e5b1943",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.4"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^3.1",
+                "phpunit/phpunit": "^9.4",
+                "vimeo/psalm": "^4.10"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "ItkDev\\CprValidator\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Martin Yde Granath",
+                    "email": "my@aarhus.dk"
+                }
+            ],
+            "description": "Danish CPR validation library",
+            "support": {
+                "source": "https://github.com/itk-dev/cpr-validator/tree/features/bug-fixes-and-clean-up"
+            },
+            "time": "2021-09-25T09:36:44+00:00"
         },
         {
             "name": "itk-dev/openid-connect",
@@ -10271,7 +10315,9 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {},
+    "stability-flags": {
+        "itk-dev/cpr-sniffer": 20
+    },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {

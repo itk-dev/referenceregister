@@ -15,6 +15,6 @@ class EntryAddFormType extends AbstractEntryFormType
 
     protected function getIdentifierHelp(): ?TranslatableInterface
     {
-        return t('Enter ID to add');
+        return t('Enter identifier to add');
     }
 }

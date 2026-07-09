@@ -9,10 +9,6 @@
         <source>Add entry</source>
         <target state="translated">Tilføj registrering</target>
       </trans-unit>
-      <trans-unit id="sclE1Ao" resname="Enter ID to add">
-        <source>Enter ID to add</source>
-        <target state="translated">Indtast id for registreringen</target>
-      </trans-unit>
       <trans-unit id="0e.0AJP" resname="Remove entry">
         <source>Remove entry</source>
         <target state="translated">Fjern registrering</target>
@@ -184,6 +180,10 @@
       <trans-unit id="j8o.s1D" resname="EntryRemove">
         <source>EntryRemove</source>
         <target state="translated">Fjern registrering</target>
+      </trans-unit>
+      <trans-unit id="qEIYLxC" resname="Enter identifier to add">
+        <source>Enter identifier to add</source>
+        <target state="translated">Indtast identifikation for registreringen</target>
       </trans-unit>
     </body>
   </file>

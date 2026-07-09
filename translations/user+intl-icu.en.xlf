@@ -9,6 +9,10 @@
         <source>Email</source>
         <target>Email</target>
       </trans-unit>
+      <trans-unit id="sG7t8cf" resname="Departments">
+        <source>Departments</source>
+        <target>Departments</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

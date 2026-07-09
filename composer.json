@@ -11,6 +11,7 @@
         "doctrine/doctrine-migrations-bundle": "^4.0",
         "doctrine/orm": "^3.6",
         "easycorp/easyadmin-bundle": "^5.1",
+        "itk-dev/cpr-sniffer": "dev-features/bug-fixes-and-clean-up",
         "itk-dev/openid-connect-bundle": "^5.0",
         "stof/doctrine-extensions-bundle": "^1.15",
         "symfony/asset": "~8.1.0",
