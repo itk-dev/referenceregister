@@ -5,10 +5,6 @@
       <tool tool-id="symfony" tool-name="Symfony"/>
     </header>
     <body>
-      <trans-unit id="37wivZ3" resname="ID">
-        <source>ID</source>
-        <target state="translated">Id</target>
-      </trans-unit>
       <trans-unit id="VgjgkxU" resname="Add entry">
         <source>Add entry</source>
         <target state="translated">Tilføj registrering</target>
@@ -117,10 +113,6 @@
         <source>Department</source>
         <target state="translated">Afdeling</target>
       </trans-unit>
-      <trans-unit id="TWYuH6u" resname="Choose department">
-        <source>Choose department</source>
-        <target state="translated">Vælg afdeling</target>
-      </trans-unit>
       <trans-unit id="YiYIE0r" resname="Entry expires after">
         <source>Entry expires after</source>
         <target state="translated">Registrering udløber efter</target>
@@ -160,6 +152,38 @@
       <trans-unit id="sIafcnN" resname="No look-up result found.">
         <source>No look-up result found.</source>
         <target state="translated">Intet resultat fundet.</target>
+      </trans-unit>
+      <trans-unit id="QypKilD" resname="Identifier">
+        <source>Identifier</source>
+        <target state="translated">Identifikation</target>
+      </trans-unit>
+      <trans-unit id="BUIQ..a" resname="Action">
+        <source>Action</source>
+        <target state="translated">Handling</target>
+      </trans-unit>
+      <trans-unit id="1_MZEgP" resname="Actions">
+        <source>Actions</source>
+        <target state="translated">Handlinger</target>
+      </trans-unit>
+      <trans-unit id="P9_Y7yU" resname="Created by">
+        <source>Created by</source>
+        <target state="translated">Oprettet af</target>
+      </trans-unit>
+      <trans-unit id="JmBViIt" resname="Action log">
+        <source>Action log</source>
+        <target state="translated">Handlingslog</target>
+      </trans-unit>
+      <trans-unit id="HXURBZI" resname="EntryAdd">
+        <source>EntryAdd</source>
+        <target state="translated">Tilføj registrering</target>
+      </trans-unit>
+      <trans-unit id="uYu4uOY" resname="EntryLookUp">
+        <source>EntryLookUp</source>
+        <target state="translated">Find registrering</target>
+      </trans-unit>
+      <trans-unit id="j8o.s1D" resname="EntryRemove">
+        <source>EntryRemove</source>
+        <target state="translated">Fjern registrering</target>
       </trans-unit>
     </body>
   </file>
