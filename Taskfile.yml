@@ -69,6 +69,13 @@ tasks:
         # Don't purge settings
         TASK_ARGS: doctrine:fixtures:load --purge-exclusions=setting --no-interaction
 
+  test:
+    desc: Run all tests
+    cmd:
+      task: compose
+      vars:
+        TASK_ARGS: exec phpfpm php bin/phpunit
+
   compose:
     desc: Run `docker compose` command, e.g. `task {{.TASK}} -- config`
     cmd: '{{.DOCKER_COMPOSE}} {{.TASK_ARGS}} {{.CLI_ARGS}}'
