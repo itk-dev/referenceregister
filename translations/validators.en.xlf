@@ -9,6 +9,10 @@
         <source>Error</source>
         <target>Error</target>
       </trans-unit>
+      <trans-unit id="rzyfHUm" resname="The identifier contains an illegal character: it can contain only numbers.">
+        <source>The identifier contains an illegal character: it can contain only numbers.</source>
+        <target>The identifier contains an illegal character: it can contain only numbers.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

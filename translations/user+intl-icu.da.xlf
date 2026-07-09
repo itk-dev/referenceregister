@@ -9,6 +9,10 @@
         <source>Email</source>
         <target state="translated">E-mailadresse</target>
       </trans-unit>
+      <trans-unit id="sG7t8cf" resname="Departments">
+        <source>Departments</source>
+        <target state="translated">Afdelinger</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

@@ -6,6 +6,7 @@ use App\Entity\User;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
+use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\EmailField;
 
@@ -37,6 +38,7 @@ class UserCrudController extends AbstractCrudController
     public function configureFields(string $pageName): iterable
     {
         yield EmailField::new('email', t('Email', domain: 'user'));
+        yield AssociationField::new('departments', t('Departments', domain: 'user'));
         yield DateTimeField::new('createdAt', t('Created at'));
         yield DateTimeField::new('updatedAt', t('Updated at'));
     }

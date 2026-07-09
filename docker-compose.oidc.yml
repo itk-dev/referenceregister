@@ -20,5 +20,7 @@ services:
                 "--user-claims",
                 '{"sub": "admin@example.com", "upn": "admin@example.com", "name": "Admin And", "roles": ["Administrator"] }',
                 "--user-claims",
-                '{"sub": "user@example.com", "upn": "user@example.com", "roles": ["User"] }',
+                '{"sub": "user@example.com", "upn": "user@example.com", "roles": ["User"], "departments": ["Department 1"] }',
+                "--user-claims",
+                '{"sub": "user@department2.example.com", "upn": "user@department2.example.com", "roles": ["User"], "departments": ["Department 2"] }',
             ]

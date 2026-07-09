@@ -29,3 +29,5 @@ services:
             $options:
                 roles_claim: '%env(OIDC_ROLES_CLAIM)%'
                 role_map: '%env(json:OIDC_ROLE_MAP)%'
+                departments_claim: '%env(OIDC_DEPARTMENTS_CLAIM)%'
+                department_map: '%env(json:OIDC_DEPARTMENT_MAP)%'

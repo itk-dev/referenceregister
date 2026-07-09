@@ -38,10 +38,17 @@ class Department implements \Stringable
     #[Valid]
     private Collection $contactPeople;
 
+    /**
+     * @var Collection<int, User>
+     */
+    #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'departments')]
+    private Collection $users;
+
     public function __construct()
     {
         $this->entries = new ArrayCollection();
         $this->contactPeople = new ArrayCollection();
+        $this->users = new ArrayCollection();
     }
 
     #[\Override]
@@ -122,6 +129,33 @@ class Department implements \Stringable
             if ($contactPerson->getDepartment() === $this) {
                 $contactPerson->setDepartment(null);
             }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, User>
+     */
+    public function getUsers(): Collection
+    {
+        return $this->users;
+    }
+
+    public function addUser(User $user): static
+    {
+        if (!$this->users->contains($user)) {
+            $this->users->add($user);
+            $user->addDepartment($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUser(User $user): static
+    {
+        if ($this->users->removeElement($user)) {
+            $user->removeDepartment($this);
         }
 
         return $this;
