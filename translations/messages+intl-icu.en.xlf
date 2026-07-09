@@ -5,10 +5,6 @@
       <tool tool-id="symfony" tool-name="Symfony"/>
     </header>
     <body>
-      <trans-unit id="37wivZ3" resname="ID">
-        <source>ID</source>
-        <target>ID</target>
-      </trans-unit>
       <trans-unit id="VgjgkxU" resname="Add entry">
         <source>Add entry</source>
         <target>Add entry</target>
@@ -117,10 +113,6 @@
         <source>Department</source>
         <target>Department</target>
       </trans-unit>
-      <trans-unit id="TWYuH6u" resname="Choose department">
-        <source>Choose department</source>
-        <target>Choose department</target>
-      </trans-unit>
       <trans-unit id="YiYIE0r" resname="Entry expires after">
         <source>Entry expires after</source>
         <target>Entry expires after</target>
@@ -160,6 +152,38 @@
       <trans-unit id="sIafcnN" resname="No look-up result found.">
         <source>No look-up result found.</source>
         <target>No look-up result found.</target>
+      </trans-unit>
+      <trans-unit id="QypKilD" resname="Identifier">
+        <source>Identifier</source>
+        <target>Identifier</target>
+      </trans-unit>
+      <trans-unit id="BUIQ..a" resname="Action">
+        <source>Action</source>
+        <target>Action</target>
+      </trans-unit>
+      <trans-unit id="1_MZEgP" resname="Actions">
+        <source>Actions</source>
+        <target>Actions</target>
+      </trans-unit>
+      <trans-unit id="P9_Y7yU" resname="Created by">
+        <source>Created by</source>
+        <target>Created by</target>
+      </trans-unit>
+      <trans-unit id="JmBViIt" resname="Action log">
+        <source>Action log</source>
+        <target>Action log</target>
+      </trans-unit>
+      <trans-unit id="HXURBZI" resname="EntryAdd">
+        <source>EntryAdd</source>
+        <target>EntryAdd</target>
+      </trans-unit>
+      <trans-unit id="uYu4uOY" resname="EntryLookUp">
+        <source>EntryLookUp</source>
+        <target>EntryLookUp</target>
+      </trans-unit>
+      <trans-unit id="j8o.s1D" resname="EntryRemove">
+        <source>EntryRemove</source>
+        <target>EntryRemove</target>
       </trans-unit>
     </body>
   </file>

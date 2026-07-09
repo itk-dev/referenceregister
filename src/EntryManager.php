@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Entity\ActionLogEntry\Type;
 use App\Entity\Department;
 use App\Entity\Entry;
 use App\Repository\EntryRepository;
@@ -21,12 +22,15 @@ class EntryManager
         #[Autowire(param: 'app_do_not_hash_entry_identifier')]
         private readonly bool $doNotHashEntryIdentifier,
         LoggerInterface $logger,
+        private readonly ActionLogger $actionLogger,
     ) {
         $this->setLogger($logger);
     }
 
     public function addEntry(string $identifier, Department $department): Entry
     {
+        $this->actionLogger->log(Type::EntryAdd, []);
+
         $entry = $this->getEntry($identifier, $department);
         if (null === $entry) {
             $entry = new Entry()
@@ -48,11 +52,15 @@ class EntryManager
      */
     public function lookUp(string $identifier): array
     {
+        $this->actionLogger->log(Type::EntryLookUp, []);
+
         return $this->getEntries($identifier);
     }
 
     public function removeEntry(string $identifier, Department $department): bool
     {
+        $this->actionLogger->log(Type::EntryRemove, []);
+
         $entries = $this->getEntries($identifier, $department, includeExpired: true);
         foreach ($entries as $entry) {
             $this->entityManager->remove($entry);

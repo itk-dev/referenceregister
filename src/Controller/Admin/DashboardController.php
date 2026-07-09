@@ -39,6 +39,7 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkTo(DepartmentCrudController::class, t('Departments'));
         if ($this->isGranted(Role::ADMIN->value)) {
             yield MenuItem::linkTo(UserCrudController::class, t('Users'));
+            yield MenuItem::linkTo(ActionLogEntryCrudController::class, t('Action log'));
         }
         yield MenuItem::linkTo(SettingCrudController::class, t('Settings'));
         if ('dev' === $this->getParameter('kernel.environment')) {
