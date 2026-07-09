@@ -3,10 +3,11 @@
 namespace App\Form;
 
 use App\Entity\Department;
-use App\Entity\Entry;
+use App\Model\EntryFormDto;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Contracts\Translation\TranslatableInterface;
@@ -17,20 +18,19 @@ abstract class AbstractEntryFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $label = $this->getIdLabel();
         $builder
-            ->add('hash', null, [
-                'label' => false,
+            ->add('identifier', TextType::class, [
+                'label' => $this->getIdentifierLabel(),
                 'attr' => [
                     'autocomplete' => 'off',
-                    'placeholder' => $label,
                 ],
-                'help' => $this->getIdHelp(),
+                'help' => $this->getIdentifierHelp(),
             ])
             ->add('department', EntityType::class, [
                 'class' => Department::class,
-                'label' => t('Department'),
-                'placeholder' => t('Choose department'),
+                'label' => $this->getDepartmentLabel(),
+                'placeholder' => '',
+                'help' => $this->getDepartmentHelp(),
             ])
             ->add('submit', SubmitType::class, [
                 'label' => $this->getSubmitLabel(),
@@ -41,16 +41,26 @@ abstract class AbstractEntryFormType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => Entry::class,
+            'data_class' => EntryFormDto::class,
         ]);
     }
 
-    protected function getIdLabel(): TranslatableInterface
+    protected function getIdentifierLabel(): TranslatableInterface
     {
-        return t('ID');
+        return t('Identifier');
     }
 
-    protected function getIdHelp(): ?TranslatableInterface
+    protected function getDepartmentLabel(): TranslatableInterface
+    {
+        return t('Department');
+    }
+
+    protected function getIdentifierHelp(): ?TranslatableInterface
+    {
+        return null;
+    }
+
+    protected function getDepartmentHelp(): ?TranslatableInterface
     {
         return null;
     }

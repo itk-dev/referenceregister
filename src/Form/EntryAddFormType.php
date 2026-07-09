@@ -13,7 +13,7 @@ class EntryAddFormType extends AbstractEntryFormType
         return t('Add entry');
     }
 
-    protected function getIdHelp(): ?TranslatableInterface
+    protected function getIdentifierHelp(): ?TranslatableInterface
     {
         return t('Enter ID to add');
     }

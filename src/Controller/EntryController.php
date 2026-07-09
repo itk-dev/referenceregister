@@ -7,6 +7,7 @@ use App\EntryManager;
 use App\Form\EntryAddFormType;
 use App\Form\EntryLookUpFormType;
 use App\Form\EntryRemoveFormType;
+use App\Model\EntryFormDto;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -26,13 +27,13 @@ final class EntryController extends AbstractController
     #[Route('/add', name: 'app_entry_add', methods: [Request::METHOD_GET, Request::METHOD_POST])]
     public function addEntry(Request $request): Response
     {
-        $entry = new Entry();
+        $entry = new EntryFormDto();
         $form = $this->createForm(EntryAddFormType::class, $entry);
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             try {
-                $this->manager->addEntry($entry);
+                $this->manager->addEntry($entry->identifier, $entry->department);
 
                 return $this->redirectToRoute('app_entry_add_success');
             } catch (\Exception $e) {
@@ -55,12 +56,12 @@ final class EntryController extends AbstractController
     #[Route('/look-up', name: 'app_entry_look_up', methods: [Request::METHOD_GET, Request::METHOD_POST])]
     public function lookUp(Request $request): Response
     {
-        $entry = new Entry();
+        $entry = new EntryFormDto();
         $form = $this->createForm(EntryLookUpFormType::class, $entry);
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $entries = $this->manager->lookUp($entry);
+            $entries = $this->manager->lookUp($entry->identifier);
 
             // Redirect to a GET request.
             $this->setLookUpResult($entries);
@@ -93,14 +94,14 @@ final class EntryController extends AbstractController
     #[Route('/remove', name: 'app_entry_remove', methods: [Request::METHOD_GET, Request::METHOD_DELETE])]
     public function removeEntry(Request $request): Response
     {
-        $entry = new Entry();
+        $entry = new EntryFormDto();
         $form = $this->createForm(EntryRemoveFormType::class, $entry, options: [
             'method' => Request::METHOD_DELETE,
         ]);
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            if ($this->manager->removeEntry($entry)) {
+            if ($this->manager->removeEntry($entry->identifier, $entry->department)) {
                 return $this->redirectToRoute('app_entry_remove_success');
             }
         }
