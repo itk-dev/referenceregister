@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Entry;
+use App\Entity\Permission;
 use App\EntryManager;
 use App\Form\EntryAddFormType;
 use App\Form\EntryLookUpFormType;
@@ -13,6 +14,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 use function Symfony\Component\Translation\t;
 
@@ -25,6 +27,7 @@ final class EntryController extends AbstractController
     }
 
     #[Route('/add', name: 'app_entry_add', methods: [Request::METHOD_GET, Request::METHOD_POST])]
+    #[IsGranted(Permission::AddEntry->value)]
     public function addEntry(Request $request): Response
     {
         $entry = new EntryFormDto();
@@ -48,12 +51,14 @@ final class EntryController extends AbstractController
     }
 
     #[Route('/add/success', name: 'app_entry_add_success', methods: [Request::METHOD_GET])]
+    #[IsGranted(Permission::AddEntry->value)]
     public function addEntrySuccess(): Response
     {
         return $this->render('entry/add-success.html.twig');
     }
 
     #[Route('/look-up', name: 'app_entry_look_up', methods: [Request::METHOD_GET, Request::METHOD_POST])]
+    #[IsGranted(Permission::LookUpEntry->value)]
     public function lookUp(Request $request): Response
     {
         $entry = new EntryFormDto();
@@ -75,6 +80,7 @@ final class EntryController extends AbstractController
     }
 
     #[Route('/look-up/result', name: 'app_entry_look_up_result', methods: [Request::METHOD_GET])]
+    #[IsGranted(Permission::LookUpEntry->value)]
     public function lookUpResult(Request $request): Response
     {
         if (!$this->hasLookUpResult()) {
@@ -92,11 +98,13 @@ final class EntryController extends AbstractController
     }
 
     #[Route('/remove', name: 'app_entry_remove', methods: [Request::METHOD_GET, Request::METHOD_DELETE])]
+    #[IsGranted(Permission::RemoveEntry->value)]
     public function removeEntry(Request $request): Response
     {
         $entry = new EntryFormDto();
         $form = $this->createForm(EntryRemoveFormType::class, $entry, options: [
             'method' => Request::METHOD_DELETE,
+            'submit_class' => 'btn btn-danger',
         ]);
 
         $form->handleRequest($request);
@@ -112,6 +120,7 @@ final class EntryController extends AbstractController
     }
 
     #[Route('/remove/success', name: 'app_entry_remove_success', methods: [Request::METHOD_GET])]
+    #[IsGranted(Permission::RemoveEntry->value)]
     public function removeEntrySuccess(): Response
     {
         return $this->render('entry/remove-success.html.twig');

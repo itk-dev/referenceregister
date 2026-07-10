@@ -78,7 +78,7 @@ final class Version20260622133721 extends AbstractMigration
             'config' => json_encode([
                 'form_type' => 'texteditor',
             ]),
-            'value' => json_encode('<div>Velkommen til <em>Aarhus Kommunes Referenceregister</em>. Her kan du <a href="/add">tilføje</a> og <a href="/remove">fjerne</a> registreringer og <a href="/look-up">lave opslag</a> i eksisterende registreringer.</div>'),
+            'value' => json_encode('<div>Velkommen til <em>Aarhus Kommunes Referenceregister</em>.</div>'),
         ]);
 
         $addSetting([

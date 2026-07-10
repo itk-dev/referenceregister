@@ -31,7 +31,7 @@ class SettingCrudController extends AbstractCrudController
     public function configureCrud(Crud $crud): Crud
     {
         return parent::configureCrud($crud)
-            ->setEntityPermission(Role::SETTINGS_ADMIN->value)
+            ->setEntityPermission(Role::SettingEditor->value)
             ->setPageTitle(Crud::PAGE_INDEX, t('Settings'))
             ->setPageTitle(Crud::PAGE_EDIT, function () {
                 /** @var Setting $setting */
@@ -60,11 +60,11 @@ class SettingCrudController extends AbstractCrudController
     public function configureFields(string $pageName): iterable
     {
         yield TextField::new('name', t('Name'))
-            ->formatValue(fn ($value) => $this->settings->getTranslatedName($value))
+//            ->formatValue(fn (string $value) => $this->settings->getTranslatedName($value))
             ->onlyOnIndex();
 
         yield TextField::new('category', t('Category'))
-            ->formatValue(fn ($value) => $this->settings->getTranslatedName('category.'.$value))
+//            ->formatValue(fn (string $value) => $this->settings->getTranslatedName('category.'.$value))
             ->onlyOnIndex();
 
         if (Crud::PAGE_INDEX === $pageName) {

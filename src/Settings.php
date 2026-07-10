@@ -30,7 +30,7 @@ final class Settings
         }
 
         if (!array_key_exists($name, $this->settings)) {
-            throw new \RuntimeException(sprintf('Setting "%s" does not exist.', $name));
+            throw new \RuntimeException(sprintf('Setting "%s" does not exist. %s', $name, json_encode(array_keys($this->settings))));
         }
 
         return $this->settings[$name];

@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Entity\Department\ContactPerson;
 use App\Repository\DepartmentRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -34,7 +35,7 @@ class Department implements \Stringable
     /**
      * @var Collection<int, ContactPerson>
      */
-    #[ORM\OneToMany(targetEntity: ContactPerson::class, mappedBy: 'department', cascade: ['persist'])]
+    #[ORM\OneToMany(targetEntity: ContactPerson::class, mappedBy: 'department', cascade: ['persist'], orphanRemoval: true)]
     #[Valid]
     private Collection $contactPeople;
 

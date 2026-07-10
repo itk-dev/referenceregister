@@ -34,13 +34,16 @@
                             {
                                 route: 'app_entry_add',
                                 label: 'Add entry'|trans,
+                                permission: enum('App\\Entity\\Permission').AddEntry.value,
                             },
                             {
                                 route: 'app_entry_look_up',
                                 label: 'Look up'|trans,
+                                permission: enum('App\\Entity\\Permission').LookUpEntry.value,
                             }, {
                                 route: 'app_entry_remove',
                                 label: 'Remove entry'|trans,
+                                permission: enum('App\\Entity\\Permission').RemoveEntry.value,
                             },
                         ] %}
                         {% set users_manual_url = settings.get('users_manual_url') %}
@@ -51,18 +54,20 @@
                             }]) %}
                         {% endif %}
                         {% for item in main_menu_items %}
-                            {% set active = item.route is defined and app.current_route starts with item.route %}
-                            <li class="nav-item">
-                                <a class="nav-link {{ active ? 'active' }}" {{ active ? 'aria-current="page"' }}
-                                   href="{{ item.url ?? path(item.route) }}">
-                                    {{ item.label }}
-                                </a>
-                            </li>
+                            {% if not item.permission is defined or is_granted(item.permission) %}
+                                {% set active = item.route is defined and app.current_route starts with item.route %}
+                                <li class="nav-item">
+                                    <a class="nav-link {{ active ? 'active' }}" {{ active ? 'aria-current="page"' }}
+                                        href="{{ item.url ?? path(item.route) }}">
+                                        {{ item.label }}
+                                    </a>
+                                </li>
+                            {% endif %}
                         {% endfor %}
                     </ul>
 
                     {% set user_menu_items = [] %}
-                    {% if is_granted(enum('App\\Entity\\Role').ADMIN.value) %}
+                    {% if is_granted(enum('App\\Entity\\Role').Manager.value) %}
                         {% set user_menu_items = user_menu_items|merge([{
                             route: 'admin',
                             label: 'Administration'|trans,

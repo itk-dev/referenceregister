@@ -29,7 +29,7 @@ class UserManager
         assert($user instanceof User);
 
         // An admin user can use all departments.
-        return $this->security->isGranted(Role::ADMIN->value)
+        return $this->security->isGranted(Role::Administrator->value)
             ? $this->departmentRepository->findAll()
             : $user->getDepartments()->toArray();
     }

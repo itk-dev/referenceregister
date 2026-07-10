@@ -3,6 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Entry;
+use App\Entity\Role;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
@@ -23,6 +24,7 @@ class EntryCrudController extends AbstractCrudController
     public function configureCrud(Crud $crud): Crud
     {
         return parent::configureCrud($crud)
+            ->setEntityPermission(Role::Administrator->value)
             ->setEntityLabelInSingular(t('Entry'))
             ->setEntityLabelInPlural(t('Entries'));
     }

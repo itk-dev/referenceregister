@@ -1,20 +1,101 @@
 # Referenceregister
 
+## Installation
+
+Create and edit `.env.local` (or set environment variables in another way):
+
+``` dotenv
+# Required
+APP_ENV=prod
+
+DATABASE_URL="…"
+
+OIDC_METADATA_URL="…"
+OIDC_CLIENT_ID="…"
+OIDC_CLIENT_SECRET="…"
+
+# Optional
+DEFAULT_LOCALE="da"
+
+OIDC_ROLES_CLAIM="roles"
+OIDC_ROLE_MAP='{
+"Administrator": ["ROLE_ADMINISTRATOR"]
+}'
+
+OIDC_DEPARTMENTS_CLAIM="departments"
+# Optionally map department name
+OIDC_DEPARTMENT_MAP='{}'
+```
+
+See the [Users](#users) section for details on the `OIDC_…` variables.
+
+Install the site:
+
+``` shell
+docker compose pull
+docker compose up --detach --remove-orphans --wait
+docker compose exec phpfpm composer install --no-dev
+docker compose exec phpfpm php bin/console doctrine:migrations:migrate --no-interaction
+docker compose exec phpfpm php bin/console asset-map:compile
+rm -fr var/share/prod/
+```
+
+Run the same commands to update the site.
+
+See the [Troubleshooting] section if something does not work as expected.
+
+## Users
+
+### Departments
+
+A user is attached to departments (typically just one). During login the OIDC claim defined in the environment variable
+`OIDC_DEPARTMENTS_CLAIM` will be used to look up departments by name and attach them to the user.
+
+If the department names in the claim do not match the actual department names, a JSON object mapping from claim
+department name to actual department name can be fined in the `.OIDC_DEPARTMENT_MAP` environment variable, e.g.
+
+``` dotenv
+# .env.local
+OIDC_DEPARTMENT_MAP='{
+  "Department 0": "The first department"
+}'
+```
+
+which will map from "Department 0" to "The first department". If a department name is not defined in the map, the name
+will be used as it is.
+
+### Roles
+
+| Name          | Permissions                                                          |
+|---------------|----------------------------------------------------------------------|
+| Administrator | Administer site settings, Look up entries, Create and remove entries |
+| Manager       | Look up entries, Create and remove entries                           |
+| User          | Look up entries                                                      |
+
+A manager can only create and remove entries form its own department. An administer can create and remove entries for
+all departments.
+
+During login the OIDC claim defined in the environment variable `OIDC_ROLES_CLAIM` will be used to look up roles and
+assign them to the user. The `OIDC_ROLE_MAP` variable defines a JSON object mapping from claim a role name to actual
+role names, e.g.
+
+``` dotenv
+# .env.local
+OIDC_ROLE_MAP='{
+ "Administrator": ["ROLE_ADMINISTRATOR"],
+ "Manager": ["ROLE_MANAGER"]
+}'
+```
+
+## Development
+
+We use [Task[(https://taskfile.dev/) for development. Run
+
 ``` shell
 task
 ```
 
-> [!TIP]
-> If development OIDC login does not work, try deleting the cache pools from [Symfony's share
-> directory](https://symfony.com/blog/new-in-symfony-7-4-share-directory):
->
-> ``` shell
-> rm -fr var/share/dev/pools/*
-> ```
->
-> This is automatically done when running `task site:update`.
-
-## Development
+to see a list of tasks.
 
 For development – and **only for development** – you can set
 
@@ -23,3 +104,15 @@ APP_DO_NOT_HASH_ENTRY_ID=true
 ```
 
 in your local environment (e.g. in `.env.local`) to disable hashing of entry IDs.
+
+## Troubleshooting
+
+> [!TIP]
+> If OIDC login does not work, try deleting the cache pools from [Symfony's share
+> directory](https://symfony.com/blog/new-in-symfony-7-4-share-directory):
+>
+> ``` shell
+> rm -fr var/share/dev/pools/*
+> ```
+>
+> This is automatically done when running `task site:update`.

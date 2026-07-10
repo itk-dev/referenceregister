@@ -8,6 +8,8 @@ framework:
     #esi: true
     #fragments: true
 
+    trusted_proxies: '127.0.0.1,REMOTE_ADDR'
+
     http_method_override: true
     allowed_http_method_override: ['DELETE']
 
