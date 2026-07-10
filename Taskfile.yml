@@ -39,7 +39,7 @@ tasks:
     desc: Additional site update commands for "dev"
     if: '[ "$APP_ENV" = "dev" ]'
     cmds:
-      - rm -fr var/share/dev/
+      - rm -fr var/share/{{.APP_ENV}}
     internal: true
 
   site:update:prod:
@@ -50,7 +50,7 @@ tasks:
       - task: console
         vars:
           TASK_ARGS: asset-map:compile
-      - rm -fr var/share/dev/
+      - rm -fr var/share/{{.APP_ENV}}
     internal: true
 
   translations:extract:
