@@ -51,6 +51,9 @@ abstract class AbstractEntryFormType extends AbstractType
             ])
             ->add('submit', SubmitType::class, [
                 'label' => $this->getSubmitLabel(),
+                'attr' => [
+                    'class' => $options['submit_class'],
+                ],
             ])
         ;
     }
@@ -59,6 +62,7 @@ abstract class AbstractEntryFormType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => EntryFormDto::class,
+            'submit_class' => null,
         ]);
     }
 

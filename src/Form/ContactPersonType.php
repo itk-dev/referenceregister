@@ -2,9 +2,7 @@
 
 namespace App\Form;
 
-use App\Entity\ContactPerson;
-use App\Entity\Department;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use App\Entity\Department\ContactPerson;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -26,11 +24,7 @@ class ContactPersonType extends AbstractType
             ])
             ->add('phone', TextType::class, [
                 'label' => t('Phone', domain: 'contact_person'),
-            ])
-            ->add('department', EntityType::class, [
-                'class' => Department::class,
-            ])
-        ;
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

@@ -3,6 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Department;
+use App\Entity\Role;
 use App\Form\ContactPersonType;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Field\CollectionField;
@@ -23,6 +24,7 @@ class DepartmentCrudController extends AbstractCrudController
     public function configureCrud(Crud $crud): Crud
     {
         return parent::configureCrud($crud)
+            ->setEntityPermission(Role::DepartmentEditor->value)
             ->setEntityLabelInSingular(t('Department'))
             ->setEntityLabelInPlural(t('Departments'));
     }
@@ -34,10 +36,15 @@ class DepartmentCrudController extends AbstractCrudController
             ->onlyOnDetail();
         yield TextField::new('name', t('Name', domain: 'department'));
         yield CollectionField::new('contactPeople', t('Contact people', domain: 'department'))
+//            ->useEntryCrudForm()
             ->renderExpanded()
+            ->setRequired(true)
             ->setEntryType(ContactPersonType::class)
-            ->setEntryIsComplex();
-        yield DateTimeField::new('createdAt', t('Created at'));
-        yield DateTimeField::new('updatedAt', t('Updated at'));
+            ->setEntryIsComplex()
+        ;
+        yield DateTimeField::new('createdAt', t('Created at'))
+            ->hideOnForm();
+        yield DateTimeField::new('updatedAt', t('Updated at'))
+            ->hideOnForm();
     }
 }

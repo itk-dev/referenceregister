@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Entity;
+namespace App\Entity\Department;
 
+use App\Entity\Department;
 use App\Repository\ContactPersonRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
@@ -26,6 +27,7 @@ class ContactPerson implements \Stringable
     private ?string $name = null;
 
     #[ORM\Column(length: 255)]
+    #[NotBlank]
     #[Email]
     private ?string $email = null;
 

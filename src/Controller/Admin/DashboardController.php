@@ -23,7 +23,7 @@ class DashboardController extends AbstractDashboardController
     #[\Override]
     public function index(): Response
     {
-        return $this->redirectToRoute('admin_setting_index');
+        return $this->redirectToRoute('admin_department_index');
     }
 
     #[\Override]
@@ -37,11 +37,12 @@ class DashboardController extends AbstractDashboardController
     public function configureMenuItems(): iterable
     {
         yield MenuItem::linkTo(DepartmentCrudController::class, t('Departments'));
-        if ($this->isGranted(Role::ADMIN->value)) {
+        if ($this->isGranted(Role::Administrator->value)) {
             yield MenuItem::linkTo(UserCrudController::class, t('Users'));
             yield MenuItem::linkTo(ActionLogEntryCrudController::class, t('Action log'));
         }
-        yield MenuItem::linkTo(SettingCrudController::class, t('Settings'));
+        yield MenuItem::linkTo(SettingCrudController::class, t('Settings'))
+            ->setPermission(Role::Administrator->value);
         if ('dev' === $this->getParameter('kernel.environment')) {
             yield MenuItem::linkTo(EntryCrudController::class, t('Entries'), icon: 'fa-brands fa-dev');
         }

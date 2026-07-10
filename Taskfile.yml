@@ -50,6 +50,7 @@ tasks:
       - task: console
         vars:
           TASK_ARGS: asset-map:compile
+      - rm -fr var/share/dev/
     internal: true
 
   translations:extract:
@@ -79,12 +80,19 @@ tasks:
       vars:
         TASK_ARGS: exec phpfpm composer {{.TASK_ARGS}}
 
-  console:
-    desc: Run Symfony console command, e.g. `task {{.TASK}} -- cache:clear`
+  php:
+    desc: Run PHP, e.g. `task {{.TASK}} -- bin/console`
     cmd:
       task: compose
       vars:
-        TASK_ARGS: exec phpfpm bin/console {{.TASK_ARGS}}
+        TASK_ARGS: exec phpfpm php {{.TASK_ARGS}}
+
+  console:
+    desc: Run Symfony console command, e.g. `task {{.TASK}} -- cache:clear`
+    cmd:
+      task: php
+      vars:
+        TASK_ARGS: bin/console {{.TASK_ARGS}}
 
   coding-standards:apply:
     desc: 'Apply coding standards'

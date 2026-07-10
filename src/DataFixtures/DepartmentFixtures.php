@@ -2,8 +2,8 @@
 
 namespace App\DataFixtures;
 
-use App\Entity\ContactPerson;
 use App\Entity\Department;
+use App\Entity\Department\ContactPerson;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 
