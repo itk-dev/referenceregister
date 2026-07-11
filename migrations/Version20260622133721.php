@@ -90,17 +90,13 @@ final class Version20260622133721 extends AbstractMigration
             'value' => json_encode('+5 years'),
         ]);
 
-        $timeZones = \DateTimeZone::listIdentifiers();
         $addSetting([
             'name' => 'app_timezone',
             'description' => 'App time zone',
             'category' => 'site',
             'type' => Types::STRING,
             'config' => json_encode([
-                'form_type' => 'choice',
-                'form_type_options' => [
-                    'choices' => array_combine($timeZones, $timeZones),
-                ],
+                'form_type' => 'timezone',
             ]),
             'value' => json_encode('Europe/Copenhagen'),
         ]);

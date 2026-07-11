@@ -2,26 +2,28 @@
 
 namespace App\Controller\Admin;
 
+use App\Admin\Configurator\SettingConfigurator;
 use App\Entity\Role;
 use App\Entity\Setting;
-use Doctrine\DBAL\Types\Types;
+use App\Settings;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Assets;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\FieldTrait;
-use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\UrlField;
 
 use function Symfony\Component\Translation\t;
 
 class SettingCrudController extends AbstractCrudController
 {
+    public function __construct(
+        Settings $settings,
+        private readonly SettingConfigurator $settingConfigurator,
+    ) {
+        parent::__construct($settings);
+    }
+
     public static function getEntityFqcn(): string
     {
         return Setting::class;
@@ -37,7 +39,7 @@ class SettingCrudController extends AbstractCrudController
                 /** @var Setting $setting */
                 $setting = $this->getContext()->getEntity()->getInstance();
 
-                return t('Edit setting {name}', ['name' => t($setting->getName())]);
+                return t('Edit setting {name}', ['name' => $this->settings->getTranslatedName($setting->getName())]);
             });
     }
 
@@ -56,15 +58,18 @@ class SettingCrudController extends AbstractCrudController
             ->disable(Action::NEW);
     }
 
+    /**
+     * @see SettingConfigurator::configure()
+     */
     #[\Override]
     public function configureFields(string $pageName): iterable
     {
         yield TextField::new('name', t('Name'))
-//            ->formatValue(fn (string $value) => $this->settings->getTranslatedName($value))
+            ->formatValue(fn (string $value) => $this->settings->getTranslatedName($value))
             ->onlyOnIndex();
 
         yield TextField::new('category', t('Category'))
-//            ->formatValue(fn (string $value) => $this->settings->getTranslatedName('category.'.$value))
+            ->formatValue(fn (string $value) => $this->settings->getTranslatedName('category.'.$value))
             ->onlyOnIndex();
 
         if (Crud::PAGE_INDEX === $pageName) {
@@ -73,26 +78,9 @@ class SettingCrudController extends AbstractCrudController
         } elseif (Crud::PAGE_EDIT === $pageName) {
             /** @var Setting $setting */
             $setting = $this->getContext()->getEntity()->getInstance();
-            [$type, $formType] = [$setting->getType(), $setting->getFormType()];
-            $fieldType = match ($type) {
-                Types::TEXT => match ($formType) {
-                    'texteditor' => TextEditorField::class,
-                    'textarea' => TextareaField::class,
-                    default => throw new \RuntimeException(\sprintf('Unhandled form type: %s', $formType)),
-                },
-                Types::BOOLEAN => BooleanField::class,
-                Types::STRING => match ($formType) {
-                    'url' => UrlField::class,
-                    'choice' => ChoiceField::class,
-                    default => TextField::class,
-                },
-                Types::INTEGER => IntegerField::class,
-                default => throw new \RuntimeException(\sprintf('Unhandled data type: %s', $type)),
-            };
+            $fieldType = $this->settingConfigurator->getFieldType($setting);
             $field = $fieldType::new('value', false);
-            \assert(\in_array(FieldTrait::class, class_uses($field), true));
-            $field
-                ->setHelp($setting->getDescription() ?: '');
+            $field->setHelp($setting->getDescription() ?: '');
             if ($field instanceof BooleanField) {
                 $field->setRequired(false);
             }
