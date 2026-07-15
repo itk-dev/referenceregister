@@ -67,14 +67,43 @@ tasks:
       task: console
       vars:
         # Don't purge settings
-        TASK_ARGS: doctrine:fixtures:load --purge-exclusions=setting --no-interaction
+        TASK_ARGS: doctrine:fixtures:load --purge-exclusions=setting --group app --no-interaction
 
   test:
     desc: Run all tests
+    cmds:
+      - task: test:integration
+      - task: test:application
+
+  test:integration: &test_task
+    env:
+      APP_ENV: test
+    desc: 'Run all {{.TASK | replace "test:" "" }} tests'
     cmd:
       task: compose
       vars:
-        TASK_ARGS: exec phpfpm php bin/phpunit
+        TASK_ARGS: exec --env APP_ENV phpfpm php bin/phpunit tests/{{.TASK | replace "test:" "" | title }}
+
+  test:application: *test_task
+
+  test:playwright:
+    env:
+      APP_ENV: test
+    desc: 'Run all {{.TASK | replace "test:" "" }} tests'
+    cmd:
+      task: compose
+      vars:
+        TASK_ARGS: run --env APP_ENV --rm playwright npx playwright test
+
+  test:playwright:ui:
+    env:
+      APP_ENV: test
+    desc: 'Run all {{.TASK | replace "test:" "" }} tests'
+    cmds:
+      - xhost + 127.0.0.1
+      - task: compose
+        vars:
+          TASK_ARGS: run --rm --env APP_ENV --env DISPLAY=host.docker.internal:0 playwright npx playwright test --ui
 
   compose:
     desc: Run `docker compose` command, e.g. `task {{.TASK}} -- config`
@@ -85,14 +114,14 @@ tasks:
     cmd:
       task: compose
       vars:
-        TASK_ARGS: exec phpfpm composer {{.TASK_ARGS}}
+        TASK_ARGS: exec --env APP_ENV phpfpm composer {{.TASK_ARGS}}
 
   php:
     desc: Run PHP, e.g. `task {{.TASK}} -- bin/console`
     cmd:
       task: compose
       vars:
-        TASK_ARGS: exec phpfpm php {{.TASK_ARGS}}
+        TASK_ARGS: exec --env APP_ENV phpfpm php {{.TASK_ARGS}}
 
   console:
     desc: Run Symfony console command, e.g. `task {{.TASK}} -- cache:clear`
