@@ -101,13 +101,8 @@ task
 
 to see a list of tasks.
 
-For development – and **only for development** – you can set
-
-``` dotenv
-APP_DO_NOT_HASH_ENTRY_ID=true
-```
-
-in your local environment (e.g. in `.env.local`) to disable hashing of entry IDs.
+During development and testing, identifiers are not hashed and all integers are valid identifiers (cf.
+[TestEntryManager](tests/Mock/TestEntryManager.php) and [services.yaml](config/services.yaml)).
 
 ## Troubleshooting
 

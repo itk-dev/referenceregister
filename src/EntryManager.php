@@ -7,9 +7,9 @@ use App\Entity\Department;
 use App\Entity\Entry;
 use App\Repository\EntryRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use ItkDev\CprValidator\CprValidator;
 use Psr\Log\LoggerAwareTrait;
 use Psr\Log\LoggerInterface;
-use Symfony\Component\DependencyInjection\Attribute\Autowire;
 
 class EntryManager
 {
@@ -19,8 +19,6 @@ class EntryManager
         private readonly EntryRepository $repository,
         private readonly EntityManagerInterface $entityManager,
         private readonly Settings $settings,
-        #[Autowire(param: 'app_do_not_hash_entry_identifier')]
-        private readonly bool $doNotHashEntryIdentifier,
         LoggerInterface $logger,
         private readonly ActionLogger $actionLogger,
     ) {
@@ -70,6 +68,13 @@ class EntryManager
         return true;
     }
 
+    public function isValidIdentifier(string $identifier): bool
+    {
+        $validator = new CprValidator();
+
+        return $validator->isCpr($identifier);
+    }
+
     /**
      * @return Entry[]
      */
@@ -90,12 +95,8 @@ class EntryManager
         ]);
     }
 
-    private function hashIdentifier(string $identifier): string
+    protected function hashIdentifier(string $identifier): string
     {
-        if ($this->doNotHashEntryIdentifier) {
-            return $identifier;
-        }
-
         return hash('sha512', $identifier);
     }
 

@@ -1,6 +1,46 @@
 include:
     - docker-compose.oidc.yml
+    - docker-compose.playwright.yml
 
 services:
     phpfpm:
-        image: itkdev/php8.5-fpm:latest
+        image: !reset
+
+        build:
+            dockerfile_inline: |
+                FROM itkdev/php8.5-fpm:latest
+
+                USER root
+                # https://phoenixnap.com/kb/add-apt-repository-command-not-found-ubuntu
+                RUN apt update && apt-get --yes install software-properties-common
+
+                # https://askubuntu.com/a/1444967
+                RUN add-apt-repository ppa:mozillateam/ppa
+
+                RUN <<EOF cat >> /etc/apt/preferences.d/mozillateamppa
+                Package: firefox*
+                Pin: release o=LP-PPA-mozillateam
+                Pin-Priority: 501
+                EOF
+
+                # https://symfony.com/doc/current/testing/end_to_end.html#docker-integration
+
+                # Chromium and ChromeDriver
+                ENV PANTHER_NO_SANDBOX 1
+                # Not mandatory, but recommended
+                ENV PANTHER_CHROME_ARGUMENTS='--disable-dev-shm-usage'
+
+                RUN apt-get --yes install libfontconfig1 fontconfig libxrender-dev libfreetype6 libxrender1 zlib1g-dev xvfb chromium-chromedriver firefox-geckodriver
+
+
+                RUN apt update && apt --yes install firefox
+
+                USER deploy
+
+    node:
+        image: node
+        profiles:
+            - dev
+        working_dir: /app
+        volumes:
+            - .:/app
