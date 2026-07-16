@@ -185,6 +185,42 @@
         <source>Enter identifier to add</source>
         <target state="translated">Indtast identifikation for registreringen</target>
       </trans-unit>
+      <trans-unit id="EbqsjUi" resname="An error occurred">
+        <source>An error occurred</source>
+        <target state="translated">Der er sket en fejl</target>
+      </trans-unit>
+      <trans-unit id="9h3Q.oa" resname="Status code">
+        <source>Status code</source>
+        <target state="translated">Statuskode</target>
+      </trans-unit>
+      <trans-unit id="XLS_e4X" resname="Status text">
+        <source>Status text</source>
+        <target state="translated">Statustekst</target>
+      </trans-unit>
+      <trans-unit id="ejRNMuv" resname="Exception message">
+        <source>Exception message</source>
+        <target state="translated">Fejlbesked</target>
+      </trans-unit>
+      <trans-unit id="_9u.dBq" resname="Page not found">
+        <source>Page not found</source>
+        <target state="translated">Side ikke fundet</target>
+      </trans-unit>
+      <trans-unit id="Fml_6f3" resname="The requested page could not be found.">
+        <source>The requested page could not be found.</source>
+        <target state="translated">Den ønskede side kunne ikke findes.</target>
+      </trans-unit>
+      <trans-unit id="QY0K9r1" resname="Error details">
+        <source>Error details</source>
+        <target state="translated">Detaljer om fejlen</target>
+      </trans-unit>
+      <trans-unit id="tCyu6fD" resname="Something went wrong!">
+        <source>Something went wrong!</source>
+        <target state="translated">Der er gået noget galt!</target>
+      </trans-unit>
+      <trans-unit id="BUcvcgl" resname="Try &lt;a href=&quot;{back_url}&quot;&gt;going back&lt;/a&gt; and retry what you we're doing, or go to the &lt;a href=&quot;{front_page_url}&quot;&gt;front page&lt;/a&gt;.">
+        <source>Try &lt;a href="{back_url}"&gt;going back&lt;/a&gt; and retry what you we're doing, or go to the &lt;a href="{front_page_url}"&gt;front page&lt;/a&gt;.</source>
+        <target state="translated"><![CDATA[Prøv at <a href="{back_url}">gå tilbage</a> og prøv igen, eller gå til <a href="{front_page_url}">forsiden</a>.]]></target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
