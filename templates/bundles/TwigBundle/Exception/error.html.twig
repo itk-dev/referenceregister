@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ 'An error occurred'|trans }}{% endblock %}
+
+{% block content %}
+    {% block message %}
+        <div class="alert alert-danger error-message">
+            {% block message_content %}
+                {% trans %}
+                    Something went wrong!
+                {% endtrans %}
+            {% endblock %}
+        </div>
+    {% endblock %}
+    {% block going_back_info %}
+        <p>
+            {# @todo Should we use referer as the back URL? #}
+            {# % set back_url = app.request.headers.get('referer') ?? 'javascript:history.back()' % #}
+            {% set back_url = 'javascript:history.back()' %}
+            {% trans with {
+                back_url: back_url,
+                front_page_url: path('app_default'),
+            } %}
+                Try <a href="{back_url}">going back</a> and retry what you we're doing, or go to the <a href="{front_page_url}">front page</a>.
+            {% endtrans %}
+        </p>
+    {% endblock %}
+
+    {% block details %}
+        <details class="error-details">
+            <summary>{{ 'Error details'|trans }}</summary>
+
+            <dl>
+                <dt>{{ 'Status code'|trans }}</dt>
+                <dd>{{ status_code }}</dd>
+
+                <dt>{{ 'Status text'|trans }}</dt>
+                <dd>{{ status_text }}</dd>
+
+                <dt>{{ 'Exception message'|trans }}</dt>
+                <dd>{{ exception.message }}</dd>
+            </dl>
+        </details>
+    {% endblock %}
+
+{% endblock %}
