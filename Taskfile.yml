@@ -90,14 +90,25 @@ tasks:
     env:
       APP_ENV: test
     desc: 'Run all {{.TASK | replace "test:" "" }} tests'
-    cmd:
-      task: compose
-      vars:
-        TASK_ARGS: run --env APP_ENV --rm playwright npx playwright test
+    cmds:
+      # - task: site:install
+      - task: console
+        vars:
+          TASK_ARGS: doctrine:fixtures:load --purge-exclusions=setting --group department --no-interaction
+      - task: compose
+        vars:
+          TASK_ARGS: run --env APP_ENV --rm playwright npm install
+      - task: compose
+        vars:
+          TASK_ARGS: run --env APP_ENV --rm playwright npx playwright install
+      - task: compose
+        vars:
+          TASK_ARGS: run --env APP_ENV --rm playwright npx playwright test
 
   test:playwright:ui:
     env:
       APP_ENV: test
+      DISPLAY: ':0'
     desc: 'Run all {{.TASK | replace "test:" "" }} tests'
     cmds:
       - xhost + 127.0.0.1

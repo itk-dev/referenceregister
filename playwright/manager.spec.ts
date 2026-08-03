@@ -9,6 +9,14 @@ test('Manager', async ({ page }) => {
   await expect(page).toHaveTitle(/Referenceregister/);
 
   await page.getByRole('link', { name: 'Add entry' }).click();
+  await page.getByLabel("Identifier", { exact: true }).fill("invalid");
+  await page.getByLabel("Department", { exact: true }).selectOption('Department 1');
+  await page.getByRole('button', {name: "Add entry"}).click();
+  await expect(page.getByRole('heading', {level: 1}))
+    .toHaveText('Add entry')
+  await expect(page.getByText('Invalid identifier')).toBeVisible()
+
+  await page.getByRole('link', { name: 'Add entry' }).click();
   await page.getByLabel("Identifier", { exact: true }).fill("test-123");
   await page.getByLabel("Department", { exact: true }).selectOption('Department 1');
   await page.getByRole('button', {name: "Add entry"}).click();
@@ -49,13 +57,3 @@ test('Manager', async ({ page }) => {
 
   await page.goto('/');
 });
-
-// test('get started link', async ({ page }) => {
-//   await page.goto('https://playwright.dev/');
-
-//   // Click the get started link.
-//   await page.getByRole('link', { name: 'Get started' }).click();
-
-//   // Expects page to have a heading with the name of Installation.
-//   await expect(page.getByRole('heading', { name: 'Installation' })).toBeVisible();
-// });

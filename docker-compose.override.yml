@@ -36,11 +36,3 @@ services:
                 RUN apt update && apt --yes install firefox
 
                 USER deploy
-
-    node:
-        image: node
-        profiles:
-            - dev
-        working_dir: /app
-        volumes:
-            - .:/app
