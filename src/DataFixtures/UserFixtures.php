@@ -62,7 +62,7 @@ final class UserFixtures extends Fixture implements DependentFixtureInterface, F
     public static function getGroups(): array
     {
         return [
-            'test',
+            'user',
         ];
     }
 }

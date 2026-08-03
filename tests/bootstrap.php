@@ -17,7 +17,7 @@ $commands = [
     'doctrine:database:drop --force',
     'doctrine:database:create',
     'doctrine:migrations:migrate --no-interaction',
-    'doctrine:fixtures:load --purge-exclusions=setting --no-interaction --group test',
+    'doctrine:fixtures:load --purge-exclusions=setting --no-interaction --group user',
     'cache:clear --no-warmup',
 ];
 foreach ($commands as $command) {
