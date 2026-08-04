@@ -2,13 +2,17 @@
 
 ## Installation
 
+See [Development](#development) for details on installing for development.
+
 Create and edit `.env.local` (or set environment variables in another way):
 
 ``` dotenv
 # Required
 APP_ENV=prod
-
 DATABASE_URL="…"
+
+ERROR_MAILER_FROM_EMAIL="…"
+ERROR_MAILER_TO_EMAIL="…"
 
 OIDC_METADATA_URL="…"
 OIDC_CLIENT_ID="…"
