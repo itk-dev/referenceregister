@@ -1,0 +1,42 @@
+name: Tests
+
+env:
+    COMPOSE_USER: runner
+
+on:
+    pull_request:
+        paths: &paths
+            - "**/*.php"
+            - "composer.json"
+            - "composer.lock"
+            - "docker-compose.yml"
+    push:
+        branches:
+            - main
+            - develop
+        paths: *paths
+
+jobs:
+    tests:
+        strategy:
+            matrix:
+                test_type:
+                    - E2E
+                    - application
+                    - integration
+                    - playwright
+        name: Test - ${{ matrix.test_type }}
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v6
+            - uses: go-task/setup-task@v2
+
+            - name: Create docker network
+              run: |
+                  docker network create frontend
+
+            - name: Install site
+              run: task site:install --yes
+
+            - name: Run ${{ matrix.test_type }} tests
+              run: task test:${{ matrix.test_type }}

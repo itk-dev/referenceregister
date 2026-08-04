@@ -36,7 +36,7 @@ final class DepartmentFixtures extends Fixture implements FixtureGroupInterface
     {
         return [
             'app',
-            'department'
+            'department',
         ];
     }
 }

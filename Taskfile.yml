@@ -86,6 +86,13 @@ tasks:
 
   test:application: *test_task
 
+  test:E2E:
+    desc: 'Run all {{.TASK | replace "test:" "" }} tests'
+    cmd:
+      task: compose
+      vars:
+        TASK_ARGS: run --build --rm panther bin/phpunit tests/{{.TASK | replace "test:" "" | title }}
+
   test:playwright:
     env:
       APP_ENV: test
@@ -281,3 +288,18 @@ tasks:
     cmds:
       - task --list-all
     silent: true
+
+  docs:images:generate:
+    desc: 'Generate docs images'
+    env:
+      PANTHER_CHROME_ARGUMENTS: '--disable-dev-shm-usage --window-size=1024,540'
+    cmds:
+      - docker compose run --build --env PANTHER_CHROME_ARGUMENTS --rm panther bin/phpunit tests/Docs/GenerateDocsImages.php
+      - task docs:images:trim
+
+  docs:images:trim:
+    desc: 'Trim docs images'
+    # Trim and add top and bottom border
+    cmd: docker compose run --rm --entrypoint mogrify imagemagick -background white -trim -gravity north -splice 0x{{.BORDER_WIDTH}}+0+0 -gravity south -splice 0x{{.BORDER_WIDTH}}+0+0 docs/images/*/*.png
+    vars:
+      BORDER_WIDTH: 16
