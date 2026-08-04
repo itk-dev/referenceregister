@@ -2,13 +2,18 @@
 
 ## Installation
 
+See [Development](#development) for details on installing for development.
+
 Create and edit `.env.local` (or set environment variables in another way):
 
 ``` dotenv
 # Required
 APP_ENV=prod
-
+APP_SECRET="…"
 DATABASE_URL="…"
+
+ERROR_MAILER_FROM_EMAIL="…"
+ERROR_MAILER_TO_EMAIL="…"
 
 OIDC_METADATA_URL="…"
 OIDC_CLIENT_ID="…"
@@ -26,6 +31,15 @@ OIDC_DEPARTMENTS_CLAIM="departments"
 # Optionally map department name
 OIDC_DEPARTMENT_MAP='{}'
 ```
+
+> [!TIP]
+> Run
+>
+> ``` shell
+> docker compose exec phpfpm php -r "print 'APP_SECRET=' . bin2hex(random_bytes(26)) . PHP_EOL;"
+> ```
+>
+> to generate a proper app secret.
 
 See the [Users](#users) section for details on the `OIDC_…` variables.
 
