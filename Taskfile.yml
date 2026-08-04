@@ -72,8 +72,10 @@ tasks:
   test:
     desc: Run all tests
     cmds:
-      - task: test:integration
+      - task: test:E2E
       - task: test:application
+      - task: test:integration
+      - task: test:playwright
 
   test:integration: &test_task
     env:
