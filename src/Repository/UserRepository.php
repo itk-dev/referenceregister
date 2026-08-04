@@ -8,6 +8,8 @@ use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * @extends ServiceEntityRepository<User>
+ *
+ * @method User|null findOneByEmail(string $email)
  */
 class UserRepository extends ServiceEntityRepository
 {

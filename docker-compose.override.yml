@@ -1,5 +1,6 @@
 include:
     - docker-compose.oidc.yml
+    - docker-compose.panther.yml
     - docker-compose.playwright.yml
 
 services:
@@ -36,3 +37,12 @@ services:
                 RUN apt update && apt --yes install firefox
 
                 USER deploy
+
+    imagemagick:
+        # https://hub.docker.com/r/dpokidov/imagemagick/
+        image: dpokidov/imagemagick
+        profiles:
+            - dev
+        volumes:
+            - .:/app
+        working_dir: /app
