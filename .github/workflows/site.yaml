@@ -5,16 +5,10 @@ env:
 
 on:
     pull_request:
-        paths: &paths
-            - "**/*.php"
-            - "composer.json"
-            - "composer.lock"
-            - "docker-compose.yml"
     push:
         branches:
             - main
             - develop
-        paths: *paths
 
 jobs:
     install-site-prod:
