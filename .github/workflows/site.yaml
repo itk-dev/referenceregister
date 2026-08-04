@@ -33,7 +33,6 @@ jobs:
 
                   ERROR_MAILER_FROM_EMAIL=error@example.com
                   ERROR_MAILER_TO_EMAIL=error@example.com
-                  APP_SECRET=this-is-not-a-good-app-secret
                   EOF
 
             - run: |
