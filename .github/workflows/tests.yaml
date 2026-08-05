@@ -23,8 +23,6 @@ jobs:
                 test_type:
                     - application
                     - integration
-                    # @todo Investigate why Playwright tests run into timeouts when run in actions
-                    # - playwright
                     # The E2E tests take a very long time to run in actions
                     # - E2E
         name: Test - ${{ matrix.test_type }}

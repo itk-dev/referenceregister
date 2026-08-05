@@ -1,7 +1,6 @@
 include:
     - docker-compose.oidc.yml
     - docker-compose.panther.yml
-    - docker-compose.playwright.yml
 
 services:
     phpfpm:
