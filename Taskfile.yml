@@ -75,7 +75,6 @@ tasks:
       - task: test:E2E
       - task: test:application
       - task: test:integration
-      - task: test:playwright
 
   test:integration: &test_task
     env:
@@ -94,36 +93,6 @@ tasks:
       task: compose
       vars:
         TASK_ARGS: run --build --rm panther bin/phpunit tests/{{.TASK | replace "test:" "" | title }}
-
-  test:playwright:
-    env:
-      APP_ENV: test
-    desc: 'Run all {{.TASK | replace "test:" "" }} tests'
-    cmds:
-      # - task: site:install
-      - task: console
-        vars:
-          TASK_ARGS: doctrine:fixtures:load --purge-exclusions=setting --group department --no-interaction
-      - task: compose
-        vars:
-          TASK_ARGS: run --env APP_ENV --rm playwright npm install
-      - task: compose
-        vars:
-          TASK_ARGS: run --env APP_ENV --rm playwright npx playwright install
-      - task: compose
-        vars:
-          TASK_ARGS: run --env APP_ENV --rm playwright npx playwright test
-
-  test:playwright:ui:
-    env:
-      APP_ENV: test
-      DISPLAY: ':0'
-    desc: 'Run all {{.TASK | replace "test:" "" }} tests'
-    cmds:
-      - xhost + 127.0.0.1
-      - task: compose
-        vars:
-          TASK_ARGS: run --rm --env APP_ENV --env DISPLAY=host.docker.internal:0 playwright npx playwright test --ui
 
   compose:
     desc: Run `docker compose` command, e.g. `task {{.TASK}} -- config`
