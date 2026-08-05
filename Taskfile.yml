@@ -265,12 +265,13 @@ tasks:
     env:
       PANTHER_CHROME_ARGUMENTS: '--disable-dev-shm-usage --window-size=1024,540'
     cmds:
-      - docker compose run --build --env PANTHER_CHROME_ARGUMENTS --rm panther bin/phpunit tests/Docs/GenerateDocsImages.php
+      - for: [en, da]
+        cmd: DEFAULT_LOCALE={{.ITEM}} docker compose run --build --env PANTHER_CHROME_ARGUMENTS --rm panther bin/phpunit tests/Docs/GenerateDocsImages.php
       - task docs:images:trim
 
   docs:images:trim:
     desc: 'Trim docs images'
     # Trim and add top and bottom border
-    cmd: docker compose run --rm --entrypoint mogrify imagemagick -background white -trim -gravity north -splice 0x{{.BORDER_WIDTH}}+0+0 -gravity south -splice 0x{{.BORDER_WIDTH}}+0+0 docs/images/*/*.png
+    cmd: docker compose run --rm --entrypoint mogrify imagemagick -background white -trim -gravity north -splice 0x{{.BORDER_WIDTH}}+0+0 -gravity south -splice 0x{{.BORDER_WIDTH}}+0+0 docs/images/*/*/*.png
     vars:
       BORDER_WIDTH: 16
