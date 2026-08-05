@@ -13,6 +13,10 @@
         <source>The identifier contains an illegal character: it can contain only numbers.</source>
         <target state="translated">Identifikationen må kun indeholde tal.</target>
       </trans-unit>
+      <trans-unit id="a6UKIJU" resname="Invalid identifier.">
+        <source>Invalid identifier.</source>
+        <target state="translated">Ugyldig identifikation.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

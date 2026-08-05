@@ -9,6 +9,34 @@
         <source>download</source>
         <target>download</target>
       </trans-unit>
+      <trans-unit id="1gMekvi" resname="paginator.label">
+        <source>paginator.label</source>
+        <target>paginator.label</target>
+      </trans-unit>
+      <trans-unit id="29d8Vn4" resname="paginator.first">
+        <source>paginator.first</source>
+        <target>paginator.first</target>
+      </trans-unit>
+      <trans-unit id="Xiqdpoq" resname="paginator.more_pages">
+        <source>paginator.more_pages</source>
+        <target>paginator.more_pages</target>
+      </trans-unit>
+      <trans-unit id="lNsI3aT" resname="paginator.last">
+        <source>paginator.last</source>
+        <target>paginator.last</target>
+      </trans-unit>
+      <trans-unit id="ZsypGha" resname="paginator.results">
+        <source>paginator.results</source>
+        <target>paginator.results</target>
+      </trans-unit>
+      <trans-unit id="ANpWHHW" resname="paginator.previous">
+        <source>paginator.previous</source>
+        <target>paginator.previous</target>
+      </trans-unit>
+      <trans-unit id="SaZbUiU" resname="paginator.next">
+        <source>paginator.next</source>
+        <target>paginator.next</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

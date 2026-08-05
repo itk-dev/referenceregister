@@ -13,6 +13,10 @@
         <source>The identifier contains an illegal character: it can contain only numbers.</source>
         <target>The identifier contains an illegal character: it can contain only numbers.</target>
       </trans-unit>
+      <trans-unit id="a6UKIJU" resname="Invalid identifier.">
+        <source>Invalid identifier.</source>
+        <target>Invalid identifier.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

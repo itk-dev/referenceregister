@@ -17,18 +17,6 @@
         <source>datagrid.no_results</source>
         <target>No results found.</target>
       </trans-unit>
-      <trans-unit id="ANpWHHW" resname="paginator.previous">
-        <source>paginator.previous</source>
-        <target>Previous</target>
-      </trans-unit>
-      <trans-unit id="SaZbUiU" resname="paginator.next">
-        <source>paginator.next</source>
-        <target>Next</target>
-      </trans-unit>
-      <trans-unit id="ZsypGha" resname="paginator.results">
-        <source>paginator.results</source>
-        <target><![CDATA[{0} No results|{1} <strong>1</strong> result|]1,Inf] <strong>%count%</strong> results]]></target>
-      </trans-unit>
       <trans-unit id="S2q7CDj" resname="label.empty">
         <source>label.empty</source>
         <target>Empty</target>

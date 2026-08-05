@@ -46,3 +46,13 @@ services:
             PANTHER_ERROR_SCREENSHOT_DIR: ./var/error-screenshots
             # https://symfony.com/doc/current/testing/end_to_end.html#changing-the-size-of-the-browser-window
             PANTHER_CHROME_ARGUMENTS: ${PANTHER_CHROME_ARGUMENTS:---disable-dev-shm-usage}
+            DEFAULT_LOCALE:
+
+    node:
+        image: node:24-alpine
+        working_dir: /app
+        volumes:
+            - ./:/app:delegated
+            # - node_modules:/app/node_modules
+        profiles:
+            - dev

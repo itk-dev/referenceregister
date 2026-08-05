@@ -1,0 +1,17 @@
+{
+  "devDependencies": {
+    "vitepress": "^2.0.0-alpha.19",
+    "vitepress-plugin-mermaid": "^2.0.17"
+  },
+  "scripts": {
+    "docs:dev": "vitepress dev docs",
+    "docs:build": "vitepress build docs",
+    "docs:preview": "vitepress preview docs"
+  },
+  "//": "https://github.com/emersonbottero/vitepress-plugin-mermaid/issues/94#issuecomment-4311076501",
+  "overrides": {
+    "vitepress-plugin-mermaid": {
+      "vitepress": "$vitepress"
+    }
+  }
+}
