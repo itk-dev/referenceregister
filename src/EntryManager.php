@@ -5,11 +5,12 @@ namespace App;
 use App\Entity\ActionLogEntry\Type;
 use App\Entity\Department;
 use App\Entity\Entry;
+use App\Exception\InvalidIdentifierException;
 use App\Repository\EntryRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use ItkDev\CprValidator\CprValidator;
 use Psr\Log\LoggerAwareTrait;
 use Psr\Log\LoggerInterface;
-use Symfony\Component\DependencyInjection\Attribute\Autowire;
 
 class EntryManager
 {
@@ -19,8 +20,6 @@ class EntryManager
         private readonly EntryRepository $repository,
         private readonly EntityManagerInterface $entityManager,
         private readonly Settings $settings,
-        #[Autowire(param: 'app_do_not_hash_entry_identifier')]
-        private readonly bool $doNotHashEntryIdentifier,
         LoggerInterface $logger,
         private readonly ActionLogger $actionLogger,
     ) {
@@ -29,6 +28,8 @@ class EntryManager
 
     public function addEntry(string $identifier, Department $department): Entry
     {
+        $this->validateIdentifier($identifier);
+
         $this->actionLogger->log(Type::EntryAdd, []);
 
         $entry = $this->getEntry($identifier, $department);
@@ -59,6 +60,8 @@ class EntryManager
 
     public function removeEntry(string $identifier, Department $department): bool
     {
+        $this->validateIdentifier($identifier);
+
         $this->actionLogger->log(Type::EntryRemove, []);
 
         $entries = $this->getEntries($identifier, $department, includeExpired: true);
@@ -68,6 +71,23 @@ class EntryManager
         $this->entityManager->flush();
 
         return true;
+    }
+
+    public function isValidIdentifier(string $identifier): bool
+    {
+        $validator = new CprValidator();
+
+        return $validator->isCpr($identifier);
+    }
+
+    /**
+     * @throws InvalidIdentifierException
+     */
+    private function validateIdentifier(string $identifier): void
+    {
+        if (!$this->isValidIdentifier($identifier)) {
+            throw new InvalidIdentifierException();
+        }
     }
 
     /**
@@ -90,12 +110,8 @@ class EntryManager
         ]);
     }
 
-    private function hashIdentifier(string $identifier): string
+    protected function hashIdentifier(string $identifier): string
     {
-        if ($this->doNotHashEntryIdentifier) {
-            return $identifier;
-        }
-
         return hash('sha512', $identifier);
     }
 

@@ -6,6 +6,9 @@ when@dev:
         profiler: true
 
 when@test:
+    web_profiler:
+        toolbar: false
+
     framework:
         profiler:
             collect: false

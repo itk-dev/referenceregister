@@ -67,7 +67,32 @@ tasks:
       task: console
       vars:
         # Don't purge settings
-        TASK_ARGS: doctrine:fixtures:load --purge-exclusions=setting --no-interaction
+        TASK_ARGS: doctrine:fixtures:load --purge-exclusions=setting --group app --no-interaction
+
+  test:
+    desc: Run all tests
+    cmds:
+      - task: test:E2E
+      - task: test:application
+      - task: test:integration
+
+  test:integration: &test_task
+    env:
+      APP_ENV: test
+    desc: 'Run all {{.TASK | replace "test:" "" }} tests'
+    cmd:
+      task: compose
+      vars:
+        TASK_ARGS: exec --env APP_ENV phpfpm php bin/phpunit tests/{{.TASK | replace "test:" "" | title }}
+
+  test:application: *test_task
+
+  test:E2E:
+    desc: 'Run all {{.TASK | replace "test:" "" }} tests'
+    cmd:
+      task: compose
+      vars:
+        TASK_ARGS: run --build --rm panther bin/phpunit tests/{{.TASK | replace "test:" "" | title }}
 
   compose:
     desc: Run `docker compose` command, e.g. `task {{.TASK}} -- config`
@@ -78,14 +103,14 @@ tasks:
     cmd:
       task: compose
       vars:
-        TASK_ARGS: exec phpfpm composer {{.TASK_ARGS}}
+        TASK_ARGS: exec --env APP_ENV phpfpm composer {{.TASK_ARGS}}
 
   php:
     desc: Run PHP, e.g. `task {{.TASK}} -- bin/console`
     cmd:
       task: compose
       vars:
-        TASK_ARGS: exec phpfpm php {{.TASK_ARGS}}
+        TASK_ARGS: exec --env APP_ENV phpfpm php {{.TASK_ARGS}}
 
   console:
     desc: Run Symfony console command, e.g. `task {{.TASK}} -- cache:clear`
@@ -234,3 +259,18 @@ tasks:
     cmds:
       - task --list-all
     silent: true
+
+  docs:images:generate:
+    desc: 'Generate docs images'
+    env:
+      PANTHER_CHROME_ARGUMENTS: '--disable-dev-shm-usage --window-size=1024,540'
+    cmds:
+      - docker compose run --build --env PANTHER_CHROME_ARGUMENTS --rm panther bin/phpunit tests/Docs/GenerateDocsImages.php
+      - task docs:images:trim
+
+  docs:images:trim:
+    desc: 'Trim docs images'
+    # Trim and add top and bottom border
+    cmd: docker compose run --rm --entrypoint mogrify imagemagick -background white -trim -gravity north -splice 0x{{.BORDER_WIDTH}}+0+0 -gravity south -splice 0x{{.BORDER_WIDTH}}+0+0 docs/images/*/*.png
+    vars:
+      BORDER_WIDTH: 16
