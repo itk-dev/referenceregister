@@ -20,6 +20,30 @@ server {
         proxy_set_header X-Forwarded-Proto $scheme;
     }
 
+    # https://vitepress.dev/guide/deploy#nginx
+    location /docs {
+        index index.html;
+
+        # content location
+        root /app/public;
+
+        # exact matches -> reverse clean urls -> folders -> not found
+        try_files $uri $uri.html $uri/ =404;
+
+        # non existent pages
+        error_page 404 /404.html;
+
+        # a folder without index.html raises 403 in this setup
+        error_page 403 /404.html;
+
+        # adjust caching headers
+        # files in the assets folder have hashes filenames
+        location ~* ^/assets/ {
+            expires 1y;
+            add_header Cache-Control "public, immutable";
+        }
+    }
+
     location / {
         # try to serve file directly, fallback to index.php
         try_files $uri /index.php$is_args$args;

@@ -254,11 +254,24 @@ tasks:
       - task: compose
         vars:
           TASK_ARGS: --profile '*' pull
+    internal: true
 
   default:
     cmds:
       - task --list-all
     silent: true
+
+  docs:serve:
+    cmd:
+      task: compose
+      vars:
+        TASK_ARGS: run --publish 5173:5173 --rm node npx vitepress dev docs --host 0.0.0.0
+
+  docs:build:
+    cmd:
+      task: compose
+      vars:
+        TASK_ARGS: run --publish 5173:5173 --rm node npm run docs:build
 
   docs:images:generate:
     desc: 'Generate docs images'
