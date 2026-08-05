@@ -5,6 +5,7 @@ namespace App;
 use App\Entity\ActionLogEntry\Type;
 use App\Entity\Department;
 use App\Entity\Entry;
+use App\Exception\InvalidIdentifierException;
 use App\Repository\EntryRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use ItkDev\CprValidator\CprValidator;
@@ -27,6 +28,8 @@ class EntryManager
 
     public function addEntry(string $identifier, Department $department): Entry
     {
+        $this->validateIdentifier($identifier);
+
         $this->actionLogger->log(Type::EntryAdd, []);
 
         $entry = $this->getEntry($identifier, $department);
@@ -57,6 +60,8 @@ class EntryManager
 
     public function removeEntry(string $identifier, Department $department): bool
     {
+        $this->validateIdentifier($identifier);
+
         $this->actionLogger->log(Type::EntryRemove, []);
 
         $entries = $this->getEntries($identifier, $department, includeExpired: true);
@@ -73,6 +78,16 @@ class EntryManager
         $validator = new CprValidator();
 
         return $validator->isCpr($identifier);
+    }
+
+    /**
+     * @throws InvalidIdentifierException
+     */
+    private function validateIdentifier(string $identifier): void
+    {
+        if (!$this->isValidIdentifier($identifier)) {
+            throw new InvalidIdentifierException();
+        }
     }
 
     /**
