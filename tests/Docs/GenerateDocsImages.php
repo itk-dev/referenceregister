@@ -17,7 +17,7 @@ final class GenerateDocsImages extends PantherTestCase
         parent::setUp();
         $this->context = null;
         $this->imageCount = 0;
-        $this->localeSwitcher =  static::getContainer()->get(LocaleSwitcher::class);
+        $this->localeSwitcher = static::getContainer()->get(LocaleSwitcher::class);
     }
 
     public function testGenerateManagerImages(): void
@@ -93,13 +93,51 @@ final class GenerateDocsImages extends PantherTestCase
         $this->takeScreenshot($client, 'entry-removed.png');
     }
 
+    public function testGenerateUserImages(): void
+    {
+        $client = static::authenticateClient(
+            static::createPantherClient(),
+            $this->getUser('user@department1.example.com'),
+        );
+        $this->context = 'user';
+
+        // Add
+
+        $client->request('GET', '/');
+        $this->takeScreenshot($client, 'front-page.png');
+
+        // Look up
+
+        $client->request('GET', '/look-up');
+        $this->takeScreenshot($client, 'entry-look-up.png');
+
+        $client->request('GET', '/look-up');
+        $buttonNode = $client->getCrawler()->selectButton('entry_look_up_form[submit]');
+        $form = $buttonNode->form([
+            'entry_look_up_form[identifier]' => 'test',
+        ]);
+        $this->takeScreenshot($client, 'entry-look-up-filled-no-match.png');
+        $client->submit($form);
+        $this->takeScreenshot($client, 'entry-look-up-no-match.png');
+
+        $client->request('GET', '/look-up');
+        $buttonNode = $client->getCrawler()->selectButton('entry_look_up_form[submit]');
+        $form = $buttonNode->form([
+            'entry_look_up_form[identifier]' => 'test-123',
+        ]);
+        $this->takeScreenshot($client, 'entry-look-up-filled.png');
+        $client->submit($form);
+
+        $this->takeScreenshot($client, 'entry-look-up-match.png');
+    }
+
     private function takeScreenshot(Client $client, string $name): void
     {
         if (null === $this->context) {
             throw new \RuntimeException('No image context set');
         }
 
-        $imagePath = sprintf('docs/images/%s/%s/%03d-%s', $this->localeSwitcher->getLocale(), $this->context, $this->imageCount++, $name);
+        $imagePath = sprintf('docs/%s/images/%s/%03d-%s', $this->localeSwitcher->getLocale(), $this->context, $this->imageCount++, $name);
         if (file_exists($imagePath)) {
             unlink($imagePath);
         }
