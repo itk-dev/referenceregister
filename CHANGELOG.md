@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+* [PR-10](https://github.com/itk-dev/referenceregister/pull/10)
+  Added lookup limit on department
 * [PR-8](https://github.com/itk-dev/referenceregister/pull/8)
   Added user manual
 * [PR-4](https://github.com/itk-dev/referenceregister/pull/4)

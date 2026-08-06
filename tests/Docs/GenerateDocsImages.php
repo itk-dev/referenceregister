@@ -38,7 +38,7 @@ final class GenerateDocsImages extends PantherTestCase
 
         $buttonNode = $client->getCrawler()->selectButton('entry_add_form[submit]');
         $form = $buttonNode->form([
-            'entry_add_form[identifier]' => 'xxx',
+            'entry_add_form[identifier]' => 'Test 123',
         ]);
         $this->takeScreenshot($client, 'entry-add-filled-invalid.png');
         $client->submit($form);

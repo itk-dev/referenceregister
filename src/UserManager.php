@@ -5,14 +5,15 @@ namespace App;
 use App\Entity\Department;
 use App\Entity\Role;
 use App\Entity\User;
+use App\Exception\LogicException;
 use App\Repository\DepartmentRepository;
 use Symfony\Bundle\SecurityBundle\Security;
 
-class UserManager
+final readonly class UserManager
 {
     public function __construct(
-        private readonly Security $security,
-        private readonly DepartmentRepository $departmentRepository,
+        private Security $security,
+        private DepartmentRepository $departmentRepository,
     ) {
     }
 
@@ -22,6 +23,8 @@ class UserManager
      * @param User|null $user if not set, the current user will be used
      *
      * @return Department[]
+     *
+     * @throws LogicException if user has no departments
      */
     public function getUserDepartments(?User $user = null): array
     {
@@ -29,8 +32,14 @@ class UserManager
         assert($user instanceof User);
 
         // An admin user can use all departments.
-        return $this->security->isGranted(Role::Administrator->value)
+        $departments = $this->security->isGranted(Role::Administrator->value)
             ? $this->departmentRepository->findAll()
             : $user->getDepartments()->toArray();
+
+        if (0 === count($departments)) {
+            throw new LogicException('Cannot get user departments');
+        }
+
+        return $departments;
     }
 }

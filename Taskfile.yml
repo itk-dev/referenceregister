@@ -65,6 +65,8 @@ tasks:
   fixtures:load:
     desc: Load fixtures
     prompt: Really load fixtures?
+    env:
+      USE_TEST_ENTRY_MANAGER: true
     cmd:
       task: console
       vars:

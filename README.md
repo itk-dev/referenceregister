@@ -68,6 +68,12 @@ OIDC_DEPARTMENT_MAP='{
 which will map from "Department 0" to "The first department". If a department name is not defined in the map, the name
 will be used as it is.
 
+#### Lookup slots
+
+A department defines a "lookup slot" that controls how many look-ups a user can at most perform within a specific
+period. A lookup slot can current span "today" (i.e. it starts at midning) or "the last 24 hours" (i.e. it starts 24
+hours ago).
+
 ### Roles
 
 | Name          | Permissions                                                          |

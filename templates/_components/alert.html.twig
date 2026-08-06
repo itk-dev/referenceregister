@@ -1,0 +1,16 @@
+{# https://getbootstrap.com/docs/5.3/components/alerts/ #}
+{% if message is defined %}
+{% set types = [
+'danger',
+'dark',
+'info',
+'light',
+'primary',
+'secondary',
+'success',
+'warning',
+] %}
+<div class="alert alert-{{ type in types ? type : 'info' }}" role="alert">
+  {{ message }}
+</div>
+{% endif %}
