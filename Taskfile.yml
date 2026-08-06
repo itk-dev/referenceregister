@@ -281,10 +281,59 @@ tasks:
       - for: [en, da]
         cmd: DEFAULT_LOCALE={{.ITEM}} docker compose run --build --env PANTHER_CHROME_ARGUMENTS --rm panther bin/phpunit tests/Docs/GenerateDocsImages.php
       - task docs:images:trim
+      - task docs:images:restore
 
   docs:images:trim:
     desc: 'Trim docs images'
-    # Trim and add top and bottom border
-    cmd: docker compose run --rm --entrypoint mogrify imagemagick -background white -trim -gravity north -splice 0x{{.BORDER_WIDTH}}+0+0 -gravity south -splice 0x{{.BORDER_WIDTH}}+0+0 docs/*/images/*/*.png
     vars:
       BORDER_WIDTH: 16
+    # Trim and add top and bottom border
+    cmd:
+      cmd: |
+        docker compose run --rm --entrypoint mogrify imagemagick \
+          -strip \
+          -background white \
+          -trim \
+          -gravity north -splice 0x{{.BORDER_WIDTH}}+0+0 \
+          -gravity south -splice 0x{{.BORDER_WIDTH}}+0+0 \
+          docs/**/*.png
+      # https://taskfile.dev/docs/reference/schema#shopt
+      shopt: [globstar]
+
+  docs:images:restore:
+    desc: 'Restore docs images that are not visually modified'
+    cmd:
+      cmd: |
+        # https://stackoverflow.com/a/949391
+        latest_commit=$(git rev-parse --verify HEAD)
+
+         # M docs/en/images/manager/006-entry-look-up.png
+        status_modified_pattern="^ M "
+
+        debug_output_filename=false
+        if [[ '{{.COMPARE_OUTPUT_FILENAME | default "-"}}' != '-' ]]; then
+          debug_output_filename=true
+        fi
+
+        shopt -s globstar nullglob
+        for file in docs/**/*.png; do
+            status=$(git status --porcelain "$file")
+            if [[ "$status" =~ $status_modified_pattern ]]; then
+                if git cat-file -p "$latest_commit":"$file" | \
+                    docker compose run --quiet --rm --entrypoint compare imagemagick \
+                    - \
+                    "$file" \
+                    {{.COMPARE_OUTPUT_FILENAME | default "-"}} > /dev/null 2>&1; then
+                    echo "Restoring $file"
+                    git restore "$file"
+                else
+                    echo "$file modified"
+                    if [ "$debug_output_filename" = true ]; then
+                      echo
+                      echo "Comparison image written to {{.COMPARE_OUTPUT_FILENAME | default "-"}}"
+                      echo
+                    fi
+                fi
+            fi
+        done
+      shopt: [globstar]

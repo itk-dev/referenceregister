@@ -141,7 +141,27 @@ task docs:images:generate
 
 to update the images (see [`tests/Docs/GenerateDocsImages.php`](tests/Docs/GenerateDocsImages.php) for details).
 
+After generating image, they are visually compared (using [`imagemagick compare`](https://imagemagick.org/compare)) with
+existing images in git, and any visually identical images are git restored.
+
+If you're curious to see why an image is not restored, i.e. why it's not visually changed, you can run something like
+
+``` shell
+COMPARE_OUTPUT_FILENAME='_misc/$(basename ${file%.*}).compare.png' task docs:images:restore
+```
+
+to save the comparison images (remember to clean up and don't commit the comparison images to git).
+
+#### Previewing the documentation
+
 When writing documentation, you can run
+
+``` shell
+task docs:serve
+```
+
+to start [the VitePress dev server](https://vitepress.dev/reference/cli#vitepress-dev) and serve the documentation on
+<http://localhost:5173/docs/>.
 
 ## Troubleshooting
 
