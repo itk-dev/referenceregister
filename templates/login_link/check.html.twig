@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ 'Log in'|trans }}{% endblock %}
+
+{% block content %}
+    <p>{{ 'Click the button to log in.'|trans }}</p>
+
+    <form action="{{ path('app_login_link_check') }}" method="POST">
+        <input type="hidden" name="expires" value="{{ expires }}">
+        <input type="hidden" name="user" value="{{ user }}">
+        <input type="hidden" name="hash" value="{{ hash }}">
+        <button type="submit" class="btn btn-primary">{{ 'Log in'|trans }}</button>
+    </form>
+{% endblock %}

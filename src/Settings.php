@@ -41,6 +41,7 @@ final class Settings
         $t = match ($name) {
             'site_name' => t('Site name'),
             'enable_log_out' => t('Enable log out'),
+            'enable_login_link' => t('Enable login link'),
             'category.user' => t('User'),
             'category.site' => t('Site'),
             'max_loookups_per_day' => t('Max lookups per day'),

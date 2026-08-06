@@ -14,12 +14,17 @@ DATABASE_URL="…"
 ERROR_MAILER_FROM_EMAIL="…"
 ERROR_MAILER_TO_EMAIL="…"
 
+MAILER_FROM_EMAIL="…"
+
 OIDC_METADATA_URL="…"
 OIDC_CLIENT_ID="…"
 OIDC_CLIENT_SECRET="…"
 
 # Optional
 DEFAULT_LOCALE="da"
+
+# Login link lifetime in seconds
+LOGIN_LINK_LIFETIME=600
 
 OIDC_ROLES_CLAIM="roles"
 OIDC_ROLE_MAP='{
@@ -90,6 +95,17 @@ OIDC_ROLE_MAP='{
  "Manager": ["ROLE_MANAGER"]
 }'
 ```
+
+### Login links
+
+As an alternative to OIDC login, an existing user can log in by requesting a login link on `/login/link`. The link is
+sent by email (using the `MAILER_FROM_EMAIL` environment variable as sender address), is valid for 10 minutes (cf. the
+`LOGIN_LINK_LIFETIME` environment variable) and can only be used once.
+
+The feature is disabled by default and can be enabled with the "Enable login link" setting on the site settings
+administration page.
+
+Note that a login link only authenticates an existing user.
 
 ## Development
 

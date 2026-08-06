@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+* [PR-5](https://github.com/itk-dev/referenceregister/pull/5)
+  Added login link authentication
 * [PR-4](https://github.com/itk-dev/referenceregister/pull/4)
   Added automated tests
 * [PR-1](https://github.com/itk-dev/referenceregister/pull/1)
