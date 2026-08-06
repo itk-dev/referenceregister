@@ -46,11 +46,11 @@
                                 permission: enum('App\\Entity\\Permission').RemoveEntry.value,
                             },
                         ] %}
-                        {% set users_manual_url = settings.get('users_manual_url') %}
-                        {% if users_manual_url %}
+                        {% set user_manual_url = settings.get('user_manual_url') %}
+                        {% if user_manual_url %}
                             {% set main_menu_items = main_menu_items|merge([{
-                                url: users_manual_url,
-                                label: "User's manual"|trans,
+                                url: user_manual_url,
+                                label: 'User manual'|trans,
                             }]) %}
                         {% endif %}
                         {% for item in main_menu_items %}

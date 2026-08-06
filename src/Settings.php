@@ -44,7 +44,7 @@ final class Settings
             'category.user' => t('User'),
             'category.site' => t('Site'),
             'max_loookups_per_day' => t('Max lookups per day'),
-            'users_manual_url' => t("User's manual URL"),
+            'user_manual_url' => t('User manual URL'),
             'front_page_text' => t('Front page text'),
             'entry_expires_after' => t('Entry expires after'),
             'app_timezone' => t('Timezone'),

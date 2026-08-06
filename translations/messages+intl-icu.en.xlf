@@ -85,14 +85,6 @@
         <source>Max lookups per day</source>
         <target>Max lookups per day</target>
       </trans-unit>
-      <trans-unit id="kQrRgGv" resname="User's manual URL">
-        <source>User's manual URL</source>
-        <target>User's manual URL</target>
-      </trans-unit>
-      <trans-unit id="lEia1yz" resname="User's manual">
-        <source>User's manual</source>
-        <target>User's manual</target>
-      </trans-unit>
       <trans-unit id="ZJpy.TT" resname="Front page text">
         <source>Front page text</source>
         <target>Front page text</target>
@@ -220,6 +212,14 @@
       <trans-unit id="BUcvcgl" resname="Try &lt;a href=&quot;{back_url}&quot;&gt;going back&lt;/a&gt; and retry what you we're doing, or go to the &lt;a href=&quot;{front_page_url}&quot;&gt;front page&lt;/a&gt;.">
         <source>Try &lt;a href="{back_url}"&gt;going back&lt;/a&gt; and retry what you we're doing, or go to the &lt;a href="{front_page_url}"&gt;front page&lt;/a&gt;.</source>
         <target><![CDATA[Try <a href="{back_url}">going back</a> and retry what you we're doing, or go to the <a href="{front_page_url}">front page</a>.]]></target>
+      </trans-unit>
+      <trans-unit id="AlMXjuq" resname="User manual URL">
+        <source>User manual URL</source>
+        <target>User manual URL</target>
+      </trans-unit>
+      <trans-unit id="sGa8sjB" resname="User manual">
+        <source>User manual</source>
+        <target>User manual</target>
       </trans-unit>
     </body>
   </file>

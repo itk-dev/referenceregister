@@ -2,22 +2,26 @@
 # https://vitepress.dev/reference/default-theme-home-page
 layout: home
 
-# hero:
-#   name: "My Awesome Project"
-#   text: "A VitePress Site"
-#   tagline: My great project tagline
-#   actions:
-#     - theme: brand
-#       text: Markdown Examples
-#       link: /markdown-examples
-#     - theme: alt
-#       text: API Examples
-#       link: /api-examples
+hero:
+  name: "Referenceregister"
+  # text: "A VitePress Site"
+  # tagline: My great project tagline
+  actions:
+    - _theme: brand
+      text: Brugervejledning
+      link: /da/brugervejledning/bruger
+    - _theme: alt
+      text: User manual
+      link: /en/user-manual/manager
 
-features:
-  - title: Brugervejledning
-    # details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
-    link: /da/brugervejledning
+# features:
+#   - title: Brugervejledning
+#     # details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
+#     link: /user-manual
+#
+#   - title: User manual
+#     # details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
+#     link: /en/user-manual
 
 #   - title: Feature B
 #     details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
