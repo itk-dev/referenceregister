@@ -48,6 +48,15 @@ services:
             PANTHER_CHROME_ARGUMENTS: ${PANTHER_CHROME_ARGUMENTS:---disable-dev-shm-usage}
             DEFAULT_LOCALE:
 
+    imagemagick:
+        # https://hub.docker.com/r/dpokidov/imagemagick/
+        image: dpokidov/imagemagick
+        profiles:
+            - dev
+        volumes:
+            - .:/app
+        working_dir: /app
+
     node:
         image: node:24-alpine
         working_dir: /app

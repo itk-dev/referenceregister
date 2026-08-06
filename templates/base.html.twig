@@ -46,12 +46,15 @@
                                 permission: enum('App\\Entity\\Permission').RemoveEntry.value,
                             },
                         ] %}
-                        {% set user_manual_url = settings.get('user_manual_url') %}
-                        {% if user_manual_url %}
-                            {% set main_menu_items = main_menu_items|merge([{
-                                url: user_manual_url,
-                                label: 'User manual'|trans,
-                            }]) %}
+                        {# We don't want the user manual link when testing #}
+                        {% if 'test' != app.environment %}
+                            {% set user_manual_url = settings.get('user_manual_url') %}
+                            {% if user_manual_url %}
+                                {% set main_menu_items = main_menu_items|merge([{
+                                    url: user_manual_url,
+                                    label: 'User manual'|trans,
+                                }]) %}
+                            {% endif %}
                         {% endif %}
                         {% for item in main_menu_items %}
                             {% if not item.permission is defined or is_granted(item.permission) %}

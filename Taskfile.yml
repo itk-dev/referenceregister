@@ -285,6 +285,6 @@ tasks:
   docs:images:trim:
     desc: 'Trim docs images'
     # Trim and add top and bottom border
-    cmd: docker compose run --rm --entrypoint mogrify imagemagick -background white -trim -gravity north -splice 0x{{.BORDER_WIDTH}}+0+0 -gravity south -splice 0x{{.BORDER_WIDTH}}+0+0 docs/images/*/*/*.png
+    cmd: docker compose run --rm --entrypoint mogrify imagemagick -background white -trim -gravity north -splice 0x{{.BORDER_WIDTH}}+0+0 -gravity south -splice 0x{{.BORDER_WIDTH}}+0+0 docs/*/images/*/*.png
     vars:
       BORDER_WIDTH: 16
