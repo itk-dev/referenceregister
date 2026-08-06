@@ -39,9 +39,20 @@ security:
                 - App\Security\OidcAuthenticator
                 - ItkDev\OpenIdConnectBundle\Security\CliLoginTokenAuthenticator
 
+            # https://symfony.com/doc/current/security/login_link.html
+            login_link:
+                check_route: app_login_link_check
+                check_post_only: true
+                signature_properties: [id, email]
+                lifetime: '%env(int:LOGIN_LINK_LIFETIME)%'
+                max_uses: 1
+                # Failures redirected to login link request form with an error message.
+                failure_path: app_login_link_request
+
     # Note: Only the *first* matching rule is applied
     access_control:
         - { path: ^/openidconnect/login(/.+)?$, roles: PUBLIC_ACCESS }
+        - { path: ^/login/link, roles: PUBLIC_ACCESS }
         - { path: ^/admin, roles: !php/enum App\Entity\Role::Manager->value }
         - { path: ^/, roles: !php/enum App\Entity\Role::User->value }
 

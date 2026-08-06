@@ -221,6 +221,58 @@
         <source>Try &lt;a href="{back_url}"&gt;going back&lt;/a&gt; and retry what you we're doing, or go to the &lt;a href="{front_page_url}"&gt;front page&lt;/a&gt;.</source>
         <target state="translated"><![CDATA[Prøv at <a href="{back_url}">gå tilbage</a> og prøv igen, eller gå til <a href="{front_page_url}">forsiden</a>.]]></target>
       </trans-unit>
+      <trans-unit id="3PkXx5O" resname="Email address">
+        <source>Email address</source>
+        <target state="translated">E-mailadresse</target>
+      </trans-unit>
+      <trans-unit id="ZQq29oG" resname="Enter your email address to receive a login link">
+        <source>Enter your email address to receive a login link</source>
+        <target state="translated">Indtast din e-mailadresse for at modtage et login-link</target>
+      </trans-unit>
+      <trans-unit id="hs7lpYp" resname="Send login link">
+        <source>Send login link</source>
+        <target state="translated">Send login-link</target>
+      </trans-unit>
+      <trans-unit id="ObNGPb3" resname="Enable login link">
+        <source>Enable login link</source>
+        <target state="translated">Aktivér login-link</target>
+      </trans-unit>
+      <trans-unit id="3mxMTtj" resname="Log in to {site_name}">
+        <source>Log in to {site_name}</source>
+        <target state="translated">Log ind på {site_name}</target>
+      </trans-unit>
+      <trans-unit id="HjL94hk" resname="Open the link to log in to {site_name}:">
+        <source>Open the link to log in to {site_name}:</source>
+        <target state="translated">Åbn linket for at logge ind på {site_name}:</target>
+      </trans-unit>
+      <trans-unit id="MWxLDLS" resname="The link is valid for {minutes} minutes and can only be used once.">
+        <source>The link is valid for {minutes} minutes and can only be used once.</source>
+        <target state="translated">Linket er gyldigt i {minutes} minutter og kan kun bruges én gang.</target>
+      </trans-unit>
+      <trans-unit id="N7ydc5C" resname="If you did not request this link, you can safely ignore this message.">
+        <source>If you did not request this link, you can safely ignore this message.</source>
+        <target state="translated">Hvis du ikke har anmodet om dette link, kan du trygt ignorere denne besked.</target>
+      </trans-unit>
+      <trans-unit id="HUCW2MU" resname="Click the link to log in to {site_name}.">
+        <source>Click the link to log in to {site_name}.</source>
+        <target state="translated">Klik på linket for at logge ind på {site_name}.</target>
+      </trans-unit>
+      <trans-unit id="RxIIlzy" resname="Log in">
+        <source>Log in</source>
+        <target state="translated">Log ind</target>
+      </trans-unit>
+      <trans-unit id="42GHjCx" resname="Click the button to log in.">
+        <source>Click the button to log in.</source>
+        <target state="translated">Klik på knappen for at logge ind.</target>
+      </trans-unit>
+      <trans-unit id="90ACRW." resname="Login link sent">
+        <source>Login link sent</source>
+        <target state="translated">Login-link sendt</target>
+      </trans-unit>
+      <trans-unit id="_rmCH4h" resname="If the email address is registered, a login link has been sent to it. The link is only valid for a short while.">
+        <source>If the email address is registered, a login link has been sent to it. The link is only valid for a short while.</source>
+        <target state="translated">Hvis e-mailadressen er registreret, er der sendt et login-link til den. Linket er kun gyldigt i kort tid.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

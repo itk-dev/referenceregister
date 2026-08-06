@@ -7,6 +7,7 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
 parameters:
+    env(LOGIN_LINK_LIFETIME): '600'
 
 services:
     # default configuration for services in *this* file
@@ -29,6 +30,10 @@ services:
                 role_map: '%env(json:OIDC_ROLE_MAP)%'
                 departments_claim: '%env(OIDC_DEPARTMENTS_CLAIM)%'
                 department_map: '%env(json:OIDC_DEPARTMENT_MAP)%'
+
+    App\LoginLinkMailer:
+        arguments:
+            $lifetime: '%env(int:LOGIN_LINK_LIFETIME)%'
 
 when@dev: &dev_services
     services:
