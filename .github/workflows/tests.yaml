@@ -40,3 +40,26 @@ jobs:
 
             - name: Run ${{ matrix.test_type }} tests
               run: task test:${{ matrix.test_type }}
+
+    fixtures:
+        name: Fixtures
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v6
+            - uses: go-task/setup-task@v2
+
+            - name: Create docker network
+              run: |
+                  docker network create frontend
+
+            - name: Set local config
+              run: |
+                  cat <<'EOF' > .env.local
+                  USE_TEST_ENTRY_MANAGER=true
+                  EOF
+
+            - name: Install site
+              run: task site:install --yes
+
+            - name: Load fixtures
+              run: task fixtures:load --yes

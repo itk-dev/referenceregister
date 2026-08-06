@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Entity\Department\ContactPerson;
+use App\Entity\Department\LookupSlot;
 use App\Repository\DepartmentRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -44,6 +45,10 @@ class Department implements \Stringable
      */
     #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'departments')]
     private Collection $users;
+
+    #[ORM\Embedded(class: LookupSlot::class)]
+    #[Valid]
+    private ?LookupSlot $lookupSlot = null;
 
     public function __construct()
     {
@@ -158,6 +163,18 @@ class Department implements \Stringable
         if ($this->users->removeElement($user)) {
             $user->removeDepartment($this);
         }
+
+        return $this;
+    }
+
+    public function getLookupSlot(): ?LookupSlot
+    {
+        return $this->lookupSlot;
+    }
+
+    public function setLookupSlot(LookupSlot $lookupSlot): Department
+    {
+        $this->lookupSlot = $lookupSlot;
 
         return $this;
     }

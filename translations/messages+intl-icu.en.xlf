@@ -81,10 +81,6 @@
         <source>Site</source>
         <target>Site</target>
       </trans-unit>
-      <trans-unit id="rE82X.X" resname="Max lookups per day">
-        <source>Max lookups per day</source>
-        <target>Max lookups per day</target>
-      </trans-unit>
       <trans-unit id="ZJpy.TT" resname="Front page text">
         <source>Front page text</source>
         <target>Front page text</target>
@@ -220,6 +216,14 @@
       <trans-unit id="sGa8sjB" resname="User manual">
         <source>User manual</source>
         <target>User manual</target>
+      </trans-unit>
+      <trans-unit id="xjAS7J7" resname="{max, plural, =1 {You have used {used} of # look-up within the current slot.} other {You have used {used} of # look-ups within the current slot.}}">
+        <source>{max, plural, =1 {You have used {used} of # look-up within the current slot.} other {You have used {used} of # look-ups within the current slot.}}</source>
+        <target>{max, plural, =1 {You have used {used} of # look-up within the current slot.} other {You have used {used} of # look-ups within the current slot.}}</target>
+      </trans-unit>
+      <trans-unit id="Ng020iZ" resname="You have used all of your look-ups ({used} of {max}) within the current slot.">
+        <source>You have used all of your look-ups ({used} of {max}) within the current slot.</source>
+        <target>You have used all of your look-ups ({used} of {max}) within the current slot.</target>
       </trans-unit>
     </body>
   </file>

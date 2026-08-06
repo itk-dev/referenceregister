@@ -29,7 +29,7 @@ class AppTest extends WebTestCase
         $this->assertResponseIsSuccessful();
 
         $client->submitForm('Look up entry', [
-            'entry_look_up_form[identifier]' => '123-hest',
+            'entry_look_up_form[identifier]' => '123 test',
         ]);
         $this->assertResponseIsUnprocessable();
         $this->assertSelectorTextContains('*', 'Invalid identifier');
@@ -49,7 +49,7 @@ class AppTest extends WebTestCase
         $this->assertFormValue('form', 'entry_remove_form[department]', $user->getDepartments()->first()->getId(), 'User department selected');
 
         $crawler = $client->submitForm('Remove entry', [
-            'entry_remove_form[identifier]' => '123-hest',
+            'entry_remove_form[identifier]' => '123 test',
         ]);
         $this->assertResponseIsUnprocessable();
         $this->assertSelectorTextContains('*', 'Invalid identifier');

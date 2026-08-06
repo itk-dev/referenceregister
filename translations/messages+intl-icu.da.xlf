@@ -81,10 +81,6 @@
         <source>Site</source>
         <target state="translated">Site</target>
       </trans-unit>
-      <trans-unit id="rE82X.X" resname="Max lookups per day">
-        <source>Max lookups per day</source>
-        <target state="translated">Maks. antal opslag pr. dag</target>
-      </trans-unit>
       <trans-unit id="ZJpy.TT" resname="Front page text">
         <source>Front page text</source>
         <target state="translated">Forsidetekst</target>
@@ -209,7 +205,7 @@
         <source>Something went wrong!</source>
         <target state="translated">Der er gået noget galt!</target>
       </trans-unit>
-      <trans-unit id="BUcvcgl" resname="Try &lt;a href=&quot;{back_url}&quot;&gt;going back&lt;/a&gt; and retry what you we're doing, or go to the &lt;a href=&quot;{front_page_url}&quot;&gt;front page&lt;/a&gt;.">
+      <trans-unit id="BUcvcgl" resname="Try &lt;a href=&quot;{back_url}&quot;>going back&lt;/a> and retry what you we're doing, or go to the &lt;a href=&quot;{front_page_url}&quot;>front page&lt;/a>.">
         <source>Try &lt;a href="{back_url}"&gt;going back&lt;/a&gt; and retry what you we're doing, or go to the &lt;a href="{front_page_url}"&gt;front page&lt;/a&gt;.</source>
         <target state="translated"><![CDATA[Prøv at <a href="{back_url}">gå tilbage</a> og prøv igen, eller gå til <a href="{front_page_url}">forsiden</a>.]]></target>
       </trans-unit>
@@ -220,6 +216,14 @@
       <trans-unit id="sGa8sjB" resname="User manual">
         <source>User manual</source>
         <target state="translated">Brugervejledning</target>
+      </trans-unit>
+      <trans-unit id="xjAS7J7" resname="{max, plural, =1 {You have used {used} of # look-up within the current slot.} other {You have used {used} of # look-ups within the current slot.}}">
+        <source>{max, plural, =1 {You have used {used} of # look-up within the current slot.} other {You have used {used} of # look-ups within the current slot.}}</source>
+        <target state="translated">{max, plural, =1 {Du har brugt {used} af # opslag inden for den aktuelle periode.} other {Du har brugt {used} af # opslag inden for den aktuelle periode.}}</target>
+      </trans-unit>
+      <trans-unit id="Ng020iZ" resname="You have used all of your look-ups ({used} of {max}) within the current slot.">
+        <source>You have used all of your look-ups ({used} of {max}) within the current slot.</source>
+        <target state="translated">Du har brugt alle dine opslag ({used} af {max}) inden for den aktuelle periode.</target>
       </trans-unit>
     </body>
   </file>
