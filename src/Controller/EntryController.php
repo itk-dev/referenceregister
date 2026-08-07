@@ -4,10 +4,12 @@ namespace App\Controller;
 
 use App\Entity\Entry;
 use App\Entity\Permission;
+use App\Entity\User;
 use App\EntryManager;
 use App\Form\EntryAddFormType;
 use App\Form\EntryLookUpFormType;
 use App\Form\EntryRemoveFormType;
+use App\LookupSlotHelper;
 use App\Model\EntryFormDto;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -59,29 +61,36 @@ final class EntryController extends AbstractController
 
     #[Route('/look-up', name: 'app_entry_look_up', methods: [Request::METHOD_GET, Request::METHOD_POST])]
     #[IsGranted(Permission::LookUpEntry->value)]
-    public function lookUp(Request $request): Response
+    public function lookUp(Request $request, LookupSlotHelper $helper): Response
     {
         $entry = new EntryFormDto();
         $form = $this->createForm(EntryLookUpFormType::class, $entry);
 
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entries = $this->manager->lookUp($entry->identifier);
+        /** @var User $user */
+        $user = $this->getUser();
+        $lookupSlot = $helper->getLookupSlot($user);
 
-            // Redirect to a GET request.
-            $this->setLookUpResult($entries);
+        if ($lookupSlot->allowsLookup()) {
+            $form->handleRequest($request);
+            if ($form->isSubmitted() && $form->isValid()) {
+                $entries = $this->manager->lookUp($entry->identifier);
 
-            return $this->redirectToRoute('app_entry_look_up_result');
+                // Redirect to a GET request.
+                $this->setLookUpResult($entries);
+
+                return $this->redirectToRoute('app_entry_look_up_result');
+            }
         }
 
         return $this->render('entry/look-up.html.twig', [
             'form' => $form,
+            'lookup_slot' => $lookupSlot,
         ]);
     }
 
     #[Route('/look-up/result', name: 'app_entry_look_up_result', methods: [Request::METHOD_GET])]
     #[IsGranted(Permission::LookUpEntry->value)]
-    public function lookUpResult(Request $request): Response
+    public function lookUpResult(): Response
     {
         if (!$this->hasLookUpResult()) {
             $this->addFlash('warning', t('No look-up result found.'));

@@ -117,7 +117,7 @@ final class EntryManagerTest extends KernelTestCase
         $entryManager = $this->entryManager;
 
         $this->expectException(InvalidIdentifierException::class);
-        $entryManager->addEntry('invalid-identifier', $department);
+        $entryManager->addEntry('invalid identifier', $department);
     }
 
     public function testRemoveEntry(): void
