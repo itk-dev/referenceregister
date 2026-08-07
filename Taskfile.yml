@@ -261,13 +261,24 @@ tasks:
       - task --list-all
     silent: true
 
+  docs:install:
+    internal: true
+    cmd:
+      task: compose
+      vars:
+        TASK_ARGS: run --rm node npm install
+
   docs:serve:
+    deps:
+      - docs:install
     cmd:
       task: compose
       vars:
         TASK_ARGS: run --publish 5173:5173 --rm node npx vitepress dev docs --host 0.0.0.0
 
   docs:build:
+    deps:
+      - docs:install
     cmd:
       task: compose
       vars:
