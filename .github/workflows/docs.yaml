@@ -1,0 +1,23 @@
+name: Docs
+
+env:
+    COMPOSE_USER: runner
+
+on:
+    pull_request:
+    push:
+        branches:
+            - main
+            - develop
+
+jobs:
+    docs-build:
+        name: Build docs
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v6
+            - uses: go-task/setup-task@v2
+
+            - name: Build docs
+              run: |
+                  task docs:build
