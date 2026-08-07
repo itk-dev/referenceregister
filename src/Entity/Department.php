@@ -48,13 +48,14 @@ class Department implements \Stringable
 
     #[ORM\Embedded(class: LookupSlot::class)]
     #[Valid]
-    private ?LookupSlot $lookupSlot = null;
+    private LookupSlot $lookupSlot;
 
     public function __construct()
     {
         $this->entries = new ArrayCollection();
         $this->contactPeople = new ArrayCollection();
         $this->users = new ArrayCollection();
+        $this->lookupSlot = new LookupSlot();
     }
 
     #[\Override]
