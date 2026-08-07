@@ -55,10 +55,12 @@ tasks:
 
   translations:extract:
     desc: Extract translations
-    cmd:
-      task: composer
-      vars:
-        TASK_ARGS: translations-extract
+    cmds:
+      - task: composer
+        vars:
+          TASK_ARGS: translations-extract
+      # https://github.com/EasyCorp/EasyAdminBundle/issues/7722
+      - rm translations/_undefined+intl-icu.*.xlf
 
   fixtures:load:
     desc: Load fixtures
