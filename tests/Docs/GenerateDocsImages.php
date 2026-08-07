@@ -106,7 +106,6 @@ final class GenerateDocsImages extends PantherTestCase
         $this->takeScreenshot($client, 'front-page.png');
 
         // Look up
-
         $client->request('GET', '/look-up');
         $this->takeScreenshot($client, 'entry-look-up.png');
 
