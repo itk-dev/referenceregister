@@ -102,7 +102,6 @@ final class GenerateDocsImages extends PantherTestCase
         $this->context = 'user';
 
         // Add
-
         $client->request('GET', '/');
         $this->takeScreenshot($client, 'front-page.png');
 
