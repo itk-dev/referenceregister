@@ -11,6 +11,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use ItkDev\CprValidator\CprValidator;
 use Psr\Log\LoggerAwareTrait;
 use Psr\Log\LoggerInterface;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 
 class EntryManager
 {
@@ -20,8 +21,10 @@ class EntryManager
         private readonly EntryRepository $repository,
         private readonly EntityManagerInterface $entityManager,
         private readonly Settings $settings,
-        LoggerInterface $logger,
         private readonly ActionLogger $actionLogger,
+        LoggerInterface $logger,
+        #[Autowire(env: 'TEST_IDENTIFIER_PATTERN')]
+        private readonly ?string $testIdentifierPattern = null,
     ) {
         $this->setLogger($logger);
     }
@@ -75,6 +78,14 @@ class EntryManager
 
     public function isValidIdentifier(string $identifier): bool
     {
+        if ($this->isTestMode()) {
+            $match = @preg_match($this->testIdentifierPattern, $identifier);
+            // $match is false if the regex is not valid.
+            if (false !== $match) {
+                return (bool) $match;
+            }
+        }
+
         $validator = new CprValidator();
 
         return $validator->isCpr($identifier);
@@ -112,6 +123,10 @@ class EntryManager
 
     protected function hashIdentifier(string $identifier): string
     {
+        if ($this->isTestMode()) {
+            return $identifier;
+        }
+
         return hash('sha512', $identifier);
     }
 
@@ -159,5 +174,10 @@ class EntryManager
         $this->entityManager->flush();
 
         $this->logger->info('All expired entries deleted.');
+    }
+
+    private function isTestMode()
+    {
+        return null !== $this->testIdentifierPattern;
     }
 }
