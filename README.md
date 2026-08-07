@@ -109,17 +109,8 @@ to see a list of tasks.
 
 ### Handling of identifiers during development and test
 
-If the `USE_TEST_ENTRY_MANAGER` is set to `true`, the Entry manager will be replaced with
-[TestEntryManager](tests/Mock/TestEntryManager.php) and identifiers are not hashed and identifiers are valid if they
-consist only of digits, dashes and the letters `t`, `e` and `s`, i.e. `test-123` is a valid test identifier.
-
-**Important**: You must clear the cache after changing the value of `USE_TEST_ENTRY_MANAGER`.
-
-Check the current Entry manager class by running
-
-``` shell
-task compose -- exec phpfpm php bin/console debug:container App\EntryManager
-```
+If the environment variable `TEST_IDENTIFIER_PATTERN` is set to a valid regex (see [`.env.test`](.env.test) for an
+example), identifiers are not hashed and identifiers are valid if they match the specified pattern.
 
 ### User facing documentation
 

@@ -55,7 +55,7 @@ jobs:
             - name: Set local config
               run: |
                   cat <<'EOF' > .env.local
-                  USE_TEST_ENTRY_MANAGER=true
+                  TEST_IDENTIFIER_PATTERN='/^[a-z0-9-]+$/'
                   EOF
 
             - name: Install site
