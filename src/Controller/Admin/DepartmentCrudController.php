@@ -36,16 +36,13 @@ class DepartmentCrudController extends AbstractCrudController
         yield IdField::new('id', t('ID', domain: 'department'))
             ->onlyOnDetail();
         yield TextField::new('name', t('Name', domain: 'department'));
-
         yield LookupSlotField::new('lookupSlot', t('Lookup slot', domain: 'department'))
             ->hideOnIndex();
-
         yield CollectionField::new('contactPeople', t('Contact people', domain: 'department'))
             ->renderExpanded()
             ->setRequired(true)
             ->setEntryType(ContactPersonType::class)
             ->setEntryIsComplex();
-
         yield DateTimeField::new('createdAt', t('Created at'))
             ->hideOnForm();
         yield DateTimeField::new('updatedAt', t('Updated at'))
