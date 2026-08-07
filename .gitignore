@@ -33,3 +33,8 @@ phpstan.neon
 /phpunit.xml
 /.phpunit.cache/
 ###< phpunit/phpunit ###
+
+node_modules
+docs/.vitepress/dist
+docs/.vitepress/cache
+public/docs

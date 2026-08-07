@@ -17,18 +17,6 @@
         <source>datagrid.no_results</source>
         <target>Intet resultat.</target>
       </trans-unit>
-      <trans-unit id="ANpWHHW" resname="paginator.previous">
-        <source>paginator.previous</source>
-        <target>Forrige</target>
-      </trans-unit>
-      <trans-unit id="SaZbUiU" resname="paginator.next">
-        <source>paginator.next</source>
-        <target>Næste</target>
-      </trans-unit>
-      <trans-unit id="ZsypGha" resname="paginator.results">
-        <source>paginator.results</source>
-        <target><![CDATA[{0} Ingen resultater|{1} <strong>1</strong> resultat|]1,Inf] <strong>%count%</strong> resultater]]></target>
-      </trans-unit>
       <trans-unit id="S2q7CDj" resname="label.empty">
         <source>label.empty</source>
         <target>Tom</target>
