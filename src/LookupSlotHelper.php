@@ -18,6 +18,8 @@ class LookupSlotHelper
     public function getLookupSlot(User $user): LookupSlotInfo
     {
         $departments = $this->userManager->getUserDepartments($user);
+        // It's not obvious which lookup slot should be used if the user has
+        // multiple departments. Therefore we just use the first (for now).
         $department = reset($departments);
         $lookupSlot = $department->getLookupSlot();
         if (null === $lookupSlot) {
