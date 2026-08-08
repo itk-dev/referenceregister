@@ -294,7 +294,7 @@ tasks:
       PANTHER_CHROME_ARGUMENTS: '--disable-dev-shm-usage --window-size=1024,540'
     cmds:
       - for: [en, da]
-        cmd: DEFAULT_LOCALE={{.ITEM}} docker compose run --build --env PANTHER_CHROME_ARGUMENTS --rm panther bin/phpunit tests/Docs/GenerateDocsImages.php
+        cmd: DEFAULT_LOCALE={{.ITEM}} docker compose run --build --env PANTHER_CHROME_ARGUMENTS --rm panther bin/phpunit tests/Docs/GenerateUserManualImages.php
       - task docs:images:trim
       - task docs:images:restore
 

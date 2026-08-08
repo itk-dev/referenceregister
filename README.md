@@ -136,7 +136,7 @@ Run
 task docs:images:generate
 ```
 
-to update the images (see [`tests/Docs/GenerateDocsImages.php`](tests/Docs/GenerateDocsImages.php) for details).
+to update the images (see [`tests/Docs/GenerateUserManualImages.php`](tests/Docs/GenerateUserManualImages.php) for details).
 
 After generating image, they are visually compared (using [`imagemagick compare`](https://imagemagick.org/compare)) with
 existing images in git, and any visually identical images are git restored.
