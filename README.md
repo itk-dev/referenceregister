@@ -158,7 +158,7 @@ task docs:serve
 ```
 
 to start [the VitePress dev server](https://vitepress.dev/reference/cli#vitepress-dev) and serve the documentation on
-<http://localhost:5173/docs/>.
+<http://localhost:5173/user-manual/>.
 
 ## Troubleshooting
 

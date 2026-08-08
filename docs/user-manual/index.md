@@ -9,10 +9,10 @@ hero:
   actions:
     - _theme: brand
       text: Brugervejledning
-      link: /da/brugervejledning/bruger
+      link: /da/bruger
     - _theme: alt
       text: User manual
-      link: /en/user-manual/manager
+      link: /en/manager
 
 # features:
 #   - title: Brugervejledning

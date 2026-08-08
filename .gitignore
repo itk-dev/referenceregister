@@ -35,6 +35,6 @@ phpstan.neon
 ###< phpunit/phpunit ###
 
 node_modules
-docs/.vitepress/dist
-docs/.vitepress/cache
-public/docs
+docs/user-manual/.vitepress/dist
+docs/user-manual/.vitepress/cache
+public/user-manual/

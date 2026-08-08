@@ -9,8 +9,8 @@ export default withMermaid(
 
         lang: 'da-DK',
         srcDir: '.',
-        outDir: '../public/docs',
-        base: '/docs/',
+        outDir: '../../public/user-manual',
+        base: '/user-manual/',
         cleanUrls: true,
 
         themeConfig: {
@@ -38,7 +38,7 @@ export default withMermaid(
                             // },
                             {
                                 text: 'Manager',
-                                link: '/en/user-manual/manager',
+                                link: '/en/manager',
                             },
                         ],
                     },
@@ -49,11 +49,11 @@ export default withMermaid(
                         items: [
                             {
                                 text: 'Bruger',
-                                link: '/da/brugervejledning/bruger',
+                                link: '/da/bruger',
                             },
                             {
                                 text: 'Leder',
-                                link: '/da/brugervejledning/leder',
+                                link: '/da/leder',
                             },
                         ],
                     },

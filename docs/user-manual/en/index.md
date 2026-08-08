@@ -3,9 +3,10 @@
 layout: home
 
 hero:
+  name: User manual
   actions:
     - _theme: brand
       text: User manual
-      link: /en/user-manual/manager
+      link: ./manager
 
 ---
