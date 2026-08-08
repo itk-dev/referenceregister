@@ -6,7 +6,7 @@ use App\Tests\E2E\PantherTestCase;
 use Symfony\Component\Panther\Client;
 use Symfony\Component\Translation\LocaleSwitcher;
 
-final class GenerateDocsImages extends PantherTestCase
+final class GenerateUserManualImages extends PantherTestCase
 {
     private ?string $context = null;
     private int $imageCount = 0;
@@ -135,7 +135,7 @@ final class GenerateDocsImages extends PantherTestCase
             throw new \RuntimeException('No image context set');
         }
 
-        $imagePath = sprintf('docs/%s/images/%s/%03d-%s', $this->localeSwitcher->getLocale(), $this->context, $this->imageCount++, $name);
+        $imagePath = sprintf('docs/user-manual/%s/images/%s/%03d-%s', $this->localeSwitcher->getLocale(), $this->context, $this->imageCount++, $name);
         if (file_exists($imagePath)) {
             unlink($imagePath);
         }
