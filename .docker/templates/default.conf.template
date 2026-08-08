@@ -21,7 +21,7 @@ server {
     }
 
     # https://vitepress.dev/guide/deploy#nginx
-    location /docs {
+    location /user-manual/ {
         index index.html;
 
         # content location

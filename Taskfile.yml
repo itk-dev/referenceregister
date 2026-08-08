@@ -278,7 +278,7 @@ tasks:
     cmd:
       task: compose
       vars:
-        TASK_ARGS: run --publish 5173:5173 --rm node npx vitepress dev docs --host 0.0.0.0
+        TASK_ARGS: run --publish 5173:5173 --rm node npx vitepress dev docs/user-manual --host 0.0.0.0
 
   docs:build:
     deps:
@@ -286,7 +286,7 @@ tasks:
     cmd:
       task: compose
       vars:
-        TASK_ARGS: run --publish 5173:5173 --rm node npm run docs:build
+        TASK_ARGS: run --rm node npm run docs:build
 
   docs:images:generate:
     desc: 'Generate docs images'

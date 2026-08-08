@@ -35,7 +35,7 @@ final class Version20260805170351 extends AbstractMigration
                 ],
             ],
             // The trailing slash is important!
-            value: '/docs/da/brugervejledning/bruger/',
+            value: '/user-manual/da/bruger/',
         );
         $this->removeSetting(name: 'users_manual_url');
     }
