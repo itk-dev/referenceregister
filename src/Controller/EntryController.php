@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Controller;
 
 use App\Entity\Entry;
@@ -99,11 +101,13 @@ final class EntryController extends AbstractController
         }
         $entries = $this->getLookUpResult();
 
-        return 0 === count($entries)
-            ? $this->render('entry/look-up-miss.html.twig')
-            : $this->render('entry/look-up-hit.html.twig', [
-                'entries' => $entries,
-            ]);
+        return
+            0 === count($entries)
+                ? $this->render('entry/look-up-miss.html.twig')
+                : $this->render('entry/look-up-hit.html.twig', [
+                    'entries' => $entries,
+                ])
+        ;
     }
 
     #[Route('/remove', name: 'app_entry_remove', methods: [Request::METHOD_GET, Request::METHOD_DELETE])]

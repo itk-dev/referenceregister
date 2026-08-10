@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Controller\Admin;
 
 use App\Entity\ActionLogEntry;
@@ -14,7 +16,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 
 use function Symfony\Component\Translation\t;
 
-class ActionLogEntryCrudController extends AbstractCrudController
+final class ActionLogEntryCrudController extends AbstractCrudController
 {
     public static function getEntityFqcn(): string
     {
@@ -44,8 +46,11 @@ class ActionLogEntryCrudController extends AbstractCrudController
         yield ChoiceField::new('type', t('Type', domain: 'action_log_entry'));
         yield DateTimeField::new('createdAt', t('Created at'));
         yield AssociationField::new('createdBy', t('Created by'));
-        yield CodeEditorField::new('context', t('Context', domain: 'action_log_entry'))
-            ->onlyOnDetail()
-            ->formatValue(static fn (array $value): string => json_encode($value, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE));
+        yield CodeEditorField::new('context', t('Context', domain: 'action_log_entry'))->onlyOnDetail()->formatValue(
+            static fn (array $value): string => json_encode(
+                $value,
+                JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE,
+            ),
+        );
     }
 }

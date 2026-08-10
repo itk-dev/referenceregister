@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Controller\Admin;
 
 use App\Entity\Role;
@@ -13,7 +15,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\EmailField;
 
 use function Symfony\Component\Translation\t;
 
-class UserCrudController extends AbstractCrudController
+final class UserCrudController extends AbstractCrudController
 {
     public static function getEntityFqcn(): string
     {
@@ -32,8 +34,7 @@ class UserCrudController extends AbstractCrudController
     #[\Override]
     public function configureActions(Actions $actions): Actions
     {
-        return parent::configureActions($actions)
-            ->disable(Action::NEW, Action::EDIT, Action::DELETE);
+        return parent::configureActions($actions)->disable(Action::NEW, Action::EDIT, Action::DELETE);
     }
 
     #[\Override]

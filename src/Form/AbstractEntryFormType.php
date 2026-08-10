@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Form;
 
 use App\Entity\Department;
@@ -30,32 +32,28 @@ abstract class AbstractEntryFormType extends AbstractType
 
         // @todo Report if no departments are available.
 
-        $builder
-            ->add('identifier', TextType::class, [
-                'label' => $this->getIdentifierLabel(),
-                'attr' => [
-                    'autocomplete' => 'off',
-                ],
-                'help' => $this->getIdentifierHelp(),
-                'constraints' => [
-                    new NotBlank(),
-                    new Identifier(),
-                ],
-            ])
-            ->add('department', EntityType::class, [
-                'class' => Department::class,
-                'label' => $this->getDepartmentLabel(),
-                'placeholder' => 1 === count($departments) ? false : '',
-                'help' => $this->getDepartmentHelp(),
-                'choices' => $departments,
-            ])
-            ->add('submit', SubmitType::class, [
-                'label' => $this->getSubmitLabel(),
-                'attr' => [
-                    'class' => $options['submit_class'],
-                ],
-            ])
-        ;
+        $builder->add('identifier', TextType::class, [
+            'label' => $this->getIdentifierLabel(),
+            'attr' => [
+                'autocomplete' => 'off',
+            ],
+            'help' => $this->getIdentifierHelp(),
+            'constraints' => [
+                new NotBlank(),
+                new Identifier(),
+            ],
+        ])->add('department', EntityType::class, [
+            'class' => Department::class,
+            'label' => $this->getDepartmentLabel(),
+            'placeholder' => 1 === count($departments) ? false : '',
+            'help' => $this->getDepartmentHelp(),
+            'choices' => $departments,
+        ])->add('submit', SubmitType::class, [
+            'label' => $this->getSubmitLabel(),
+            'attr' => [
+                'class' => $options['submit_class'],
+            ],
+        ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Controller\Admin;
 
 use App\Entity\Entry;
@@ -13,7 +15,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 
 use function Symfony\Component\Translation\t;
 
-class EntryCrudController extends AbstractCrudController
+final class EntryCrudController extends AbstractCrudController
 {
     public static function getEntityFqcn(): string
     {
@@ -32,15 +34,13 @@ class EntryCrudController extends AbstractCrudController
     #[\Override]
     public function configureActions(Actions $actions): Actions
     {
-        return parent::configureActions($actions)
-            ->disable(Action::NEW, Action::EDIT, Action::DELETE);
+        return parent::configureActions($actions)->disable(Action::NEW, Action::EDIT, Action::DELETE);
     }
 
     #[\Override]
     public function configureFields(string $pageName): iterable
     {
-        yield TextField::new('hash', t('Hash', domain: 'entry'))
-            ->setSortable(false);
+        yield TextField::new('hash', t('Hash', domain: 'entry'))->setSortable(false);
         yield AssociationField::new('department', t('Department', domain: 'entry'));
         yield DateTimeField::new('createdAt', t('Created at'));
         yield DateTimeField::new('updatedAt', t('Updated at'));

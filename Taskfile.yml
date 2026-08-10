@@ -272,6 +272,12 @@ tasks:
       vars:
         TASK_ARGS: run --rm node npm install
 
+  mago:lint: &mago_command
+    desc: 'Run `mago {{.TASK | replace "mago:" "" }}` inside docker compose setup'
+    cmds:
+      - task: compose
+        vars:
+          TASK_ARGS: run --rm mago {{.TASK | replace "mago:" "" }}
   user-manual:serve:
     deps:
       - user-manual:install
@@ -288,6 +294,8 @@ tasks:
       vars:
         TASK_ARGS: run --rm node npm run user-manual:build
 
+  mago:format: *mago_command
+  mago:analyze: *mago_command
   user-manual:images:generate:
     desc: 'Generate docs images'
     env:
@@ -354,3 +362,21 @@ tasks:
             fi
         done
       shopt: [globstar]
+
+  # https://mago.carthage.software/latest/en/guide/getting-started/
+  mago:run:
+    desc: 'Run all Mago steps (cf. https://mago.carthage.software/latest/en/guide/getting-started/)'
+    cmds:
+      - task: mago:lint
+      - task: mago:format
+      - task: mago:analyze
+
+  mago:lint: &mago_command
+    desc: 'Run `mago {{.TASK | replace "mago:" "" }}` inside docker compose setup'
+    cmds:
+      - task: compose
+        vars:
+          TASK_ARGS: run --rm mago {{.TASK | replace "mago:" "" }}
+
+  mago:format: *mago_command
+  mago:analyze: *mago_command

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Security\Voter;
 
 use App\Entity\Permission;
@@ -24,8 +26,13 @@ final class PermissionVoter extends Voter
         return null !== Permission::tryFrom($attribute);
     }
 
-    protected function voteOnAttribute(string $attribute, mixed $subject, TokenInterface $token, ?Vote $vote = null): bool
-    {
+    protected function voteOnAttribute(
+        string $attribute,
+        mixed $subject,
+        #[\SensitiveParameter]
+        TokenInterface $token,
+        ?Vote $vote = null,
+    ): bool {
         $permission = Permission::tryFrom($attribute);
 
         return match ($permission) {

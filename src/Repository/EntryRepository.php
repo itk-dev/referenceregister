@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Repository;
 
 use App\Entity\Department;
@@ -23,16 +25,16 @@ class EntryRepository extends ServiceEntityRepository
      */
     public function findByHashAndDepartment(string $hash, ?Department $department, bool $includeExpired = false): array
     {
-        $qb = $this->createQueryBuilder('e')
-            ->where('e.hash = :hash')
-            ->setParameter('hash', $hash);
+        $qb = $this->createQueryBuilder('e')->where('e.hash = :hash')->setParameter('hash', $hash);
         if (null !== $department) {
-            $qb->andWhere('e.department = :department')
-                ->setParameter('department', $department->getId(), UuidType::NAME);
+            $qb->andWhere('e.department = :department')->setParameter(
+                'department',
+                $department->getId(),
+                UuidType::NAME,
+            );
         }
         if (!$includeExpired) {
-            $qb->andWhere('e.expiredAt > :now')
-                ->setParameter('now', new \DateTimeImmutable());
+            $qb->andWhere('e.expiredAt > :now')->setParameter('now', new \DateTimeImmutable());
         }
         $query = $qb->getQuery();
 
@@ -46,9 +48,7 @@ class EntryRepository extends ServiceEntityRepository
     {
         $now ??= new \DateTimeImmutable();
 
-        $qb = $this->createQueryBuilder('e')
-            ->where('e.expiredAt <= :now')
-            ->setParameter('now', $now);
+        $qb = $this->createQueryBuilder('e')->where('e.expiredAt <= :now')->setParameter('now', $now);
 
         return $qb->getQuery()->execute();
     }

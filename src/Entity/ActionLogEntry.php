@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Entity;
 
 use App\Entity\ActionLogEntry\Type;
@@ -54,7 +56,6 @@ class ActionLogEntry
                 return $this->createdBy;
             }
         },
-    )
-    {
+    ) {
     }
 }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Repository;
 
 use App\Entity\ActionLogEntry;
@@ -20,7 +22,8 @@ class ActionLogEntryRepository extends ServiceEntityRepository
 
     public function findLookups(User $user, \DateTimeImmutable $since)
     {
-        return $this->createQueryBuilder('e')
+        return $this
+            ->createQueryBuilder('e')
             ->where('e.type = :type')
             ->setParameter('type', ActionLogEntry\Type::EntryLookUp)
             ->andWhere('e.createdBy = :user')

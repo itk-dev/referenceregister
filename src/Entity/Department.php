@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Entity;
 
 use App\Entity\Department\ContactPerson;
@@ -36,7 +38,12 @@ class Department implements \Stringable
     /**
      * @var Collection<int, ContactPerson>
      */
-    #[ORM\OneToMany(targetEntity: ContactPerson::class, mappedBy: 'department', cascade: ['persist'], orphanRemoval: true)]
+    #[ORM\OneToMany(
+        targetEntity: ContactPerson::class,
+        mappedBy: 'department',
+        cascade: ['persist'],
+        orphanRemoval: true,
+    )]
     #[Valid]
     private Collection $contactPeople;
 

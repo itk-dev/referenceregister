@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Entity\Department;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Range;
 
-#[ORM\Embeddable()]
+#[ORM\Embeddable]
 class LookupSlot
 {
     public const int LOOKUPS_MIN = 1;

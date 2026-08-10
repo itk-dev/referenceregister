@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Security;
 
 use App\Entity\Department;
@@ -54,8 +56,7 @@ class OidcAuthenticator extends OpenIdLoginAuthenticator
             $departmentNames = (array) ($claims[$departmentClaim] ?? []);
 
             // Check if user exists already - if not create a user
-            $user = $this->entityManager->getRepository(User::class)
-                ->findOneBy(['email' => $email]);
+            $user = $this->entityManager->getRepository(User::class)->findOneBy(['email' => $email]);
             if (null === $user) {
                 // Create the new user and persist it
                 $user = new User();
@@ -67,7 +68,10 @@ class OidcAuthenticator extends OpenIdLoginAuthenticator
             $map = (array) ($this->options['role_map'] ?? null);
             $userRoles = array_map(static fn (string $role) => (array) ($map[$role] ?? null), $roles);
             // Flatten and filter out invalid roles.
-            $userRoles = array_filter(array_merge(...$userRoles), static fn (string $role) => null !== Role::tryFrom($role));
+            $userRoles = array_filter(
+                array_merge(...$userRoles),
+                static fn (string $role) => null !== Role::tryFrom($role),
+            );
             $user->setRoles($userRoles);
 
             // Map department names. If a name is not mapped, we just keep the name as it is.
@@ -78,8 +82,7 @@ class OidcAuthenticator extends OpenIdLoginAuthenticator
             foreach ($user->getDepartments() as $department) {
                 $user->removeDepartment($department);
             }
-            $departments = $this->entityManager->getRepository(Department::class)
-                ->findBy(['name' => $departmentNames]);
+            $departments = $this->entityManager->getRepository(Department::class)->findBy(['name' => $departmentNames]);
             foreach ($departments as $department) {
                 $user->addDepartment($department);
             }
@@ -95,8 +98,12 @@ class OidcAuthenticator extends OpenIdLoginAuthenticator
         }
     }
 
-    public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): ?Response
-    {
+    public function onAuthenticationSuccess(
+        Request $request,
+        #[\SensitiveParameter]
+        TokenInterface $token,
+        string $firewallName,
+    ): ?Response {
         return new RedirectResponse($this->router->generate('app_default'));
     }
 

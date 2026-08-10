@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Validator;
 
 use App\EntryManager;
@@ -28,9 +30,7 @@ final class IdentifierValidator extends ConstraintValidator
         $value = (string) $value;
 
         if (!$this->entryManager->isValidIdentifier($value)) {
-            $this->context->buildViolation($constraint->message)
-                ->setParameter('{{ value }}', $value)
-                ->addViolation();
+            $this->context->buildViolation($constraint->message)->setParameter('{{ value }}', $value)->addViolation();
         }
     }
 }

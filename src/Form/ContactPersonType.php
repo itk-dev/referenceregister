@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Form;
 
 use App\Entity\Department\ContactPerson;
@@ -15,16 +17,13 @@ class ContactPersonType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $builder
-            ->add('name', TextType::class, [
-                'label' => t('Name', domain: 'contact_person'),
-            ])
-            ->add('email', EmailType::class, [
-                'label' => t('Email', domain: 'contact_person'),
-            ])
-            ->add('phone', TextType::class, [
-                'label' => t('Phone', domain: 'contact_person'),
-            ]);
+        $builder->add('name', TextType::class, [
+            'label' => t('Name', domain: 'contact_person'),
+        ])->add('email', EmailType::class, [
+            'label' => t('Email', domain: 'contact_person'),
+        ])->add('phone', TextType::class, [
+            'label' => t('Phone', domain: 'contact_person'),
+        ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

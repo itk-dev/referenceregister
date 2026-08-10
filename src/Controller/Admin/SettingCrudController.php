@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Controller\Admin;
 
 use App\Admin\Configurator\SettingConfigurator;
@@ -15,7 +17,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 
 use function Symfony\Component\Translation\t;
 
-class SettingCrudController extends AbstractCrudController
+final class SettingCrudController extends AbstractCrudController
 {
     public function __construct(
         Settings $settings,
@@ -46,16 +48,13 @@ class SettingCrudController extends AbstractCrudController
     #[\Override]
     public function configureAssets(Assets $assets): Assets
     {
-        return parent::configureAssets($assets)
-            ->addAssetMapperEntry('admin');
+        return parent::configureAssets($assets)->addAssetMapperEntry('admin');
     }
 
     #[\Override]
     public function configureActions(Actions $actions): Actions
     {
-        return $actions
-            ->disable(Action::DELETE)
-            ->disable(Action::NEW);
+        return $actions->disable(Action::DELETE)->disable(Action::NEW);
     }
 
     /**
@@ -64,14 +63,15 @@ class SettingCrudController extends AbstractCrudController
     #[\Override]
     public function configureFields(string $pageName): iterable
     {
-        yield TextField::new('name', t('Name'))
-            ->formatValue(fn (string $value) => $this->settings->getTranslatedName($value))
-            ->onlyOnIndex();
+        yield TextField::new('name', t('Name'))->formatValue(
+            fn (string $value) => $this->settings->getTranslatedName($value),
+        )->onlyOnIndex();
 
-        yield TextField::new('category', t('Category'))
-            ->formatValue(fn (string $value) => $this->settings->getTranslatedName('category.'.$value))
-            ->onlyOnIndex();
+        yield TextField::new('category', t('Category'))->formatValue(
+            fn (string $value) => $this->settings->getTranslatedName('category.'.$value),
+        )->onlyOnIndex();
 
+        // @mago-ignore lint:no-else-clause
         if (Crud::PAGE_INDEX === $pageName) {
             // The actual field type will be overridden in SettingConfigurator for non-string values.
             yield TextField::new('value', t('Value'));
@@ -80,11 +80,15 @@ class SettingCrudController extends AbstractCrudController
             $setting = $this->getContext()->getEntity()->getInstance();
             $fieldType = $this->settingConfigurator->getFieldType($setting);
             $field = $fieldType::new('value', false);
-            $field->setHelp($setting->getDescription() ?: '');
+            $help = $setting->getDescription();
+            if (null !== $help) {
+                $field->setHelp($help);
+            }
             if ($field instanceof BooleanField) {
                 $field->setRequired(false);
             }
-            if ($formTypeOptions = $setting->getFormTypeOptions()) {
+            $formTypeOptions = $setting->getFormTypeOptions();
+            if (null !== $formTypeOptions) {
                 $field->setFormTypeOptions($formTypeOptions);
             }
 
