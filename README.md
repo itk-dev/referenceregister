@@ -121,7 +121,7 @@ configuration](.docker/templates/default.conf.template) has been extended to ser
 Run
 
 ``` shell
-task docs:build
+task user-manual:build
 ```
 
 to build the documentation site.
@@ -133,10 +133,10 @@ screenshots of actual pages in the application.
 Run
 
 ``` shell
-task docs:images:generate
+task user-manual:images:generate
 ```
 
-to update the images (see [`tests/Docs/GenerateDocsImages.php`](tests/Docs/GenerateDocsImages.php) for details).
+to update the images (see [`tests/Docs/GenerateUserManualImages.php`](tests/Docs/GenerateUserManualImages.php) for details).
 
 After generating image, they are visually compared (using [`imagemagick compare`](https://imagemagick.org/compare)) with
 existing images in git, and any visually identical images are git restored.
@@ -144,7 +144,7 @@ existing images in git, and any visually identical images are git restored.
 If you're curious to see why an image is not restored, i.e. why it's not visually changed, you can run something like
 
 ``` shell
-COMPARE_OUTPUT_FILENAME='_misc/$(basename ${file%.*}).compare.png' task docs:images:restore
+COMPARE_OUTPUT_FILENAME='_misc/$(basename ${file%.*}).compare.png' task user-manual:images:restore
 ```
 
 to save the comparison images (remember to clean up and don't commit the comparison images to git).
@@ -154,11 +154,11 @@ to save the comparison images (remember to clean up and don't commit the compari
 When writing documentation, you can run
 
 ``` shell
-task docs:serve
+task user-manual:serve
 ```
 
-to start [the VitePress dev server](https://vitepress.dev/reference/cli#vitepress-dev) and serve the documentation on
-<http://localhost:5173/docs/>.
+to start [the VitePress dev server](https://vitepress.dev/reference/cli#vitepress-dev) and serve the user manual on
+<http://localhost:5173/user-manual/>.
 
 ## Troubleshooting
 

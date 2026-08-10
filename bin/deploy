@@ -1,0 +1,37 @@
+#!/usr/bin/env bash
+
+project_dir=$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)
+
+git_tag=${1:-}
+if [ -z "$git_tag" ]; then
+  (>&2 echo "Usage: $0 git-tag")
+  exit
+fi
+
+cd "$project_dir" || exit 1
+
+git_remote=origin
+git fetch $git_remote
+
+# https://stackoverflow.com/a/30524983
+if git ls-remote --exit-code --heads $git_remote refs/heads/"$git_tag" 2>&1 > /dev/null >/dev/null 2>&1; then
+    echo "Deploying branch $git_tag"
+    git_remote_tag="$git_remote/$git_tag"
+elif git ls-remote --exit-code --tags $git_remote refs/tags/"$git_tag" 2>&1 > /dev/null >/dev/null 2>&1; then
+    echo "Deploying tag $git_tag"
+    git_remote_tag="$git_tag"
+else
+    (>&2 echo "Invalid tag or branch name: $git_tag")
+    exit 1
+fi
+
+git checkout --force "$git_tag" > /dev/null 2>&1
+git reset --hard "$git_remote_tag" > /dev/null 2>&1
+
+task --yes site:update
+
+# Build user manual
+docker compose run --rm node npm install
+docker compose run --rm node npm run user-manual:build
+# … and clean up
+docker compose run --rm node rm -fr node_modules

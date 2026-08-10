@@ -25,7 +25,7 @@ tasks:
           TASK_ARGS: up --detach --remove-orphans --wait
       - task: composer
         vars:
-          TASK_ARGS: install {{if eq .APP_ENV "prod"}}--no-dev{{end}}
+          TASK_ARGS: install {{if eq (env "APP_ENV") "prod"}}--no-dev --classmap-authoritative{{end}}
       - task: console
         vars:
           TASK_ARGS: doctrine:migrations:migrate --no-interaction
@@ -265,40 +265,42 @@ tasks:
       - task --list-all
     silent: true
 
-  docs:install:
+  user-manual:install:
     internal: true
     cmd:
       task: compose
       vars:
         TASK_ARGS: run --rm node npm install
 
-  docs:serve:
+  user-manual:serve:
     deps:
-      - docs:install
+      - user-manual:install
     cmd:
       task: compose
       vars:
-        TASK_ARGS: run --publish 5173:5173 --rm node npx vitepress dev docs --host 0.0.0.0
+        TASK_ARGS: run --publish 5173:5173 --rm node npx vitepress dev docs/user-manual --host 0.0.0.0
 
-  docs:build:
+  user-manual:build:
     deps:
-      - docs:install
+      - user-manual:install
     cmd:
       task: compose
       vars:
-        TASK_ARGS: run --publish 5173:5173 --rm node npm run docs:build
+        TASK_ARGS: run --rm node npm run user-manual:build
 
-  docs:images:generate:
+  user-manual:images:generate:
     desc: 'Generate docs images'
     env:
       PANTHER_CHROME_ARGUMENTS: '--disable-dev-shm-usage --window-size=1024,540'
     cmds:
-      - for: [en, da]
-        cmd: DEFAULT_LOCALE={{.ITEM}} docker compose run --build --env PANTHER_CHROME_ARGUMENTS --rm panther bin/phpunit tests/Docs/GenerateDocsImages.php
-      - task docs:images:trim
-      - task docs:images:restore
+      - for:
+          - en
+          - da
+        cmd: DEFAULT_LOCALE={{.ITEM}} docker compose run --build --env PANTHER_CHROME_ARGUMENTS --rm panther bin/phpunit tests/Docs/GenerateUserManualImages.php {{.CLI_ARGS}}
+      - task user-manual:images:trim
+      - task user-manual:images:restore
 
-  docs:images:trim:
+  user-manual:images:trim:
     desc: 'Trim docs images'
     vars:
       BORDER_WIDTH: 16
@@ -315,7 +317,7 @@ tasks:
       # https://taskfile.dev/docs/reference/schema#shopt
       shopt: [globstar]
 
-  docs:images:restore:
+  user-manual:images:restore:
     desc: 'Restore docs images that are not visually modified'
     cmd:
       cmd: |
