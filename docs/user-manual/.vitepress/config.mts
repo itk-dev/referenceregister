@@ -55,10 +55,19 @@ export default withMermaid(
                                 text: 'Leder',
                                 link: '/da/leder',
                             },
+                            {
+                                text: 'Login',
+                                link: '/da/login',
+                            },
                         ],
                     },
                     // { text: 'Referenceregister', link: '/', target: '_self' },
                 ],
+            },
+
+            docFooter: {
+                prev: false,
+                next: false,
             },
         },
 
