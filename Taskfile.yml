@@ -25,7 +25,7 @@ tasks:
           TASK_ARGS: up --detach --remove-orphans --wait
       - task: composer
         vars:
-          TASK_ARGS: install {{if eq .APP_ENV "prod"}}--no-dev{{end}}
+          TASK_ARGS: install {{if eq (env "APP_ENV") "prod"}}--no-dev --classmap-authoritative{{end}}
       - task: console
         vars:
           TASK_ARGS: doctrine:migrations:migrate --no-interaction

@@ -1,0 +1,61 @@
+name: Build release
+
+env:
+    COMPOSE_USER: runner
+
+on:
+    push:
+        tags:
+            - "*.*.*"
+
+permissions:
+    contents: write
+
+jobs:
+    create-release:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v6
+
+            - name: Composer install
+              # Cf. `APP_ENV=prod task site:update --dry`
+              run: |
+                  docker network create frontend
+                  cat <<'EOF' > .env.local
+                  APP_ENV=prod
+                  ERROR_MAILER_FROM_EMAIL='error+from@example.com'
+                  ERROR_MAILER_TO_EMAIL='error+to@example.com'
+                  EOF
+                  docker compose run --rm --no-deps phpfpm composer install --no-dev --classmap-authoritative
+                  docker compose run --rm --no-deps phpfpm php bin/console asset-map:compile
+                  docker compose run --rm --no-deps phpfpm composer clear-cache
+                  rm .env.local
+
+            - name: Build user manual
+              # Cf. `task user-manual:build --dry`
+              run: |
+                  docker compose run --rm node npm install
+                  docker compose run --rm node npm run user-manual:build
+                  docker compose run --rm node rm -fr node_modules
+                  # We don't need the docs source in the build
+                  rm -fr docs
+
+            - name: Make assets dir
+              run: |
+                  mkdir -p ../assets
+
+            - name: Create archive
+              run: |
+                  tar --exclude='.git' -zcf ../assets/${{ github.event.repository.name }}-${{ github.ref_name }}.tar.gz ./
+
+            - name: Create checksum
+              run: |
+                  cd ../assets
+                  sha256sum ${{ github.event.repository.name }}-${{ github.ref_name }}.tar.gz > ../assets/checksum.txt
+
+            - name: Create a release in GitHub and uploads assets
+              run: gh release create ${{ github.ref_name }} --verify-tag --generate-notes ../assets/*.*
+              env:
+                  GITHUB_TOKEN: ${{ github.TOKEN }}
+              shell: bash
