@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App;
 
 use App\Entity\ActionLogEntry\Type;
@@ -79,6 +81,7 @@ class EntryManager
     public function isValidIdentifier(string $identifier): bool
     {
         if ($this->isTestMode()) {
+            // @mago-ignore lint:no-error-control-operator
             $match = @preg_match($this->testIdentifierPattern, $identifier);
             // $match is false if the regex is not valid.
             if (false !== $match) {
@@ -104,8 +107,11 @@ class EntryManager
     /**
      * @return Entry[]
      */
-    private function getEntries(string $identifier, ?Department $department = null, ?bool $includeExpired = false): array
-    {
+    private function getEntries(
+        string $identifier,
+        ?Department $department = null,
+        ?bool $includeExpired = false,
+    ): array {
         $hash = $this->hashIdentifier($identifier);
 
         return $this->repository->findByHashAndDepartment($hash, $department, includeExpired: $includeExpired);
@@ -146,7 +152,7 @@ class EntryManager
      */
     public function loadEntries(array $entries): array
     {
-        $ids = array_map(fn (Entry $entry) => $entry->getId(), $entries);
+        $ids = array_map(static fn (Entry $entry) => $entry->getId(), $entries);
 
         return $this->repository->findBy(['id' => $ids]);
     }
@@ -160,14 +166,21 @@ class EntryManager
             1 === $count
                 ? 'One expired entry found.'
                 : '{count} expired entries found.',
-            ['count' => count($entries)]
+            ['count' => count($entries)],
         );
 
         foreach ($entries as $entry) {
+            // @mago-ignore lint:no-else-clause
             if ($dryRun) {
-                $this->logger->info('Entry {entry} expired at {expired_at} will be deleted', ['entry' => $entry, 'expired_at' => $entry->getExpiredAt()]);
+                $this->logger->info('Entry {entry} expired at {expired_at} will be deleted', [
+                    'entry' => $entry,
+                    'expired_at' => $entry->getExpiredAt(),
+                ]);
             } else {
-                $this->logger->info('Deleting entry {entry} expired at {expired_at}', ['entry' => $entry, 'expired_at' => $entry->getExpiredAt()]);
+                $this->logger->info('Deleting entry {entry} expired at {expired_at}', [
+                    'entry' => $entry,
+                    'expired_at' => $entry->getExpiredAt(),
+                ]);
                 $this->entityManager->remove($entry);
             }
         }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Controller\Admin;
 
 use App\Settings;
@@ -30,7 +32,6 @@ abstract class AbstractCrudController extends BaseAbstractCrudController
     #[\Override]
     public function configureActions(Actions $actions): Actions
     {
-        return parent::configureActions($actions)
-            ->disable(Action::DELETE);
+        return parent::configureActions($actions)->disable(Action::DELETE);
     }
 }

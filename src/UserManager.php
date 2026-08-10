@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App;
 
 use App\Entity\Department;
@@ -29,7 +31,13 @@ final readonly class UserManager
     public function getUserDepartments(?User $user = null): array
     {
         $user ??= $this->security->getUser();
-        assert($user instanceof User);
+        if (!$user instanceof User) {
+            throw new LogicException(sprintf(
+                'User object must be an instance of %s. Found %s.',
+                User::class,
+                $user::class,
+            ));
+        }
 
         // An admin user can use all departments.
         $departments = $this->security->isGranted(Role::Administrator->value)

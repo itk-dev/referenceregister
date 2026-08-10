@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Controller\Admin;
 
 use App\Entity\Role;
@@ -13,7 +15,7 @@ use Symfony\Component\HttpFoundation\Response;
 use function Symfony\Component\Translation\t;
 
 #[AdminDashboard(routePath: '/admin', routeName: 'admin')]
-class DashboardController extends AbstractDashboardController
+final class DashboardController extends AbstractDashboardController
 {
     public function __construct(
         private readonly Settings $settings,
@@ -29,8 +31,7 @@ class DashboardController extends AbstractDashboardController
     #[\Override]
     public function configureDashboard(): Dashboard
     {
-        return Dashboard::new()
-            ->setTitle($this->settings->get('site_name'));
+        return Dashboard::new()->setTitle($this->settings->get('site_name'));
     }
 
     #[\Override]
@@ -41,8 +42,7 @@ class DashboardController extends AbstractDashboardController
             yield MenuItem::linkTo(UserCrudController::class, t('Users'));
             yield MenuItem::linkTo(ActionLogEntryCrudController::class, t('Action log'));
         }
-        yield MenuItem::linkTo(SettingCrudController::class, t('Settings'))
-            ->setPermission(Role::Administrator->value);
+        yield MenuItem::linkTo(SettingCrudController::class, t('Settings'))->setPermission(Role::Administrator->value);
         if ('dev' === $this->getParameter('kernel.environment')) {
             yield MenuItem::linkTo(EntryCrudController::class, t('Entries'), icon: 'fa-brands fa-dev');
         }

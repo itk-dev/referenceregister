@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\DataFixtures;
 
 use App\Entity\Department;
@@ -21,14 +23,10 @@ final class DepartmentFixtures extends Fixture implements FixtureGroupInterface
         foreach ($names as $index => $name) {
             $department = new Department()
                 ->setName($name)
-                ->setLookupSlot(new LookupSlot()
-                    ->setStartsAt(match ($index) {
-                        0 => LookupSlot::STARTS_AT_24_HOURS_AGO,
-                        default => LookupSlot::STARTS_AT_MIDNIGHT,
-                    })
-                    ->setMaxLookups(2 ** $index + 1)
-                )
-            ;
+                ->setLookupSlot(new LookupSlot()->setStartsAt(match ($index) {
+                    0 => LookupSlot::STARTS_AT_24_HOURS_AGO,
+                    default => LookupSlot::STARTS_AT_MIDNIGHT,
+                })->setMaxLookups(2 ** $index + 1));
             $contactPerson = new ContactPerson()
                 ->setName('Contact 1')
                 ->setEmail('contact0@department1.example.com')

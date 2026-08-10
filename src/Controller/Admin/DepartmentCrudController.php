@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Controller\Admin;
 
 use App\Admin\Field\LookupSlotField;
@@ -14,7 +16,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 
 use function Symfony\Component\Translation\t;
 
-class DepartmentCrudController extends AbstractCrudController
+final class DepartmentCrudController extends AbstractCrudController
 {
     public static function getEntityFqcn(): string
     {
@@ -33,19 +35,15 @@ class DepartmentCrudController extends AbstractCrudController
     #[\Override]
     public function configureFields(string $pageName): iterable
     {
-        yield IdField::new('id', t('ID', domain: 'department'))
-            ->onlyOnDetail();
+        yield IdField::new('id', t('ID', domain: 'department'))->onlyOnDetail();
         yield TextField::new('name', t('Name', domain: 'department'));
-        yield LookupSlotField::new('lookupSlot', t('Lookup slot', domain: 'department'))
-            ->hideOnIndex();
+        yield LookupSlotField::new('lookupSlot', t('Lookup slot', domain: 'department'))->hideOnIndex();
         yield CollectionField::new('contactPeople', t('Contact people', domain: 'department'))
             ->renderExpanded()
             ->setRequired(true)
             ->setEntryType(ContactPersonType::class)
             ->setEntryIsComplex();
-        yield DateTimeField::new('createdAt', t('Created at'))
-            ->hideOnForm();
-        yield DateTimeField::new('updatedAt', t('Updated at'))
-            ->hideOnForm();
+        yield DateTimeField::new('createdAt', t('Created at'))->hideOnForm();
+        yield DateTimeField::new('updatedAt', t('Updated at'))->hideOnForm();
     }
 }
