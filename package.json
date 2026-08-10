@@ -4,9 +4,9 @@
     "vitepress-plugin-mermaid": "^2.0.17"
   },
   "scripts": {
-    "docs:dev": "vitepress dev docs/user-manual",
-    "docs:build": "vitepress build docs/user-manual",
-    "docs:preview": "vitepress preview docs/user-manual"
+    "user-manual:dev": "vitepress dev docs/user-manual",
+    "user-manual:build": "vitepress build docs/user-manual",
+    "user-manual:preview": "vitepress preview docs/user-manual"
   },
   "//": "https://github.com/emersonbottero/vitepress-plugin-mermaid/issues/94#issuecomment-4311076501",
   "overrides": {
