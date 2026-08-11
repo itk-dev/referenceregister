@@ -100,7 +100,8 @@ final class EntryController extends AbstractController
     public function lookUpResult(): Response
     {
         if (!$this->hasLookUpResult()) {
-            $this->addFlash('warning', t('No look-up result found.'));
+            // @todo Should we tell the user? How do we tell it?
+            // $this->addFlash('warning', t('No look-up result found.'));
 
             return $this->redirectToRoute('app_entry_look_up');
         }

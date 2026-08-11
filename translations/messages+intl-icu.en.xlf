@@ -133,10 +133,6 @@
         <source>Error adding entry ({message})</source>
         <target>Error adding entry ({message})</target>
       </trans-unit>
-      <trans-unit id="sIafcnN" resname="No look-up result found.">
-        <source>No look-up result found.</source>
-        <target>No look-up result found.</target>
-      </trans-unit>
       <trans-unit id="QypKilD" resname="Identifier">
         <source>Identifier</source>
         <target>Identifier</target>
