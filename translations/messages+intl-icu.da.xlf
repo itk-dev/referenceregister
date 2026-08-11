@@ -133,10 +133,6 @@
         <source>Error adding entry ({message})</source>
         <target state="translated">Fejl under registrering ({message})</target>
       </trans-unit>
-      <trans-unit id="sIafcnN" resname="No look-up result found.">
-        <source>No look-up result found.</source>
-        <target state="translated">Intet resultat fundet.</target>
-      </trans-unit>
       <trans-unit id="QypKilD" resname="Identifier">
         <source>Identifier</source>
         <target state="translated">Identifikation</target>
@@ -205,7 +201,7 @@
         <source>Something went wrong!</source>
         <target state="translated">Der er gået noget galt!</target>
       </trans-unit>
-      <trans-unit id="BUcvcgl" resname="Try &lt;a href=&quot;{back_url}&quot;>going back&lt;/a> and retry what you we're doing, or go to the &lt;a href=&quot;{front_page_url}&quot;>front page&lt;/a>.">
+      <trans-unit id="BUcvcgl" resname="Try &lt;a href=&quot;{back_url}&quot;&gt;going back&lt;/a&gt; and retry what you we're doing, or go to the &lt;a href=&quot;{front_page_url}&quot;&gt;front page&lt;/a&gt;.">
         <source>Try &lt;a href="{back_url}"&gt;going back&lt;/a&gt; and retry what you we're doing, or go to the &lt;a href="{front_page_url}"&gt;front page&lt;/a&gt;.</source>
         <target state="translated"><![CDATA[Prøv at <a href="{back_url}">gå tilbage</a> og prøv igen, eller gå til <a href="{front_page_url}">forsiden</a>.]]></target>
       </trans-unit>
