@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="en" target-language="da" datatype="plaintext" original="file.ext">
+    <header>
+      <tool tool-id="symfony" tool-name="Symfony"/>
+    </header>
+    <body>
+      <trans-unit id="37wivZ3" resname="ID">
+        <source>ID</source>
+        <target state="translated">Id</target>
+      </trans-unit>
+      <trans-unit id="wbMeKOh" resname="Name">
+        <source>Name</source>
+        <target state="translated">Navn</target>
+      </trans-unit>
+      <trans-unit id="44Xm2E5" resname="Contact people">
+        <source>Contact people</source>
+        <target state="translated">Kontaktpersoner</target>
+      </trans-unit>
+      <trans-unit id="HNeY5J1" resname="Starts at">
+        <source>Starts at</source>
+        <target state="translated">Starttidspunkt</target>
+      </trans-unit>
+      <trans-unit id="WXUUwlH" resname="Max lookups">
+        <source>Max lookups</source>
+        <target state="translated">Maksimalt antal opslag i perioden</target>
+      </trans-unit>
+      <trans-unit id="dR5NRrR" resname="Lookup slot">
+        <source>Lookup slot</source>
+        <target state="translated">Opslagsperiode</target>
+      </trans-unit>
+      <trans-unit id="Wz56GdM" resname="24 hours ago">
+        <source>24 hours ago</source>
+        <target state="translated">For 24 timer siden</target>
+      </trans-unit>
+      <trans-unit id="fNJUg0W" resname="At midnight">
+        <source>At midnight</source>
+        <target state="translated">Ved midnat</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

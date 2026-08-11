@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="en" target-language="en" datatype="plaintext" original="file.ext">
+    <header>
+      <tool tool-id="symfony" tool-name="Symfony"/>
+    </header>
+    <body>
+      <trans-unit id="VgjgkxU" resname="Add entry">
+        <source>Add entry</source>
+        <target>Add entry</target>
+      </trans-unit>
+      <trans-unit id="0e.0AJP" resname="Remove entry">
+        <source>Remove entry</source>
+        <target>Remove entry</target>
+      </trans-unit>
+      <trans-unit id="P.g8bnt" resname="Look up entry">
+        <source>Look up entry</source>
+        <target>Look up entry</target>
+      </trans-unit>
+      <trans-unit id="kiK66bJ" resname="Look up">
+        <source>Look up</source>
+        <target>Look up</target>
+      </trans-unit>
+      <trans-unit id="qy4mn48" resname="Entry not found">
+        <source>Entry not found</source>
+        <target>Entry not found</target>
+      </trans-unit>
+      <trans-unit id="ZxxVJAS" resname="Entry found">
+        <source>Entry found</source>
+        <target>Entry found</target>
+      </trans-unit>
+      <trans-unit id="AmK50LP" resname="Entry removed">
+        <source>Entry removed</source>
+        <target>Entry removed</target>
+      </trans-unit>
+      <trans-unit id="uV2Unnq" resname="Entry added">
+        <source>Entry added</source>
+        <target>Entry added</target>
+      </trans-unit>
+      <trans-unit id="VXFwlwn" resname="Settings">
+        <source>Settings</source>
+        <target>Settings</target>
+      </trans-unit>
+      <trans-unit id="om5IBU_" resname="Edit setting {name}">
+        <source>Edit setting {name}</source>
+        <target>Edit setting {name}</target>
+      </trans-unit>
+      <trans-unit id="wbMeKOh" resname="Name">
+        <source>Name</source>
+        <target>Name</target>
+      </trans-unit>
+      <trans-unit id="tceoGZr" resname="Category">
+        <source>Category</source>
+        <target>Category</target>
+      </trans-unit>
+      <trans-unit id="NXe.m.c" resname="Value">
+        <source>Value</source>
+        <target>Value</target>
+      </trans-unit>
+      <trans-unit id="mpHDX6N" resname="Administration">
+        <source>Administration</source>
+        <target>Administration</target>
+      </trans-unit>
+      <trans-unit id="S6MjfUy" resname="Log out">
+        <source>Log out</source>
+        <target>Log out</target>
+      </trans-unit>
+      <trans-unit id="uCtVl2y" resname="Site name">
+        <source>Site name</source>
+        <target>Site name</target>
+      </trans-unit>
+      <trans-unit id="2hD.56m" resname="Enable log out">
+        <source>Enable log out</source>
+        <target>Enable log out</target>
+      </trans-unit>
+      <trans-unit id="TkiKoB6" resname="User">
+        <source>User</source>
+        <target>User</target>
+      </trans-unit>
+      <trans-unit id="XveYC5a" resname="Site">
+        <source>Site</source>
+        <target>Site</target>
+      </trans-unit>
+      <trans-unit id="ZJpy.TT" resname="Front page text">
+        <source>Front page text</source>
+        <target>Front page text</target>
+      </trans-unit>
+      <trans-unit id="sG7t8cf" resname="Departments">
+        <source>Departments</source>
+        <target>Departments</target>
+      </trans-unit>
+      <trans-unit id="R_dqsNs" resname="Front page">
+        <source>Front page</source>
+        <target>Front page</target>
+      </trans-unit>
+      <trans-unit id="LZXye1z" resname="Department">
+        <source>Department</source>
+        <target>Department</target>
+      </trans-unit>
+      <trans-unit id="YiYIE0r" resname="Entry expires after">
+        <source>Entry expires after</source>
+        <target>Entry expires after</target>
+      </trans-unit>
+      <trans-unit id="ZvziuWE" resname="Timezone">
+        <source>Timezone</source>
+        <target>Timezone</target>
+      </trans-unit>
+      <trans-unit id="RPUHE9I" resname="Entry">
+        <source>Entry</source>
+        <target>Entry</target>
+      </trans-unit>
+      <trans-unit id="SdhQjq0" resname="Entries">
+        <source>Entries</source>
+        <target>Entries</target>
+      </trans-unit>
+      <trans-unit id="LVVWz4T" resname="Created at">
+        <source>Created at</source>
+        <target>Created at</target>
+      </trans-unit>
+      <trans-unit id="E6miBl5" resname="Updated at">
+        <source>Updated at</source>
+        <target>Updated at</target>
+      </trans-unit>
+      <trans-unit id="1BqSb.F" resname="Expired at">
+        <source>Expired at</source>
+        <target>Expired at</target>
+      </trans-unit>
+      <trans-unit id="BCGjfox" resname="Users">
+        <source>Users</source>
+        <target>Users</target>
+      </trans-unit>
+      <trans-unit id="3rCuur2" resname="Error adding entry ({message})">
+        <source>Error adding entry ({message})</source>
+        <target>Error adding entry ({message})</target>
+      </trans-unit>
+      <trans-unit id="QypKilD" resname="Identifier">
+        <source>Identifier</source>
+        <target>Identifier</target>
+      </trans-unit>
+      <trans-unit id="BUIQ..a" resname="Action">
+        <source>Action</source>
+        <target>Action</target>
+      </trans-unit>
+      <trans-unit id="1_MZEgP" resname="Actions">
+        <source>Actions</source>
+        <target>Actions</target>
+      </trans-unit>
+      <trans-unit id="P9_Y7yU" resname="Created by">
+        <source>Created by</source>
+        <target>Created by</target>
+      </trans-unit>
+      <trans-unit id="JmBViIt" resname="Action log">
+        <source>Action log</source>
+        <target>Action log</target>
+      </trans-unit>
+      <trans-unit id="HXURBZI" resname="EntryAdd">
+        <source>EntryAdd</source>
+        <target>EntryAdd</target>
+      </trans-unit>
+      <trans-unit id="uYu4uOY" resname="EntryLookUp">
+        <source>EntryLookUp</source>
+        <target>EntryLookUp</target>
+      </trans-unit>
+      <trans-unit id="j8o.s1D" resname="EntryRemove">
+        <source>EntryRemove</source>
+        <target>EntryRemove</target>
+      </trans-unit>
+      <trans-unit id="qEIYLxC" resname="Enter identifier to add">
+        <source>Enter identifier to add</source>
+        <target>Enter identifier to add</target>
+      </trans-unit>
+      <trans-unit id="EbqsjUi" resname="An error occurred">
+        <source>An error occurred</source>
+        <target>An error occurred</target>
+      </trans-unit>
+      <trans-unit id="9h3Q.oa" resname="Status code">
+        <source>Status code</source>
+        <target>Status code</target>
+      </trans-unit>
+      <trans-unit id="XLS_e4X" resname="Status text">
+        <source>Status text</source>
+        <target>Status text</target>
+      </trans-unit>
+      <trans-unit id="ejRNMuv" resname="Exception message">
+        <source>Exception message</source>
+        <target>Exception message</target>
+      </trans-unit>
+      <trans-unit id="_9u.dBq" resname="Page not found">
+        <source>Page not found</source>
+        <target>Page not found</target>
+      </trans-unit>
+      <trans-unit id="Fml_6f3" resname="The requested page could not be found.">
+        <source>The requested page could not be found.</source>
+        <target>The requested page could not be found.</target>
+      </trans-unit>
+      <trans-unit id="QY0K9r1" resname="Error details">
+        <source>Error details</source>
+        <target>Error details</target>
+      </trans-unit>
+      <trans-unit id="tCyu6fD" resname="Something went wrong!">
+        <source>Something went wrong!</source>
+        <target>Something went wrong!</target>
+      </trans-unit>
+      <trans-unit id="BUcvcgl" resname="Try &lt;a href=&quot;{back_url}&quot;&gt;going back&lt;/a&gt; and retry what you we're doing, or go to the &lt;a href=&quot;{front_page_url}&quot;&gt;front page&lt;/a&gt;.">
+        <source>Try &lt;a href="{back_url}"&gt;going back&lt;/a&gt; and retry what you we're doing, or go to the &lt;a href="{front_page_url}"&gt;front page&lt;/a&gt;.</source>
+        <target><![CDATA[Try <a href="{back_url}">going back</a> and retry what you we're doing, or go to the <a href="{front_page_url}">front page</a>.]]></target>
+      </trans-unit>
+      <trans-unit id="AlMXjuq" resname="User manual URL">
+        <source>User manual URL</source>
+        <target>User manual URL</target>
+      </trans-unit>
+      <trans-unit id="sGa8sjB" resname="User manual">
+        <source>User manual</source>
+        <target>User manual</target>
+      </trans-unit>
+      <trans-unit id="xjAS7J7" resname="{max, plural, =1 {You have used {used} of # look-up within the current slot.} other {You have used {used} of # look-ups within the current slot.}}">
+        <source>{max, plural, =1 {You have used {used} of # look-up within the current slot.} other {You have used {used} of # look-ups within the current slot.}}</source>
+        <target>{max, plural, =1 {You have used {used} of # look-up within the current slot.} other {You have used {used} of # look-ups within the current slot.}}</target>
+      </trans-unit>
+      <trans-unit id="Ng020iZ" resname="You have used all of your look-ups ({used} of {max}) within the current slot.">
+        <source>You have used all of your look-ups ({used} of {max}) within the current slot.</source>
+        <target>You have used all of your look-ups ({used} of {max}) within the current slot.</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

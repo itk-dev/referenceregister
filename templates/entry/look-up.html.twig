@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ 'Look up'|trans }}{% endblock %}
+
+{% block content %}
+    {% if lookup_slot.allowsLookup %}
+        {{ form(form) }}
+
+        <div class="lookup-slot-info">
+            {% trans with {used: lookup_slot.used, max: lookup_slot.max} %}
+            {max, plural, =1 {You have used {used} of # look-up within the current slot.} other {You have used {used} of # look-ups within the current slot.}}
+            {% endtrans %}
+        </div>
+    {% else %}
+        {{ include('_components/alert.html.twig', {type: 'warning', message: 'You have used all of your look-ups ({used} of {max}) within the current slot.'|trans({used: lookup_slot.used, max: lookup_slot.max})}) }}
+    {% endif %}
+{% endblock %}

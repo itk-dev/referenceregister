@@ -1,0 +1,396 @@
+version: '3'
+
+vars:
+  DOCKER_COMPOSE: '{{.TASK_DOCKER_COMPOSE | default "docker compose"}}'
+
+# https://taskfile.dev/usage/#env-files
+dotenv: ['.env.local', '.env']
+
+tasks:
+  site:install:
+    desc: Install site from scratch
+    prompt: Really (re)install site?
+    cmds:
+      - task: compose
+        vars:
+          TASK_ARGS: down --remove-orphans
+      - task: site:update
+
+  site:update:
+    desc: Update site
+    cmds:
+      - task: docker:pull
+      - task: compose
+        vars:
+          TASK_ARGS: up --detach --remove-orphans --wait
+      - task: composer
+        vars:
+          TASK_ARGS: install {{if eq (env "APP_ENV") "prod"}}--no-dev --classmap-authoritative{{end}}
+      - task: console
+        vars:
+          TASK_ARGS: doctrine:migrations:migrate --no-interaction
+      - task: site:update:dev
+      - task: site:update:prod
+      - task: console
+        vars:
+          TASK_ARGS: cache:clear
+
+  site:update:dev:
+    desc: Additional site update commands for "dev"
+    if: '[ "$APP_ENV" = "dev" ]'
+    cmds:
+      - rm -fr var/share/{{.APP_ENV}}
+    internal: true
+
+  site:update:prod:
+    desc: Additional site update commands for "prod"
+    if: '[ "$APP_ENV" = "prod" ]'
+    # https://symfony.com/doc/current/frontend/asset_mapper.html#serving-assets-in-dev-vs-prod
+    cmds:
+      - task: console
+        vars:
+          TASK_ARGS: asset-map:compile
+      - rm -fr var/share/{{.APP_ENV}}
+    internal: true
+
+  translations:extract:
+    desc: Extract translations
+    cmds:
+      - task: composer
+        vars:
+          TASK_ARGS: translations-extract
+      # https://github.com/EasyCorp/EasyAdminBundle/issues/7722
+      - rm translations/_undefined+intl-icu.*.xlf
+
+  fixtures:load:
+    desc: Load fixtures
+    prompt: Really load fixtures?
+    env:
+      USE_TEST_ENTRY_MANAGER: true
+    cmd:
+      task: console
+      vars:
+        # Don't purge settings
+        TASK_ARGS: doctrine:fixtures:load --purge-exclusions=setting --group app --no-interaction
+
+  test:
+    desc: Run all tests
+    cmds:
+      - task: test:E2E
+      - task: test:application
+      - task: test:integration
+
+  test:integration: &test_task
+    env:
+      APP_ENV: test
+    desc: 'Run all {{.TASK | replace "test:" "" }} tests'
+    cmd:
+      task: compose
+      vars:
+        TASK_ARGS: exec --env APP_ENV phpfpm php bin/phpunit tests/{{.TASK | replace "test:" "" | title }}
+
+  test:application: *test_task
+
+  test:E2E:
+    desc: 'Run all {{.TASK | replace "test:" "" }} tests'
+    cmd:
+      task: compose
+      vars:
+        TASK_ARGS: run --build --rm panther bin/phpunit tests/{{.TASK | replace "test:" "" | title }}
+
+  compose:
+    desc: Run `docker compose` command, e.g. `task {{.TASK}} -- config`
+    cmd: '{{.DOCKER_COMPOSE}} {{.TASK_ARGS}} {{.CLI_ARGS}}'
+
+  composer:
+    desc: Run `composer` command, e.g. `task {{.TASK}} -- show`
+    cmd:
+      task: compose
+      vars:
+        TASK_ARGS: exec --env APP_ENV phpfpm composer {{.TASK_ARGS}}
+
+  php:
+    desc: Run PHP, e.g. `task {{.TASK}} -- bin/console`
+    cmd:
+      task: compose
+      vars:
+        TASK_ARGS: exec --env APP_ENV phpfpm php {{.TASK_ARGS}}
+
+  console:
+    desc: Run Symfony console command, e.g. `task {{.TASK}} -- cache:clear`
+    cmd:
+      task: php
+      vars:
+        TASK_ARGS: bin/console {{.TASK_ARGS}}
+
+  coding-standards:apply:
+    desc: 'Apply coding standards'
+    cmds:
+      - task: coding-standards:assets:apply
+      - task: coding-standards:composer:apply
+      - task: coding-standards:markdown:apply
+      - task: coding-standards:php:apply
+      - task: coding-standards:twig:apply
+      - task: coding-standards:yaml:apply
+
+  coding-standards:check:
+    desc: 'Apply coding standards'
+    cmds:
+      - task: coding-standards:assets:check
+      - task: coding-standards:composer:check
+      - task: coding-standards:markdown:check
+      - task: coding-standards:php:check
+      - task: coding-standards:twig:check
+      - task: coding-standards:yaml:check
+
+  coding-standards:assets:apply:
+    desc: 'Apply coding standards for assets'
+    cmd:
+      task: compose
+      vars:
+        TASK_ARGS: run --rm prettier 'assets/' --write
+
+  coding-standards:assets:check:
+    desc: 'Apply and check coding standards for assets'
+    cmds:
+      - task: coding-standards:assets:apply
+      - task: compose
+        vars:
+          TASK_ARGS: run --rm prettier 'assets/' --check
+
+  coding-standards:composer:apply:
+    desc: 'Apply coding standards for Composer'
+    cmd:
+      task: composer
+      vars:
+        TASK_ARGS: normalize
+
+  coding-standards:composer:check:
+    desc: 'Apply and check coding standards for Composer'
+    cmds:
+      - task: coding-standards:composer:apply
+      - task: composer
+        vars:
+          TASK_ARGS: audit
+      - task: composer
+        vars:
+          TASK_ARGS: normalize --dry-run
+      - task: composer
+        vars:
+          TASK_ARGS: validate --strict
+
+  coding-standards:markdown:apply:
+    desc: 'Apply coding standards for Markdown'
+    cmds:
+      - task: compose
+        vars:
+          TASK_ARGS: run --rm markdownlint '**/*.md' --fix
+
+  coding-standards:markdown:check:
+    desc: 'Apply and check coding standards for Markdown'
+    cmds:
+      - task: coding-standards:markdown:apply
+      - task: compose
+        vars:
+          TASK_ARGS: run --rm markdownlint '**/*.md'
+
+  coding-standards:php:apply:
+    desc: 'Apply coding standards for PHP'
+    cmds:
+      - task: compose
+        vars:
+          TASK_ARGS: exec phpfpm vendor/bin/rector
+      - task: compose
+        vars:
+          TASK_ARGS: exec phpfpm vendor/bin/php-cs-fixer fix
+
+  coding-standards:php:check:
+    desc: 'Apply and check coding standards for PHP'
+    cmds:
+      - task: coding-standards:php:apply
+      - task: compose
+        vars:
+          TASK_ARGS: exec phpfpm vendor/bin/rector --dry-run
+      - task: compose
+        vars:
+          TASK_ARGS: exec phpfpm vendor/bin/php-cs-fixer check
+
+  coding-standards:twig:apply:
+    desc: 'Apply coding standards for Twig'
+    cmds:
+      - task: compose
+        vars:
+          TASK_ARGS: exec phpfpm vendor/bin/twig-cs-fixer fix
+
+  coding-standards:twig:check:
+    desc: 'Apply and check coding standards for Twig'
+    cmds:
+      - task: coding-standards:twig:apply
+      - task: compose
+        vars:
+          TASK_ARGS: exec phpfpm vendor/bin/twig-cs-fixer check
+
+  coding-standards:yaml:apply:
+    desc: 'Apply coding standards for YAML'
+    cmds:
+      - task: compose
+        vars:
+          TASK_ARGS: run --rm prettier --parser yaml phpstan*.neon '**/*.{yml,yaml}' --write
+
+  coding-standards:yaml:check:
+    desc: 'Apply and check coding standards for YAML'
+    cmds:
+      - task: coding-standards:yaml:apply
+      - task: compose
+        vars:
+          TASK_ARGS: run --rm prettier --parser yaml phpstan*.neon '**/*.{yml,yaml}' --check
+
+  code-analysis:
+    desc: 'Run code analysis'
+    cmds:
+      - task: code-analysis:phpstan
+      - task: code-analysis:mago
+
+  code-analysis:phpstan:
+    desc: 'Run PHPStan'
+    cmds:
+      - task: compose
+        vars:
+          TASK_ARGS: run --rm --no-deps phpfpm composer install --no-scripts
+      - task: compose
+        vars:
+          TASK_ARGS: run --rm --no-deps phpfpm vendor/bin/phpstan
+
+  code-analysis:mago:
+    desc: 'Run Mago analysis'
+    cmd:
+      task: mago:analyze
+
+  docker:pull:
+    desc: 'Pull all development docker images'
+    cmds:
+      - task: compose
+        vars:
+          TASK_ARGS: --profile '*' pull
+    internal: true
+
+  default:
+    cmds:
+      - task --list-all
+    silent: true
+
+  user-manual:install:
+    internal: true
+    cmd:
+      task: compose
+      vars:
+        TASK_ARGS: run --rm node npm install
+
+  mago:lint: &mago_command
+    desc: 'Run `mago {{.TASK | replace "mago:" "" }}` inside docker compose setup'
+    cmds:
+      - task: compose
+        vars:
+          TASK_ARGS: run --rm mago {{.TASK | replace "mago:" "" }}
+  user-manual:serve:
+    deps:
+      - user-manual:install
+    cmd:
+      task: compose
+      vars:
+        TASK_ARGS: run --publish 5173:5173 --rm node npx vitepress dev docs/user-manual --host 0.0.0.0
+
+  user-manual:build:
+    deps:
+      - user-manual:install
+    cmd:
+      task: compose
+      vars:
+        TASK_ARGS: run --rm node npm run user-manual:build
+
+  mago:format: *mago_command
+  mago:analyze: *mago_command
+  user-manual:images:generate:
+    desc: 'Generate docs images'
+    env:
+      PANTHER_CHROME_ARGUMENTS: '--disable-dev-shm-usage --window-size=1024,540'
+    cmds:
+      - for:
+          - en
+          - da
+        cmd: DEFAULT_LOCALE={{.ITEM}} docker compose run --build --env PANTHER_CHROME_ARGUMENTS --rm panther bin/phpunit tests/Docs/GenerateUserManualImages.php {{.CLI_ARGS}}
+      - task user-manual:images:trim
+      - task user-manual:images:restore
+
+  user-manual:images:trim:
+    desc: 'Trim docs images'
+    vars:
+      BORDER_WIDTH: 16
+    # Trim and add top and bottom border
+    cmd:
+      cmd: |
+        docker compose run --rm --entrypoint mogrify imagemagick \
+          -strip \
+          -background white \
+          -trim \
+          -gravity north -splice 0x{{.BORDER_WIDTH}}+0+0 \
+          -gravity south -splice 0x{{.BORDER_WIDTH}}+0+0 \
+          docs/**/*.png
+      # https://taskfile.dev/docs/reference/schema#shopt
+      shopt: [globstar]
+
+  user-manual:images:restore:
+    desc: 'Restore docs images that are not visually modified'
+    cmd:
+      cmd: |
+        # https://stackoverflow.com/a/949391
+        latest_commit=$(git rev-parse --verify HEAD)
+
+         # M docs/en/images/manager/006-entry-look-up.png
+        status_modified_pattern="^ M "
+
+        debug_output_filename=false
+        if [[ '{{.COMPARE_OUTPUT_FILENAME | default "-"}}' != '-' ]]; then
+          debug_output_filename=true
+        fi
+
+        shopt -s globstar nullglob
+        for file in docs/**/*.png; do
+            status=$(git status --porcelain "$file")
+            if [[ "$status" =~ $status_modified_pattern ]]; then
+                if git cat-file -p "$latest_commit":"$file" | \
+                    docker compose run --quiet --rm --entrypoint compare imagemagick \
+                    - \
+                    "$file" \
+                    {{.COMPARE_OUTPUT_FILENAME | default "-"}} > /dev/null 2>&1; then
+                    echo "Restoring $file"
+                    git restore "$file"
+                else
+                    echo "$file modified"
+                    if [ "$debug_output_filename" = true ]; then
+                      echo
+                      echo "Comparison image written to {{.COMPARE_OUTPUT_FILENAME | default "-"}}"
+                      echo
+                    fi
+                fi
+            fi
+        done
+      shopt: [globstar]
+
+  # https://mago.carthage.software/latest/en/guide/getting-started/
+  mago:run:
+    desc: 'Run all Mago steps (cf. https://mago.carthage.software/latest/en/guide/getting-started/)'
+    cmds:
+      - task: mago:lint
+      - task: mago:format
+      - task: mago:analyze
+
+  mago:lint: &mago_command
+    desc: 'Run `mago {{.TASK | replace "mago:" "" }}` inside docker compose setup'
+    cmds:
+      - task: compose
+        vars:
+          TASK_ARGS: run --rm mago {{.TASK | replace "mago:" "" }}
+
+  mago:format: *mago_command
+  mago:analyze: *mago_command

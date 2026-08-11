@@ -1,0 +1,32 @@
+services:
+    # https://github.com/geigerzaehler/oidc-provider-mock
+    idp:
+        image: &oidc_provider_mock_image ghcr.io/geigerzaehler/oidc-provider-mock:latest
+        # Let this container be accessible both internally and externally on the same domain.
+        container_name: idp.${COMPOSE_DOMAIN:?}
+        networks:
+            - app
+            - frontend
+        labels:
+            - "traefik.enable=true"
+            - "traefik.docker.network=frontend"
+            - "traefik.http.routers.${COMPOSE_PROJECT_NAME:?}-idp.rule=Host(`idp.${COMPOSE_DOMAIN:?}`)"
+        expose:
+            - "80"
+        command:
+            [
+                "--port",
+                "80",
+                "--user-claims",
+                '{"sub": "User (Department 1)", "upn": "user@department1.example.com", "roles": ["User"], "departments": ["Department 1"] }',
+                "--user-claims",
+                '{"sub": "User (Department 2)", "upn": "user@department2.example.com", "roles": ["User"], "departments": ["Department 2"] }',
+                "--user-claims",
+                '{"sub": "User (Department 3)", "upn": "user@department3.example.com", "roles": ["User"], "departments": ["Department 3"] }',
+                "--user-claims",
+                '{"sub": "Manager (Department 1)", "upn": "manager@department1.example.com", "roles": ["Manager"], "departments": ["Department 1"] }',
+                "--user-claims",
+                '{"sub": "Manager (Department 2)", "upn": "manager@department2.example.com", "roles": ["Manager"], "departments": ["Department 2"] }',
+                "--user-claims",
+                '{"sub": "Admin", "upn": "admin@example.com", "name": "Admin And", "roles": ["Administrator"] }',
+            ]

@@ -1,0 +1,16 @@
+include:
+    - docker-compose.docs.yml
+    - docker-compose.oidc.yml
+
+services:
+    phpfpm:
+        image: itkdev/php8.5-fpm:latest
+
+    # https://mago.carthage.software/latest/en/guide/installation/#docker
+    mago:
+        image: ghcr.io/carthage-software/mago
+        profiles:
+            - dev
+        volumes:
+            - ./:/app
+        working_dir: /app

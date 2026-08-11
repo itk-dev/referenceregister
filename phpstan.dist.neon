@@ -1,0 +1,18 @@
+parameters:
+    level: 6
+    paths:
+        - bin/
+        - config/
+        - public/
+        - src/
+        # - tests/
+
+    excludePaths:
+        - src/Kernel.php
+
+    ignoreErrors:
+        - message: '#Property App\\Entity\\[^:]+::\$id \(Symfony\\Component\\Uid\\Uuid\|null\) is never assigned Symfony\\Component\\Uid\\Uuid so it can be removed from the property type.#'
+          path: src/Entity/*
+
+        - message: '#Method .+::log\(\) has parameter \$context with no value type specified in iterable type array.#'
+          path: src/
