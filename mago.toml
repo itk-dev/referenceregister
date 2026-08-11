@@ -41,6 +41,7 @@ literal-named-argument = { enabled = false }
 halstead = { effort-threshold = 7000 }
 excessive-parameter-list = { enabled = false }
 too-many-methods = { enabled = false }
+cyclomatic-complexity = { enabled = false }
 
 [analyzer]
 plugins = []

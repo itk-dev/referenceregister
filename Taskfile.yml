@@ -248,6 +248,12 @@ tasks:
   code-analysis:
     desc: 'Run code analysis'
     cmds:
+      - task: code-analysis:phpstan
+      - task: mago:analyze
+
+  code-analysis:phpstan:
+    desc: 'Run PHPStan'
+    cmds:
       - task: compose
         vars:
           TASK_ARGS: exec phpfpm vendor/bin/phpstan

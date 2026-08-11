@@ -16,45 +16,51 @@ final class UserFixtures extends Fixture implements DependentFixtureInterface, F
 {
     public function load(ObjectManager $manager): void
     {
+        $email = 'admin@example.com';
         $user = new User()
-            ->setEmail('admin@example.com')
+            ->setEmail($email)
             ->setRoles([Role::Administrator->value]);
         $manager->persist($user);
 
+        $email = 'manager@department1.example.com';
         $user = new User()
-            ->setEmail('manager@department1.example.com')
+            ->setEmail($email)
             ->setRoles([Role::Manager->value])
             ->addDepartment($this->getReference('department:Department 1', Department::class));
         $manager->persist($user);
-        $this->addReference($user->getEmail(), $user);
+        $this->addReference($email, $user);
 
+        $email = 'manager@department2.example.com';
         $user = new User()
-            ->setEmail('manager@department2.example.com')
+            ->setEmail($email)
             ->setRoles([Role::Manager->value])
             ->addDepartment($this->getReference('department:Department 2', Department::class));
         $manager->persist($user);
-        $this->addReference($user->getEmail(), $user);
+        $this->addReference($email, $user);
 
+        $email = 'user@department1.example.com';
         $user = new User()
-            ->setEmail('user@department1.example.com')
+            ->setEmail($email)
             ->setRoles([Role::User->value])
             ->addDepartment($this->getReference('department:Department 1', Department::class));
         $manager->persist($user);
-        $this->addReference($user->getEmail(), $user);
+        $this->addReference($email, $user);
 
+        $email = 'user@department2.example.com';
         $user = new User()
-            ->setEmail('user@department2.example.com')
+            ->setEmail($email)
             ->setRoles([Role::User->value])
             ->addDepartment($this->getReference('department:Department 2', Department::class));
         $manager->persist($user);
-        $this->addReference($user->getEmail(), $user);
+        $this->addReference($email, $user);
 
+        $email = 'user@department3.example.com';
         $user = new User()
-            ->setEmail('user@department3.example.com')
+            ->setEmail($email)
             ->setRoles([Role::User->value])
             ->addDepartment($this->getReference('department:Department 3', Department::class));
         $manager->persist($user);
-        $this->addReference($user->getEmail(), $user);
+        $this->addReference($email, $user);
 
         $manager->flush();
     }

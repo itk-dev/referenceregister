@@ -8,6 +8,7 @@ use App\Entity\Entry;
 use App\Entity\Permission;
 use App\Entity\User;
 use App\EntryManager;
+use App\Exception\LogicException;
 use App\Form\EntryAddFormType;
 use App\Form\EntryLookUpFormType;
 use App\Form\EntryRemoveFormType;
@@ -40,6 +41,10 @@ final class EntryController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             try {
+                if (null === $entry->department) {
+                    throw new LogicException('Entry department cannot be null');
+                }
+
                 $this->manager->addEntry($entry->identifier, $entry->department);
 
                 return $this->redirectToRoute('app_entry_add_success');
@@ -122,6 +127,10 @@ final class EntryController extends AbstractController
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+            if (null === $entry->department) {
+                throw new LogicException('Entry department cannot be null');
+            }
+
             if ($this->manager->removeEntry($entry->identifier, $entry->department)) {
                 return $this->redirectToRoute('app_entry_remove_success');
             }
@@ -163,10 +172,16 @@ final class EntryController extends AbstractController
     private function getLookUpResult(): array
     {
         $session = $this->requestStack->getSession();
-        $entries = (array) $session->get(self::SESSION_LOOK_UP_RESULT);
+        // @mago-ignore analysis:mixed-assignment
+        $value = $session->get(self::SESSION_LOOK_UP_RESULT);
+        if (!is_array($value) || !array_is_list($value)) {
+            return [];
+        }
         $session->remove(self::SESSION_LOOK_UP_RESULT);
 
-        foreach ($entries as $entry) {
+        $entries = [];
+        /** @var mixed $entry */
+        foreach ($value as $entry) {
             if (!$entry instanceof Entry) {
                 return [];
             }

@@ -13,6 +13,7 @@ use Symfony\Bridge\Doctrine\Types\UuidType;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Uid\Uuid;
+use Symfony\Component\Validator\Constraints\Email;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_EMAIL', fields: ['email'])]
@@ -27,8 +28,12 @@ class User implements UserInterface, \Stringable
     #[ORM\CustomIdGenerator(class: 'doctrine.uuid_generator')]
     private ?Uuid $id = null;
 
+    /**
+     * @var non-empty-string
+     */
     #[ORM\Column(length: 180)]
-    private ?string $email = null;
+    #[Email]
+    private string $email;
 
     /**
      * @var list<string> The user roles
@@ -49,7 +54,7 @@ class User implements UserInterface, \Stringable
 
     public function __toString(): string
     {
-        return (string) $this->email;
+        return $this->email;
     }
 
     public function getId(): ?Uuid
@@ -57,11 +62,14 @@ class User implements UserInterface, \Stringable
         return $this->id;
     }
 
-    public function getEmail(): ?string
+    public function getEmail(): string
     {
         return $this->email;
     }
 
+    /**
+     * @param non-empty-string $email
+     */
     public function setEmail(string $email): static
     {
         $this->email = $email;
@@ -76,7 +84,7 @@ class User implements UserInterface, \Stringable
      */
     public function getUserIdentifier(): string
     {
-        return (string) $this->email;
+        return $this->email;
     }
 
     /**

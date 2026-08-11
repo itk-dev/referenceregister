@@ -15,14 +15,4 @@ use Symfony\Component\Validator\Constraint;
 final class Identifier extends Constraint
 {
     public string $message = 'Invalid identifier.';
-
-    // You can use #[HasNamedArguments] to make some constraint options required.
-    // All configurable options must be passed to the constructor.
-    public function __construct(
-        public string $mode = 'strict',
-        ?array $groups = null,
-        mixed $payload = null,
-    ) {
-        parent::__construct([], $groups, $payload);
-    }
 }
