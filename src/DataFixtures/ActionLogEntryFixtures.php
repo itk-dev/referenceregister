@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\DataFixtures;
 
 use App\Entity\ActionLogEntry;
-use App\Entity\Department;
 use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Bundle\FixturesBundle\FixtureGroupInterface;
@@ -23,9 +22,8 @@ final class ActionLogEntryFixtures extends Fixture implements DependentFixtureIn
 
         // Use up all look-ups for user
         $user = $this->getReference('user@department2.example.com', User::class);
-        /** @var Department $department */
         $department = $user->getDepartments()[0];
-        $maxLookups = $department->getLookupSlot()->getMaxLookups();
+        $maxLookups = (int) $department->getLookupSlot()?->getMaxLookups();
         for ($i = 0; $i < $maxLookups; ++$i) {
             $entry = new ActionLogEntry($type, [], $user);
             $manager->persist($entry);

@@ -13,11 +13,13 @@ use Doctrine\ORM\EntityManagerInterface;
 use ItkDev\CprValidator\CprValidator;
 use Psr\Log\LoggerAwareTrait;
 use Psr\Log\LoggerInterface;
+use Psr\Log\LoggerTrait;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 
 class EntryManager
 {
     use LoggerAwareTrait;
+    use LoggerTrait;
 
     public function __construct(
         private readonly EntryRepository $repository,
@@ -80,7 +82,7 @@ class EntryManager
 
     public function isValidIdentifier(string $identifier): bool
     {
-        if ($this->isTestMode()) {
+        if ($this->isTestMode() && null !== $this->testIdentifierPattern) {
             // @mago-ignore lint:no-error-control-operator
             $match = @preg_match($this->testIdentifierPattern, $identifier);
             // $match is false if the regex is not valid.
@@ -110,7 +112,7 @@ class EntryManager
     private function getEntries(
         string $identifier,
         ?Department $department = null,
-        ?bool $includeExpired = false,
+        bool $includeExpired = false,
     ): array {
         $hash = $this->hashIdentifier($identifier);
 
@@ -138,7 +140,7 @@ class EntryManager
 
     private function computeExpiredAt(Entry $entry): \DateTimeImmutable
     {
-        $entryExpiresAfterSpec = $this->settings->get('entry_expires_after');
+        $entryExpiresAfterSpec = (string) $this->settings->get('entry_expires_after');
 
         return new \DateTimeImmutable($entryExpiresAfterSpec);
     }
@@ -162,7 +164,7 @@ class EntryManager
         $entries = $this->repository->findExpired($now);
         $count = count($entries);
 
-        $this->logger->info(
+        $this->info(
             1 === $count
                 ? 'One expired entry found.'
                 : '{count} expired entries found.',
@@ -172,12 +174,12 @@ class EntryManager
         foreach ($entries as $entry) {
             // @mago-ignore lint:no-else-clause
             if ($dryRun) {
-                $this->logger->info('Entry {entry} expired at {expired_at} will be deleted', [
+                $this->info('Entry {entry} expired at {expired_at} will be deleted', [
                     'entry' => $entry,
                     'expired_at' => $entry->getExpiredAt(),
                 ]);
             } else {
-                $this->logger->info('Deleting entry {entry} expired at {expired_at}', [
+                $this->info('Deleting entry {entry} expired at {expired_at}', [
                     'entry' => $entry,
                     'expired_at' => $entry->getExpiredAt(),
                 ]);
@@ -186,11 +188,16 @@ class EntryManager
         }
         $this->entityManager->flush();
 
-        $this->logger->info('All expired entries deleted.');
+        $this->info('All expired entries deleted.');
     }
 
-    private function isTestMode()
+    private function isTestMode(): bool
     {
         return null !== $this->testIdentifierPattern;
+    }
+
+    public function log($level, \Stringable|string $message, array $context = []): void
+    {
+        $this->logger?->log($level, $message, $context);
     }
 }

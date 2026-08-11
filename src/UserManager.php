@@ -24,7 +24,7 @@ final readonly class UserManager
      *
      * @param User|null $user if not set, the current user will be used
      *
-     * @return Department[]
+     * @return non-empty-array<Department>
      *
      * @throws LogicException if user has no departments
      */
@@ -32,11 +32,7 @@ final readonly class UserManager
     {
         $user ??= $this->security->getUser();
         if (!$user instanceof User) {
-            throw new LogicException(sprintf(
-                'User object must be an instance of %s. Found %s.',
-                User::class,
-                $user::class,
-            ));
+            throw new LogicException(sprintf('User object must be an instance of %s. Found %s.', User::class, null === $user ? 'null' : $user::class));
         }
 
         // An admin user can use all departments.

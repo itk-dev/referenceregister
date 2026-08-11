@@ -20,8 +20,12 @@ class ActionLogEntryRepository extends ServiceEntityRepository
         parent::__construct($registry, ActionLogEntry::class);
     }
 
-    public function findLookups(User $user, \DateTimeImmutable $since)
+    /**
+     * @return ActionLogEntry[]
+     */
+    public function findLookups(User $user, \DateTimeImmutable $since): array
     {
+        // @mago-ignore analysis:mixed-return-statement
         return $this
             ->createQueryBuilder('e')
             ->where('e.type = :type')

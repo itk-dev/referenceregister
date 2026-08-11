@@ -38,6 +38,7 @@ class EntryRepository extends ServiceEntityRepository
         }
         $query = $qb->getQuery();
 
+        // @mago-ignore analysis:mixed-return-statement
         return $query->execute();
     }
 
@@ -50,6 +51,7 @@ class EntryRepository extends ServiceEntityRepository
 
         $qb = $this->createQueryBuilder('e')->where('e.expiredAt <= :now')->setParameter('now', $now);
 
+        // @mago-ignore analysis:mixed-return-statement
         return $qb->getQuery()->execute();
     }
 }

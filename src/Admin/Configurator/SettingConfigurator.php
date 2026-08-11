@@ -29,7 +29,7 @@ final class SettingConfigurator implements FieldConfiguratorInterface
 
     public function configure(FieldDto $field, EntityDto $entityDto, AdminContext $context): void
     {
-        if (Crud::PAGE_INDEX !== $context->getCrud()->getCurrentPage()) {
+        if (Crud::PAGE_INDEX !== $context->getCrud()?->getCurrentPage()) {
             return;
         }
 

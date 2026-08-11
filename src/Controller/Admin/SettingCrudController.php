@@ -12,6 +12,8 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Assets;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
+use EasyCorp\Bundle\EasyAdminBundle\Contracts\Field\FieldInterface;
+use EasyCorp\Bundle\EasyAdminBundle\Contracts\Field\FieldTraitAwareInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 
@@ -34,6 +36,7 @@ final class SettingCrudController extends AbstractCrudController
     #[\Override]
     public function configureCrud(Crud $crud): Crud
     {
+        // @mago-ignore analysis:possible-method-access-on-null,mixed-method-access
         return parent::configureCrud($crud)
             ->setEntityPermission(Role::SettingEditor->value)
             ->setPageTitle(Crud::PAGE_INDEX, t('Settings'))
@@ -77,15 +80,17 @@ final class SettingCrudController extends AbstractCrudController
             yield TextField::new('value', t('Value'));
         } elseif (Crud::PAGE_EDIT === $pageName) {
             /** @var Setting $setting */
-            $setting = $this->getContext()->getEntity()->getInstance();
+            $setting = $this->getContext()?->getEntity()?->getInstance();
             $fieldType = $this->settingConfigurator->getFieldType($setting);
+            /** @var FieldInterface $field */
             $field = $fieldType::new('value', false);
+            if ($field instanceof BooleanField) {
+                $field->setRequired(false);
+            }
+            /** @var FieldTraitAwareInterface $field */
             $help = $setting->getDescription();
             if (null !== $help) {
                 $field->setHelp($help);
-            }
-            if ($field instanceof BooleanField) {
-                $field->setRequired(false);
             }
             $formTypeOptions = $setting->getFormTypeOptions();
             if (null !== $formTypeOptions) {

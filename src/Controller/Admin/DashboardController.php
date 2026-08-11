@@ -31,7 +31,7 @@ final class DashboardController extends AbstractDashboardController
     #[\Override]
     public function configureDashboard(): Dashboard
     {
-        return Dashboard::new()->setTitle($this->settings->get('site_name'));
+        return Dashboard::new()->setTitle((string) $this->settings->get('site_name'));
     }
 
     #[\Override]

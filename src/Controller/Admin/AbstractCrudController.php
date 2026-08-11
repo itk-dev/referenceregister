@@ -26,7 +26,7 @@ abstract class AbstractCrudController extends BaseAbstractCrudController
         return parent::configureCrud($crud)
             ->showEntityActionsInlined()
             ->setDateTimeFormat('yyyy/MM/dd HH:mm')
-            ->setTimezone($this->settings->get('app_timezone'));
+            ->setTimezone((string) $this->settings->get('app_timezone'));
     }
 
     #[\Override]
