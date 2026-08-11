@@ -61,6 +61,6 @@ jobs:
                   docker network create frontend
 
             - run: |
-                  docker compose run --rm phpfpm composer install
+                  docker compose run --rm --no-deps phpfpm composer install --no-scripts
                   # https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/blob/master/doc/usage.rst#the-check-command
                   docker compose run --rm phpfpm vendor/bin/php-cs-fixer fix --dry-run --diff

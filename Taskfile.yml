@@ -249,14 +249,22 @@ tasks:
     desc: 'Run code analysis'
     cmds:
       - task: code-analysis:phpstan
-      - task: mago:analyze
+      - task: code-analysis:mago
 
   code-analysis:phpstan:
     desc: 'Run PHPStan'
     cmds:
       - task: compose
         vars:
-          TASK_ARGS: exec phpfpm vendor/bin/phpstan
+          TASK_ARGS: run --rm --no-deps phpfpm composer install --no-scripts
+      - task: compose
+        vars:
+          TASK_ARGS: run --rm --no-deps phpfpm vendor/bin/phpstan
+
+  code-analysis:mago:
+    desc: 'Run Mago analysis'
+    cmd:
+      task: mago:analyze
 
   docker:pull:
     desc: 'Pull all development docker images'
