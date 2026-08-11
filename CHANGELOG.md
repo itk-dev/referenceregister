@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.0.0] - 2026-08-11
+
 * [PR-13](https://github.com/itk-dev/referenceregister/pull/13)
   Build and deployment
 * [PR-12](https://github.com/itk-dev/referenceregister/pull/12)
@@ -20,4 +22,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 * [PR-1](https://github.com/itk-dev/referenceregister/pull/1)
   Referenceregister
 
-[Unreleased]: https://github.com/itk-dev/referenceregister
+[Unreleased]: https://github.com/itk-dev/referenceregister/compare/1.0.0...HEAD
+[1.0.0]: https://github.com/itk-dev/referenceregister/releases/tag/1.0.0
